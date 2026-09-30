@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Homework 4: Solutions</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  table.det { border-collapse: collapse; display: inline-block; vertical-align: middle; margin: 4px 6px; }
+  table.det td { padding: 2px 8px; text-align:center; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Homework 4</h1>
+<div class="meta">Sections 3.1–3.3 · Determinants, Cramer's Rule, and Adjugate Matrices · Full solutions</div>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">$A,B$ are $3\times 3$ with $\det A=-2,\ \det B=3$. Compute each without finding entries.</p>
+<div class="sol">
+<p>(a) $\det(AB)=\det A\cdot\det B = (-2)(3) = -6$</p>
+<p>(b) $\det(A^T)=\det A = -2$</p>
+<p>(c) $\det(A^{-1})=\dfrac{1}{\det A}=\dfrac{1}{-2}=-\dfrac12$</p>
+<p>(d) $\det(4A)=4^3\det A = 64(-2) = -128$ &nbsp;<span class="muted">(scalar $c$ times an $n\times n$ matrix gives factor $c^n$; here $n=3$)</span></p>
+<p>(e) $\det(A^2B^{-1})=\det(A^2)\det(B^{-1})=(\det A)^2\cdot\dfrac{1}{\det B}=(-2)^2\cdot\dfrac13=\dfrac{4}{3}$</p>
+</div>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">$A$ is $3\times 3$, $\det A=5$. $B$ from $A$ by: $R_1\leftrightarrow R_3$, then $R_2\leftarrow -2R_2$, then $R_3\leftarrow R_3+7R_1$.</p>
+<div class="sol">
+<p>Track the determinant through each operation:</p>
+<ul>
+<li>$R_1\leftrightarrow R_3$: row swap $\Rightarrow$ multiply by $-1$. Det becomes $-5$.</li>
+<li>$R_2\leftarrow -2R_2$: multiplying one row by $-2$ $\Rightarrow$ multiply det by $-2$. Det becomes $(-5)(-2)=10$.</li>
+<li>$R_3\leftarrow R_3+7R_1$: adding a multiple of one row to another leaves det unchanged. Det stays $10$.</li>
+</ul>
+<p class="ans">$\det B = 10$.</p>
+</div>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">Operations on $3\times 3$ $A$: $R_1\leftrightarrow R_3$, $R_2\leftarrow 3R_2$, $R_3\leftarrow R_3-2R_1$, producing
+$U=\begin{bmatrix}2&1&-1\\0&3&4\\0&0&2\end{bmatrix}$. Find $\det A$ without reconstructing $A$.</p>
+<div class="sol">
+<p>Each operation multiplies the determinant by a known factor: swap $\times(-1)$, row-scale by 3 $\times 3$, row replacement $\times 1$. Hence</p>
+<p>$$\det U = \det A\cdot(-1)\cdot 3\cdot 1 = -3\det A.$$</p>
+<p>$U$ is upper triangular, so $\det U = 2\cdot 3\cdot 2 = 12$. Therefore $12=-3\det A$.</p>
+<p class="ans">$\det A = -4$.</p>
+</div>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">True/False, with justification.</p>
+<div class="sol">
+<p>(a) <b>False.</b> Determinant is not linear in matrix addition. Counterexample: $A=I_2,\ B=I_2$. Then $\det(A+B)=\det(2I_2)=4$ but $\det A+\det B=1+1=2$.</p>
+<p>(b) <b>False.</b> $\det A=0$ means $A$ is singular, but it need not have a zero row. Counterexample: $A=\begin{bmatrix}1&1\\1&1\end{bmatrix}$, $\det A=0$, no zero row.</p>
+<p>(c) <b>True.</b> $\det(AB)=\det A\,\det B=0$, so at least one factor is $0$.</p>
+<p>(d) <b>False.</b> Many distinct matrices share a determinant. Counterexample: $A=I_2$, $B=\begin{bmatrix}2&0\\0&1/2\end{bmatrix}$; both have $\det=1$ but $A\neq B$.</p>
+<p>(e) <b>True.</b> Adding a multiple of one row to another is a row replacement, which leaves the determinant unchanged.</p>
+</div>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">$A_t=\begin{bmatrix}1&1&1\\ 1&t&1\\ 1&1&t\end{bmatrix}$. Use determinant properties and row operations (not a full cofactor expansion) to find $\det(A_t)$; for what value(s) of $t$ is $A_t$ invertible?</p>
+<div class="sol">
+<p>Apply row-replacement operations, which leave the determinant unchanged. Subtract the first row from the other two rows:</p>
+<p>$$R_2\leftarrow R_2-R_1,\qquad R_3\leftarrow R_3-R_1:\qquad
+A_t\to\begin{bmatrix}1&1&1\\ 0&t-1&0\\ 0&0&t-1\end{bmatrix}.$$</p>
+<p>Each step is of the form $R_i\leftarrow R_i+kR_1$ (a row replacement), so $\det$ is unchanged. The result is upper triangular, and the determinant of a triangular matrix is the product of its diagonal entries:</p>
+<p>$$\det(A_t)=1\cdot(t-1)\cdot(t-1)=(t-1)^2.$$</p>
+<p>$A_t$ is invertible iff $\det(A_t)\neq 0$, i.e. $t-1\neq 0$.</p>
+<p class="ans">$\det(A_t)=(t-1)^2$; $A_t$ is invertible exactly when $t\neq 1$.</p>
+<p class="note">Why $t=1$ fails: every row becomes $(1,1,1)$, so the rows are linearly dependent and $\det A_1=0$. This is exactly the coefficient matrix of Problem 22, where Cramer's Rule therefore breaks down at $t=1$.</p>
+</div>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">$\det\begin{bmatrix}1&2&0&1\\ 2&5&1&3\\ 1&3&2&4\\ 0&1&1&2\end{bmatrix}$ by reducing to upper triangular form.</p>
+<div class="sol">
+<p>$R_2\leftarrow R_2-2R_1$: $[0,1,1,1]$; &nbsp; $R_3\leftarrow R_3-R_1$: $[0,1,2,3]$.</p>
+<p>Now $R_3\leftarrow R_3-R_2$: $[0,0,1,2]$; &nbsp; $R_4\leftarrow R_4-R_2$: $[0,0,0,1]$.</p>
+<p>All operations are row replacements, so the determinant is unchanged. The resulting matrix is upper triangular:</p>
+<p>$$\begin{bmatrix}1&2&0&1\\ 0&1&1&1\\ 0&0&1&2\\ 0&0&0&1\end{bmatrix}.$$</p>
+<p class="ans">$\det = 1\cdot1\cdot1\cdot1 = 1$.</p>
+</div>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">$\det\begin{bmatrix}3&0&2\\ 0&-1&4\\ 5&0&1\end{bmatrix}$ via cofactor expansion; state the chosen row/column.</p>
+<div class="sol">
+<p><b>Choice:</b> column 2, because it has two zeros: entries $(1,2)=0,\ (2,2)=-1,\ (3,2)=0$.</p>
+<p>$$\det = (-1)^{2+2}(-1)\,M_{22}=(-1)\cdot\det\!\begin{bmatrix}3&2\\5&1\end{bmatrix}=(-1)(3\cdot1-2\cdot5)=(-1)(-7)=7.$$</p>
+<p class="ans">$\det = 7$.</p>
+</div>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">$\det\begin{bmatrix}2&0&1&0\\ 0&3&0&0\\ 1&0&4&2\\ 0&0&0&5\end{bmatrix}$ via cofactor expansion.</p>
+<div class="sol">
+<p>Expand along column 2 (only entry $(2,2)=3$ is nonzero; cofactor sign $(-1)^{2+2}=+1$):</p>
+<p>$$\det = 3\cdot M_{22},\quad M_{22}=\det\!\begin{bmatrix}2&1&0\\ 1&4&2\\ 0&0&5\end{bmatrix}.$$</p>
+<p>Expand $M_{22}$ along its 3rd row (only $(3,3)=5$, sign $(-1)^{3+3}=+1$):</p>
+<p>$$M_{22}=5\cdot\det\!\begin{bmatrix}2&1\\1&4\end{bmatrix}=5(8-1)=35.$$</p>
+<p class="ans">$\det = 3\cdot 35 = 105$. The zeros let almost every cofactor term vanish.</p>
+</div>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">$A=\begin{bmatrix}1&-2&3\\ 0&4&5\\ 2&1&-1\end{bmatrix}$. Find $M_{12},C_{12},M_{23},C_{23},M_{31},C_{31}$, then $\det A$ by expanding the 2nd row.</p>
+<div class="sol">
+<p>$M_{12}=\det\begin{bmatrix}0&5\\2&-1\end{bmatrix}=0(-1)-5(2)=-10$; &nbsp; $C_{12}=(-1)^{1+2}M_{12}=10$.</p>
+<p>$M_{23}=\det\begin{bmatrix}1&-2\\2&1\end{bmatrix}=1(1)-(-2)(2)=5$; &nbsp; $C_{23}=(-1)^{2+3}M_{23}=-5$.</p>
+<p>$M_{31}=\det\begin{bmatrix}-2&3\\4&5\end{bmatrix}=(-2)(5)-3(4)=-22$; &nbsp; $C_{31}=(-1)^{3+1}M_{31}=-22$.</p>
+<p>Second-row expansion needs $C_{21},C_{22}$ too:</p>
+<p>$M_{21}=\det\begin{bmatrix}-2&3\\1&-1\end{bmatrix}=2-3=-1\Rightarrow C_{21}=1$;</p>
+<p>$M_{22}=\det\begin{bmatrix}1&3\\2&-1\end{bmatrix}=-1-6=-7\Rightarrow C_{22}=-7$.</p>
+<p>$$\det A = 0\cdot C_{21}+4\cdot C_{22}+5\cdot C_{23}=0+4(-7)+5(-5)=-28-25=-53.$$</p>
+<p class="ans">$M_{12}=-10,\ C_{12}=10,\ M_{23}=5,\ C_{23}=-5,\ M_{31}=-22,\ C_{31}=-22;\ \det A=-53$.</p>
+</div>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">$A=\begin{bmatrix}2&0&1\\ 3&-1&2\\ 0&4&5\end{bmatrix}$.</p>
+<div class="sol">
+<p>(a) Six-term (diagonal) formula:</p>
+<p>$\det A = 2[(-1)(5)-2(4)] - 0 + 1[3(4)-(-1)(0)] = 2(-13)+12 = -26+12=-14$.</p>
+<p>(b) Cofactor expansion along column 2 (entries $0,-1,4$):</p>
+<p>$M_{22}=\det\begin{bmatrix}2&1\\0&5\end{bmatrix}=10\Rightarrow C_{22}=10$; &nbsp; $M_{32}=\det\begin{bmatrix}2&1\\3&2\end{bmatrix}=1\Rightarrow C_{32}=-1$.</p>
+<p>$\det A = 0\cdot C_{12}+(-1)\cdot10+4\cdot(-1)=-10-4=-14$.</p>
+<p>(c) Both compute the same quantity: the determinant is a single well-defined number for the matrix, given by the Leibniz/multilinear-alternating definition. The "six-term" formula <i>is</i> the cofactor expansion along the first row fully written out; cofactor expansion is just a recursive application of that same definition. Different paths must yield the same value.</p>
+<p class="ans">$\det A = -14$ both ways.</p>
+</div>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">General determinant formula: each term has exactly one entry from each row and each column.</p>
+<div class="sol">
+<p>(a) A $4\times 4$ determinant has one term per permutation of $\{1,2,3,4\}$: <b>4! = 24</b> terms.</p>
+<p>(b) $a_{11}a_{22}a_{33}a_{44}$ corresponds to column order $(1,2,3,4)$, a valid permutation (one from each row and column). $a_{11}a_{22}a_{34}a_{44}$ uses column 4 twice and omits column 3 — not a permutation — so it cannot appear.</p>
+<p>(c) Product $a_{12}a_{24}a_{31}a_{43}$ has column order $(2,4,1,3)$. Count inversions in $(2,4,1,3)$: $(2,1),(4,1),(4,3)$ → 3 inversions, an odd number, so the term carries a <b>minus</b> sign.</p>
+</div>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">Rows of $A$ are $r_1,r_2,r_3$, $\det A=6$. $B$ has rows $r_1+2r_2,\ -3r_2,\ r_3-5r_2$. Find $\det B$ without entries.</p>
+<div class="sol">
+<p>Using multilinearity of the determinant in the rows,</p>
+<p>$$\det B = \det(r_1+2r_2,\,-3r_2,\,r_3-5r_2)=\det(r_1,-3r_2,r_3-5r_2)+2\det(r_2,-3r_2,r_3-5r_2).$$</p>
+<p>First term: linearity in row 3 gives $\det(r_1,-3r_2,r_3)+(-5)\det(r_1,-3r_2,r_2)$. The second piece has rows 2 and 3 both proportional to $r_2$ → $0$. So $=(-3)\det(r_1,r_2,r_3)=-3(6)=-18$.</p>
+<p>Second term: both pieces contain rows 1 and 2 proportional to $r_2$ → $0$.</p>
+<p class="ans">$\det B = -18$.</p>
+<p class="note">Equivalently, the row transformation matrix is $\begin{bmatrix}1&2&0\\0&-3&0\\0&-5&1\end{bmatrix}$, whose determinant is $-3$, so $\det B=(-3)\det A=-18$.</p>
+</div>
+</div>
+
+<!-- ===================== 13 ===================== -->
+<h2>Problem 13</h2>
+<div class="q">
+<p class="prob">Explain why $a_{11}C_{21}+a_{12}C_{22}+a_{13}C_{23}=0$, but $a_{21}C_{21}+a_{22}C_{22}+a_{23}C_{23}=\det A$.</p>
+<div class="sol">
+<p>Let $B$ be $A$ with its second row replaced by the first row of $A$. Then $B$ has two identical rows (row 1 = row 2), so $\det B=0$. Expanding $\det B$ along its second row:</p>
+<p>$$\det B = b_{21}C'_{21}+b_{22}C'_{22}+b_{23}C'_{23}=a_{11}C_{21}+a_{12}C_{22}+a_{13}C_{23}$$</p>
+<p>because $b_{2j}=a_{1j}$ and deleting the (replaced) second row leaves rows 1 and 3 of $A$, so the minors — hence cofactors $C'_{2j}$ — equal $A$'s $C_{2j}$. Thus the sum is $0$.</p>
+<p>For the second identity, $a_{21}C_{21}+a_{22}C_{22}+a_{23}C_{23}$ is exactly the cofactor expansion of $\det A$ along its actual second row, so it equals $\det A$ by definition.</p>
+</div>
+</div>
+
+<!-- ===================== 14 ===================== -->
+<h2>Problem 14</h2>
+<div class="q">
+<p class="prob">$A=\begin{bmatrix}1&2&0\\ -1&3&1\\ 2&0&1\end{bmatrix}$. Find the cofactor matrix $C$, $\operatorname{adj}(A)$, and $\det A$.</p>
+<div class="sol">
+<p>$\det A = 1(3\cdot1-1\cdot0)-2((-1)\cdot1-1\cdot2)+0 = 3-2(-3)=9$.</p>
+<p>Cofactors:</p>
+<p>$C_{11}=3,\ C_{12}=3,\ C_{13}=-6;\quad C_{21}=-2,\ C_{22}=1,\ C_{23}=4;\quad C_{31}=2,\ C_{32}=-1,\ C_{33}=5$.</p>
+<p>$$C=\begin{bmatrix}3&3&-6\\-2&1&4\\2&-1&5\end{bmatrix},\qquad \operatorname{adj}(A)=C^T=\begin{bmatrix}3&-2&2\\3&1&-1\\-6&4&5\end{bmatrix}.$$</p>
+<p class="ans">$\det A=9$ (and $A\,\operatorname{adj}(A)=9I$, confirming the cofactors).</p>
+</div>
+</div>
+
+<!-- ===================== 15 ===================== -->
+<h2>Problem 15</h2>
+<div class="q">
+<p class="prob">Using Problem 14, $A^{-1}=\dfrac{1}{\det A}\operatorname{adj}(A)$; verify one row-by-column product in $AA^{-1}$.</p>
+<div class="sol">
+<p>$$A^{-1}=\frac19\begin{bmatrix}3&-2&2\\3&1&-1\\-6&4&5\end{bmatrix}=\begin{bmatrix}1/3&-2/9&2/9\\ 1/3&1/9&-1/9\\ -2/3&4/9&5/9\end{bmatrix}.$$</p>
+<p>Verify entry $(2,2)$ of $AA^{-1}$: row 2 of $A$ is $(-1,3,1)$, column 2 of $A^{-1}$ is $(-2/9,1/9,4/9)$:</p>
+<p>$$(-1)(-2/9)+3(1/9)+1(4/9)=2/9+3/9+4/9=9/9=1.$$</p>
+<p class="ans">Confirmed (off-diagonal entries similarly give $0$).</p>
+</div>
+</div>
+
+<!-- ===================== 16 ===================== -->
+<h2>Problem 16</h2>
+<div class="q">
+<p class="prob">$A=\begin{bmatrix}a&b\\c&d\end{bmatrix}$. Find $\operatorname{adj}(A)$ and verify $A\operatorname{adj}(A)=\det(A)I_2$; explain why $A^{-1}=\frac1{\det A}\operatorname{adj}(A)$ needs $\det A\neq0$.</p>
+<div class="sol">
+<p>$\operatorname{adj}(A)=\begin{bmatrix}d&-b\\-c&a\end{bmatrix}$. Then</p>
+<p>$$A\operatorname{adj}(A)=\begin{bmatrix}a&b\\c&d\end{bmatrix}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}=\begin{bmatrix}ad-bc&0\\0&ad-bc\end{bmatrix}=(ad-bc)I_2=\det(A)I_2.$$</p>
+<p>The formula $A^{-1}=\frac1{\det A}\operatorname{adj}(A)$ requires division by $\det A$, which is only valid when $\det A\neq0$ (and that condition is exactly what makes $A$ invertible).</p>
+</div>
+</div>
+
+<!-- ===================== 17 ===================== -->
+<h2>Problem 17</h2>
+<div class="q">
+<p class="prob">A student: "If $\det A=0$ then $A\operatorname{adj}(A)=0$, therefore $\operatorname{adj}(A)=0$." Explain the error; give a $2\times2$ example with $\det A=0$ but $\operatorname{adj}(A)\neq0$.</p>
+<div class="sol">
+<p>From $A\operatorname{adj}(A)=\det(A)I=0$ we may only conclude that each <i>column</i> of $\operatorname{adj}(A)$ lies in the null space of $A$. A nonzero matrix times a nonzero matrix can be the zero matrix; $\operatorname{adj}(A)=0$ does not follow.</p>
+<p>Example: $A=\begin{bmatrix}1&0\\0&0\end{bmatrix}$, $\det A=0$. Its adjugate is $\operatorname{adj}(A)=\begin{bmatrix}0&0\\0&1\end{bmatrix}\neq0$. Indeed $A\operatorname{adj}(A)=\begin{bmatrix}0&0\\0&0\end{bmatrix}$.</p>
+</div>
+</div>
+
+<!-- ===================== 18 ===================== -->
+<h2>Problem 18</h2>
+<div class="q">
+<p class="prob">$A=\begin{bmatrix}1&1&0\\0&1&1\\1&0&1\end{bmatrix}$, $\operatorname{adj}(A)=\begin{bmatrix}1&-1&1\\1&1&-1\\-1&1&1\end{bmatrix}$. (a) Find $\det A$ via $A\operatorname{adj}(A)=\det(A)I$. (b) Find $A^{-1}$.</p>
+<div class="sol">
+<p>(a) $A\operatorname{adj}(A)=\begin{bmatrix}2&0&0\\0&2&0\\0&0&2\end{bmatrix}=2I$. Hence $\det A=2$.</p>
+<p>(b) $A^{-1}=\frac12\operatorname{adj}(A)=\begin{bmatrix}1/2&-1/2&1/2\\ 1/2&1/2&-1/2\\ -1/2&1/2&1/2\end{bmatrix}$.</p>
+</div>
+</div>
+
+<!-- ===================== 19 ===================== -->
+<h2>Problem 19</h2>
+<div class="q">
+<p class="prob">Cramer's Rule for $\begin{cases}2x-y=1\\ 3x+2y=8\end{cases}$.</p>
+<div class="sol">
+<p>$A=\begin{bmatrix}2&-1\\3&2\end{bmatrix},\ b=\begin{bmatrix}1\\8\end{bmatrix},\ \det A=2(2)-(-1)(3)=7$.</p>
+<p>$A_1=\begin{bmatrix}1&-1\\8&2\end{bmatrix},\ \det A_1=1(2)-(-1)(8)=10\ \Rightarrow\ x=10/7$.</p>
+<p>$A_2=\begin{bmatrix}2&1\\3&8\end{bmatrix},\ \det A_2=2(8)-1(3)=13\ \Rightarrow\ y=13/7$.</p>
+<p class="ans">$(x,y)=(10/7,\ 13/7)$.</p>
+</div>
+</div>
+
+<!-- ===================== 20 ===================== -->
+<h2>Problem 20</h2>
+<div class="q">
+<p class="prob">$\begin{cases}x+2y-z=6\\ 2x+y+z=3\\ x-y+z=-2\end{cases}$.</p>
+<div class="sol">
+<p>$A=\begin{bmatrix}1&2&-1\\2&1&1\\1&-1&1\end{bmatrix},\ b=\begin{bmatrix}6\\3\\-2\end{bmatrix}$.</p>
+<p>$\det A=1(1+1)-2(2-1)+(-1)(-2-1)=2-2+3=3$.</p>
+<p>$A_1=\begin{bmatrix}6&2&-1\\3&1&1\\-2&-1&1\end{bmatrix}$: $\det A_1=6(2)-2(1)+(-1)(-1)=12-10+1=3\Rightarrow x=1$.</p>
+<p>$A_2=\begin{bmatrix}1&6&-1\\2&3&1\\1&-2&1\end{bmatrix}$: $\det A_2=1(5)-6(1)+(-1)(-7)=5-6+7=6\Rightarrow y=2$.</p>
+<p>$A_3=\begin{bmatrix}1&2&6\\2&1&3\\1&-1&-2\end{bmatrix}$: $\det A_3=1(-1)-2(-7)+6(-3)=1+14-18=-3\Rightarrow z=-1$.</p>
+<p class="ans">$(x,y,z)=(1,\ 2,\ -1)$.</p>
+</div>
+</div>
+
+<!-- ===================== 21 ===================== -->
+<h2>Problem 21</h2>
+<div class="q">
+<p class="prob">$\begin{cases}2x_1-x_2+x_3=5\\ x_1+2x_2=-1\\ 3x_1+x_2+2x_3=6\end{cases}$. Use Cramer's Rule to find only $x_2$.</p>
+<div class="sol">
+<p>$A=\begin{bmatrix}2&-1&1\\1&2&0\\3&1&2\end{bmatrix}$. $\det A=2(4)-(-1)(2)+1(1-6)=8+2-5=5$.</p>
+<p>$A_2=\begin{bmatrix}2&5&1\\1&-1&0\\3&6&2\end{bmatrix}$ (replace column 2 with $b$).</p>
+<p>$\det A_2=2(-2)-5(2)+1(6+3)=-4-10+9=-5$.</p>
+<p class="ans">$x_2=\det A_2/\det A=-5/5=-1$.</p>
+</div>
+</div>
+
+<!-- ===================== 22 ===================== -->
+<h2>Problem 22</h2>
+<div class="q">
+<p class="prob">$\begin{cases}x+y+z=1\\ x+ty+z=1\\ x+y+tz=1\end{cases}$.</p>
+<div class="sol">
+<p>(a) Coefficient matrix $M=\begin{bmatrix}1&1&1\\1&t&1\\1&1&t\end{bmatrix}$. Using the same subtract-the-first-row idea as in Problem 5: $R_2\leftarrow R_2-R_1$, $R_3\leftarrow R_3-R_1$ gives upper triangular $\operatorname{diag}(1,t-1,t-1)$, so $\det M=(t-1)^2$. Cramer's Rule applies when $\det M\neq0$, i.e. <b>$t\neq1$</b>.</p>
+<p>(b) For $t\neq1$: subtracting the first equation from the 2nd and 3rd gives $(t-1)y=0$ and $(t-1)z=0$, hence $y=z=0$, and then $x=1$. So $(x,y,z)=(1,0,0)$.</p>
+<p>(c) When $t=1$ all three equations become $x+y+z=1$; the system collapses to one equation, so it has <b>infinitely many solutions</b> (a plane). Cramer's Rule fails because $\det M=0$.</p>
+</div>
+</div>
+
+<!-- ===================== 23 ===================== -->
+<h2>Problem 23</h2>
+<div class="q">
+<p class="prob">Show $x_j=\dfrac{\det(A_j)}{\det A}$ by connecting the matrix product $\operatorname{adj}(A)b$ with a cofactor expansion.</p>
+<div class="sol">
+<p>$x=A^{-1}b=\frac1{\det A}\operatorname{adj}(A)b$. The $j$-th component is $x_j=\frac1{\det A}(\operatorname{adj}(A)b)_j$.</p>
+<p>Row $j$ of $\operatorname{adj}(A)$ equals column $j$ of the cofactor matrix $C$, namely $(C_{1j},C_{2j},\dots,C_{nj})$. So</p>
+<p>$$(\operatorname{adj}(A)b)_j=\sum_{i=1}^n C_{ij}\,b_i.$$</p>
+<p>Now $A_j$ is $A$ with column $j$ replaced by $b$. Expanding $\det(A_j)$ along column $j$:</p>
+<p>$$\det(A_j)=\sum_{i=1}^n (A_j)_{ij}\, (C_j)_{ij}=\sum_{i=1}^n b_i\,C_{ij},$$</p>
+<p>because the cofactors $(C_j)_{ij}$ are computed by deleting row $i$ and column $j$ — column $j$ is the one we replaced, so they are unchanged from $A$'s cofactors $C_{ij}$. Thus $(\operatorname{adj}(A)b)_j=\det(A_j)$, and</p>
+<p>$$x_j=\frac{\det(A_j)}{\det A}.$$</p>
+</div>
+</div>
+
+<!-- ===================== 24 ===================== -->
+<h2>Problem 24</h2>
+<div class="q">
+<p class="prob">$A=\begin{bmatrix}1&2\\3&4\end{bmatrix}$. A student found $C=\begin{bmatrix}4&-3\\-2&1\end{bmatrix}$ but wrote $\operatorname{adj}(A)=C$.</p>
+<div class="sol">
+<p>(a) The error: $\operatorname{adj}(A)$ is the <b>transpose</b> of the cofactor matrix, not the cofactor matrix itself. (The student's $C$ is correct: $C_{11}=4,\ C_{12}=-3,\ C_{21}=-2,\ C_{22}=1$.)</p>
+<p>(b) Correct adjugate: $\operatorname{adj}(A)=C^T=\begin{bmatrix}4&-2\\-3&1\end{bmatrix}$.</p>
+<p>(c) $A\,C=\begin{bmatrix}1&2\\3&4\end{bmatrix}\begin{bmatrix}4&-3\\-2&1\end{bmatrix}=\begin{bmatrix}0&-1\\4&-5\end{bmatrix}$ — not of the form $\det(A)I$.</p>
+<p>$A\operatorname{adj}(A)=\begin{bmatrix}1&2\\3&4\end{bmatrix}\begin{bmatrix}4&-2\\-3&1\end{bmatrix}=\begin{bmatrix}-2&0\\0&-2\end{bmatrix}=\det(A)I$.</p>
+<p class="ans">$A\operatorname{adj}(A)$ has the form $\det(A)I$ (here $\det A=-2$).</p>
+</div>
+</div>
+
+<!-- ===================== 25 ===================== -->
+<h2>Problem 25</h2>
+<div class="q">
+<p class="prob">$A$ is a $3\times3$ real matrix with $A^T=-A$ (skew-symmetric). Prove $\det A=0$ without expanding.</p>
+<div class="sol">
+<p>$$\det(A)=\det(A^T)=\det(-A)=(-1)^3\det(A)=-\det(A).$$</p>
+<p>So $\det(A)=-\det(A)$, hence $2\det(A)=0$, and therefore $\det(A)=0$.</p>
+<p class="note">Key facts used: $\det(A^T)=\det(A)$ and $\det(cA)=c^n\det(A)$ with $n=3$. (For odd dimension a real skew-symmetric matrix is always singular; in even dimensions it need not be.)</p>
+</div>
+</div>
+
+</div>
+</body>
+</html>
