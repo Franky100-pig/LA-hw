@@ -1,15 +1,17 @@
 # LA-hw
 
-Linear Algebra homework assignments and worked solutions.
+Original Linear Algebra practice sets with full worked solutions.
+
+All problems are self-written in the spirit of MIT 18.06 (Gilbert Strang) — no school or course materials are included. Emphasis is on determinant properties, row operations, cofactor structure and Cramer's rule, with proof-style reasoning questions.
 
 ## Contents
 
-| Assignment | Topics | Homework | Solutions |
+| Set | Topics | Problems | Solutions |
 |---|---|---|---|
-| HW4 | §3.1–3.3 — Determinants, Cofactors & Adjugate, Cramer's Rule | [`hw4/Linear_Algebra_Homework_4.pdf`](hw4/Linear_Algebra_Homework_4.pdf) | [`.docx`](hw4/Linear_Algebra_Homework_4_Solutions.docx) · [`.pdf`](hw4/Linear_Algebra_Homework_4_Solutions.pdf) · [`.html`](hw4/Linear_Algebra_Homework_4_Solutions.html) |
+| Set 1 | Determinants, Cofactors & Adjugate, Cramer's Rule | [`.pdf`](set1/problems.pdf) · [`.html`](set1/problems.html) | [`.pdf`](set1/solutions.pdf) · [`.docx`](set1/solutions.docx) · [`.html`](set1/solutions.html) |
 
-Solutions for each assignment are provided in three formats:
+Solution formats:
 
-- **`.docx`** — editable, with native Word equations (opens in Word, Pages, WPS, Google Docs).
-- **`.pdf`** — fixed layout, opens anywhere.
-- **`.html`** — self-contained, MathJax-rendered (open in a browser).
+- **`.docx`** — editable, native Word equations (opens in Word, Pages, WPS, Google Docs)
+- **`.pdf`** — LaTeX-typeset, fixed layout
+- **`.html`** — self-contained, MathJax-rendered (open in a browser)
