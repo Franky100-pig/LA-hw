@@ -1,6 +1,6 @@
 # LA-hw
 
-Original Linear Algebra practice sets with full worked solutions.
+Original Linear Algebra practice sets with full worked solutions. It can be used with the LA Helper to strengthen your Linear Algebra knowledge.
 
 All problems are self-written in the spirit of MIT 18.06 (Gilbert Strang) — no school or course materials are included. Emphasis is on determinant properties, row operations, cofactor structure and Cramer's rule, with proof-style reasoning questions.
 
