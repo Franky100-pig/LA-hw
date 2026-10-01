@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 1</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 1</h1>
+<div class="meta">Determinants, Cofactors &amp; Adjugate, Cramer's Rule · Full solutions · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">$A$ and $B$ are $4\times 4$ matrices with $\det A = 2$ and $\det B = -3$. Compute each of the following without finding any entries of $A$ or $B$: (a) $\det(AB)$ (b) $\det(A^T)$ (c) $\det(A^{-1}B)$ (d) $\det(2A)$ (e) $\det(A^2B^{-1})$.</p>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">$A$ is a $3\times 3$ matrix with $\det A = -4$. A matrix $B$ is obtained from $A$ by performing, in order: $R_2 \leftarrow 3R_2$, then $R_1 \leftrightarrow R_2$, then $R_3 \leftarrow R_3 - 5R_1$. Find $\det B$ and explain the effect of each operation.</p>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">Starting from a $3\times 3$ matrix $A$, the operations $R_2 \leftarrow 2R_2$, then $R_1 \leftrightarrow R_3$, then $R_3 \leftarrow R_3 + 4R_2$ are performed, producing
+$$U = \begin{bmatrix} 3 &amp; 1 &amp; 2 \\ 0 &amp; -1 &amp; 5 \\ 0 &amp; 0 &amp; 4 \end{bmatrix}.$$
+Find $\det A$ without reconstructing $A$.</p>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">True or false? Justify each answer (if false, give a counterexample or correct the statement).</p>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">Let $A_t = \begin{bmatrix} t &amp; 1 &amp; 1 \\ 1 &amp; t &amp; 1 \\ 1 &amp; 1 &amp; t \end{bmatrix}$. Using determinant properties and row operations (not a full cofactor expansion), find $\det(A_t)$. For which values of $t$ is $A_t$ invertible?</p>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Compute $\det\begin{bmatrix} 1 &amp; 2 &amp; 0 &amp; 2 \\ 2 &amp; 5 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 2 &amp; 1 \\ 1 &amp; 3 &amp; 1 &amp; 3 \end{bmatrix}$ by row-replacement operations only (no swaps), reducing to upper triangular form.</p>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">Compute $\det\begin{bmatrix} 2 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 4 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 3 &amp; 0 \\ 0 &amp; 5 &amp; 0 &amp; 2 \end{bmatrix}$ by cofactor expansion, choosing the most efficient row or column and stating your choice.</p>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix} 2 &amp; 1 &amp; 4 \\ 3 &amp; 0 &amp; -1 \\ 1 &amp; 2 &amp; 3 \end{bmatrix}$. Find the cofactors $C_{21}, C_{22}, C_{23}$, then compute $\det A$ by expanding along the second row. Explain the difference between a minor $M_{ij}$ and a cofactor $C_{ij}$.</p>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix} 1 &amp; 2 &amp; 0 \\ 0 &amp; 1 &amp; 1 \\ 2 &amp; 0 &amp; 1 \end{bmatrix}$. (a) Find the cofactor matrix $C$ and $\operatorname{adj}(A)$. (b) Verify one complete row-by-column product in $A\,\operatorname{adj}(A)$. (c) Find $A^{-1}$.</p>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">Use Cramer's Rule to solve $\begin{cases} 3x - 2y = 4 \\ 2x + 5y = 9 \end{cases}$. Identify $A$, $A_1$, $A_2$ and compute the necessary determinants.</p>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Consider the system
+$$\begin{cases} x + 2y + z = 5 \\ 2x - y + 3z = 4 \\ x + y + 2z = 7 \end{cases}$$
+Use Cramer's Rule to find <em>only</em> $y$. Do not solve for $x$ or $z$.</p>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">(a) Suppose every row of a square matrix $A$ sums to zero. Prove that $\det A = 0$ without expanding the determinant.  (b) True or false: "$\operatorname{adj}(A)$ exists only when $A$ is invertible." Justify your answer.</p>
+</div>
+
+</div>
+</body>
+
+</html>
