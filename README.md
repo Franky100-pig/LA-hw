@@ -9,7 +9,7 @@ All problems are self-written in the spirit of MIT 18.06 (Gilbert Strang) — no
 | Set | Topics | Problems | Solutions |
 |---|---|---|---|
 | Set 1 | Determinants, Cofactors & Adjugate, Cramer's Rule | [`.pdf`](set1/problems.pdf) · [`.html`](set1/problems.html) | [`.pdf`](set1/solutions.pdf) · [`.docx`](set1/solutions.docx) · [`.html`](set1/solutions.html) |
-| Set 2 | Row Echelon Form & the Determinant | [`.html`](set2/problems.html) | [`.html`](set2/solutions.html) |
+| Set 2 | Row Echelon Form & the Determinant | [`.pdf`](set2/problems.pdf) · [`.html`](set2/problems.html) | [`.pdf`](set2/solutions.pdf) · [`.docx`](set2/solutions.docx) · [`.html`](set2/solutions.html) |
 
 Solution formats:
 
