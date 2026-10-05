@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 2</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 2</h1>
+<div class="meta">Row Echelon Form &amp; the Determinant · Full solutions · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Throughout this set, <strong>REF</strong> means row echelon form: zeros below the diagonal, and each nonzero row starting strictly further right than the one above it. Recommended technique: reach REF using <em>row replacements only</em> ($R_i \leftarrow R_i + cR_j$), which never change the determinant — then read the determinant off the diagonal. Whenever a swap or a scaling is unavoidable, account for it explicitly.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">Compute $\det\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 5 &amp; 3 \\ 1 &amp; 1 &amp; 1 \end{bmatrix}$ by reducing to row echelon form. Use row replacements only — no swaps, no scalings — and state why your answer is legitimate.</p>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">Compute $\det\begin{bmatrix} 0 &amp; 1 &amp; 2 \\ 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \end{bmatrix}$ by reducing to row echelon form. A leading entry of zero forces a swap. Perform the swap, finish the reduction, and explain exactly where the swap's effect on the determinant enters your answer.</p>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix} 0 &amp; 1 &amp; 2 &amp; 3 \\ 1 &amp; 2 &amp; 3 &amp; 4 \\ 2 &amp; 4 &amp; 6 &amp; 8 \\ 1 &amp; 0 &amp; 1 &amp; 1 \end{bmatrix}$. Without computing the determinant, use row echelon form to decide whether $\det A$ is zero, and say which single observation settles it.</p>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">A common habit is to normalize each row while reducing (dividing the pivot row by its leading entry). Explain why this is a bad idea when the goal is the determinant. Give a $2\times 2$ example making the cost concrete, and say which single step type you should avoid.</p>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">Starting from $A = \begin{bmatrix} 2 &amp; 1 &amp; 0 \\ 4 &amp; 3 &amp; 1 \\ 6 &amp; 5 &amp; 1 \end{bmatrix}$, the following operations are performed in order:
+$$R_2 \leftarrow R_2 - 2R_1, \qquad R_3 \leftarrow R_3 - 3R_1, \qquad R_3 \leftarrow R_3 - 2R_2,$$
+producing an upper triangular matrix $U$. Find $\det A$ <em>without</em> redoing the elimination.</p>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix} 1 &amp; 1 &amp; 0 &amp; 2 \\ 0 &amp; 1 &amp; 2 &amp; 1 \\ 2 &amp; 3 &amp; 2 &amp; 5 \\ 1 &amp; 2 &amp; 1 &amp; 3 \end{bmatrix}$. Reduce to row echelon form. Then (a) report the rank, and (b) exhibit the exact relation among the rows that forces $\det A = 0$.</p>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">Let $A_t = \begin{bmatrix} t &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; t &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; t &amp; 1 \\ 1 &amp; 0 &amp; 0 &amp; t \end{bmatrix}$. Use row echelon form to find all <em>real</em> values of $t$ for which $\det A_t = 0$. Justify that your list is complete.</p>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">Compute $\det\begin{bmatrix} 2 &amp; 1 &amp; 0 \\ 1 &amp; 3 &amp; 1 \\ 0 &amp; 1 &amp; 4 \end{bmatrix}$ by row echelon form. Fractions are unavoidable here; carry them exactly rather than rounding.</p>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">Compute the determinant of $A = \begin{bmatrix} 1 &amp; 4 &amp; 1 &amp; 0 \\ 1 &amp; 2 &amp; 0 &amp; 0 \\ 0 &amp; 2 &amp; 4 &amp; 1 \\ 1 &amp; 4 &amp; 4 &amp; 5 \end{bmatrix}$ by reducing to row echelon form. Find a reduction that needs neither swaps nor scalings, and say why such a reduction exists here at all.</p>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">Let $B_t = \begin{bmatrix} 1 &amp; 1 &amp; t \\ 0 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; t \end{bmatrix}$. Show by row reduction that $\det B_t = 1$ for <em>every</em> $t$. Then explain why expanding along the first row would have made this much harder to see.</p>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Let $A$ be $n\times n$. Prove that $\det A \neq 0$ if and only if the row echelon form of $A$ has a pivot in every row. (Your proof may use the three determinant effects of elementary row operations, but it must not use the general theory of rank.)</p>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">True or false? Justify each answer (if false, give a counterexample or correct the statement).</p>
+<p class="prob">(a) "If the row echelon form of $A$ has a zero row, then $\det A = 0$."<br>
+(b) "Row replacements change the determinant, so $\det(\text{REF}(A)) = \det A$ is false in general."<br>
+(c) "If two row replacements turn $A$ into a matrix with determinant $0$, then $\det A = 0$."<br>
+(d) "The determinant of a triangular matrix is the product of its diagonal entries, whether or not it is in echelon form."<br>
+(e) "A matrix in row echelon form with a nonzero determinant must have a pivot in its first row."</p>
+</div>
+
+</div>
+</body>
+
+</html>
