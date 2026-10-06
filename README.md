@@ -2,7 +2,7 @@
 
 Original Linear Algebra practice sets with full worked solutions. It can be used with the LA Helper to strengthen your Linear Algebra knowledge.
 
-All problems are self-written in the spirit of MIT 18.06 (Gilbert Strang) — no school or course materials are included. Set 1 covers determinant properties, row operations, cofactor structure and Cramer's rule, with proof-style reasoning questions. Set 2 applies row echelon form to the determinant: tracking swaps and scalings, spotting singularity before computing, and a proof that a pivot in every row is exactly $\det A \neq 0$.
+All problems are self-written mimicking the form of MIT 18.06 (Gilbert Strang) — no school or course materials are included. If there are similar questions, those are just coincidences. Set 1 covers determinant properties, row operations, cofactor structure and Cramer's rule, with proof-style reasoning questions. Set 2 applies row echelon form to the determinant: tracking swaps and scalings, spotting singularity before computing, and a proof that a pivot in every row is exactly $\det A \neq 0$.
 
 ## Contents
 
