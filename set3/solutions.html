@@ -60,7 +60,8 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 (c) Which vector did you have to drop, and what was the relation that made it drop out?</p>
 <div class="sol">
 <p>(a) Reduce the matrix with all four columns:</p>
-<p>$$\begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 2 &amp; 1 &amp; 3 &amp; 4 \\ 0 &amp; 1 &amp; 1 &amp; 1 \end{bmatrix} \xrightarrow{R_2 \leftarrow R_2 - 2R_1} \begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 1 \end{bmatrix} \xrightarrow{R_3 \leftarrow R_3 - R_2} \begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}.$$</p>
+<p>$$\begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 2 &amp; 1 &amp; 3 &amp; 4 \\ 0 &amp; 1 &amp; 1 &amp; 1 \end{bmatrix} \xrightarrow{\;R_2 \leftarrow R_2 - 2R_1\;} \begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 1 \end{bmatrix},$$
+<p>$$\xrightarrow{\;R_3 \leftarrow R_3 - R_2\;} \begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}.$$</p>
 <p>Three pivots, so the span is all of $\mathbb{R}^3$ and its dimension is $3$. A spanning set of $4$ vectors with a redundancy must therefore lose at least one; any $3$ that survive independent will do. Take</p>
 <p>$$\mathcal{B} = \{u_1, u_2, u_4\}. \quad \text{Check: } \det[u_1\;u_2\;u_4] = \begin{vmatrix} 1 &amp; 0 &amp; 2 \\ 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 1 \end{vmatrix} = 1 \ne 0.$$</p>
 <p>The determinant is $1$, so those three are independent, and three independent vectors in $\mathbb{R}^3$ already span everything: <strong>no set of two can span $\mathbb{R}^3$</strong> (that is Problem 11).</p>
@@ -68,7 +69,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p>$$\begin{bmatrix} 1 &amp; 0 &amp; 2 \\ 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}\begin{bmatrix} a \\ b \\ c \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix} \;\Longrightarrow\; a + 2c = 1,\; 2a + b + 4c = 3,\; b + c = 1.$$</p>
 <p>From the first and third, $a = 1 - 2c$ and $b = 1 - c$. Substituting into the middle equation:</p>
 <p>$$2(1 - 2c) + (1 - c) + 4c = 3 \;\Longrightarrow\; 3 - c = 3 \;\Longrightarrow\; c = 0, \quad a = 1,\; b = 1.$$</p>
-<p>$$u_3 = 1\,u_1 + 1\,u_2 + 0\,u_4 = \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix}\; ✓$$</p>
+<p>$$u_3 = 1\,u_1 + 1\,u_2 + 0\,u_4 = \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix}\; \checkmark$$</p>
 <p>So the full coordinate list in the basis $\mathcal{B} = \{u_1,u_2,u_4\}$ is</p>
 <p>$$[u_1] = (1,0,0)^T, \qquad [u_2] = (0,1,0)^T, \qquad [u_3] = (1,1,0)^T, \qquad [u_4] = (0,0,1)^T.$$</p>
 <p>(c) The dropped vector is $u_3$, and the relation is $u_3 - u_1 - u_2 = 0$. Had we tried to keep $u_1, u_2, u_3$ and drop $u_4$ instead, we would have found <em>no</em> solution: those three span a plane (the same relation kills the third dimension), and $u_4$ is not in it — check the first coordinate of $\alpha u_1 + \beta u_2 + \gamma u_3 = u_4$: $\alpha + \gamma = 2$, $2\alpha + \beta + 3\gamma = 4$, $\beta + \gamma = 1$ are inconsistent.</p>
@@ -106,7 +107,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 (c) Is $\{u,v,z\}$ linearly independent? Support your answer with a determinant.</p>
 <div class="sol">
 <p>(a) $ac_1 + bc_2 = w$ is the two-unknown system</p>
-<p>$$\begin{bmatrix} 1 &amp; 2 \\ 2 &amp; 0 \\ 3 &amp; 1 \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} 3 \\ 2 \\ 4 \end{bmatrix}. \quad \text{Take } c_1 = 1,\ c_2 = 1: \quad 1 + 2 = 3,\; 2 + 0 = 2,\; 3 + 1 = 4 \; ✓$$</p>
+<p>$$\begin{bmatrix} 1 &amp; 2 \\ 2 &amp; 0 \\ 3 &amp; 1 \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} 3 \\ 2 \\ 4 \end{bmatrix}. \quad \text{Take } c_1 = 1,\ c_2 = 1: \quad 1 + 2 = 3,\; 2 + 0 = 2,\; 3 + 1 = 4 \; \checkmark$$</p>
 <p>(b) Same system with right side $z$:</p>
 <p>$$\begin{bmatrix} 1 &amp; 2 \\ 2 &amp; 0 \\ 3 &amp; 1 \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} \xrightarrow{\text{row reduce}} \text{inconsistent (a row of zeros } = \text{ a nonzero entry)}$$</p>
 <p>Explicitly, the equations are $c_1 + 2c_2 = 0$, $2c_1 = 1$, $3c_1 + c_2 = 0$. The second gives $c_1 = \tfrac12$, so the first gives $c_2 = -\tfrac14$; but then $3c_1 + c_2 = \tfrac32 - \tfrac14 = \tfrac54 \ne 0$. Contradiction.</p>
@@ -151,7 +152,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p>(c) With $r' = (1,0,-1)^T$,</p>
 <p>$$\det[p\;q\;r'] = \begin{vmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; -1 \end{vmatrix} = 1 \cdot (1 \cdot (-1) - 0 \cdot 1) + 1 \cdot (1 \cdot 1 - 1 \cdot 0) = -1 + 1 = 0.$$</p>
 <p>Now rank $2$, so $\dim W' = 2$ — one dimension was lost. Which one? Solve $ap + bq = r'$:</p>
-<p>$$\begin{bmatrix} 1 &amp; 0 \\ 1 &amp; 1 \\ 0 &amp; 1 \end{bmatrix}\begin{bmatrix} a \\ b \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ -1 \end{bmatrix} \Longrightarrow a = 1,\; a + b = 0 \Rightarrow b = -1,\; b = -1 \; ✓$$</p>
+<p>$$\begin{bmatrix} 1 &amp; 0 \\ 1 &amp; 1 \\ 0 &amp; 1 \end{bmatrix}\begin{bmatrix} a \\ b \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ -1 \end{bmatrix} \Longrightarrow a = 1,\; a + b = 0 \Rightarrow b = -1,\; b = -1 \; \checkmark$$</p>
 <p>so $r' = p - q$.</p>
 <p class="ans">(a) $\dim W = 3$, basis $\{p,q,r\}$; (b) $W = \mathbb{R}^3$; (c) $\dim W' = 2$ with $r' = p - q$.</p>
 </div>
@@ -171,10 +172,10 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p>$$\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \\ c_3 \end{bmatrix} = \begin{bmatrix} 2 \\ 3 \\ 3 \end{bmatrix} \;\Longrightarrow\; c_1 + c_3 = 2,\; c_1 + c_2 = 3,\; c_2 + c_3 = 3.$$</p>
 <p>Adding and subtracting: from the first and second, $c_2 = 3 - c_1$ and $c_3 = 2 - c_1$; the third gives $3 - c_1 + 2 - c_1 = 3$, so $2c_1 = 2$, $c_1 = 1$ and hence $c_2 = 2$, $c_3 = 1$.</p>
 <p>(c) Multiply back:</p>
-<p>$$1\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} + 2\begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix} + 1\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 + 0 + 1 \\ 1 + 2 + 0 \\ 0 + 2 + 1 \end{bmatrix} = \begin{bmatrix} 2 \\ 3 \\ 3 \end{bmatrix}\; ✓$$</p>
+<p>$$1\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} + 2\begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix} + 1\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 + 0 + 1 \\ 1 + 2 + 0 \\ 0 + 2 + 1 \end{bmatrix} = \begin{bmatrix} 2 \\ 3 \\ 3 \end{bmatrix}\; \checkmark$$</p>
 <p>For a general vector, the same elimination with $(x,y,z)$ in place of $(2,3,3)$ gives $c_1 + c_3 = x$, $c_1 + c_2 = y$, $c_2 + c_3 = z$; solving, $c_1 = \tfrac{x + y - z}{2}$, $c_2 = \tfrac{-x + y + z}{2}$, $c_3 = \tfrac{x - y + z}{2}$. In matrix form,</p>
 <p>$$[v]_B = B^{-1}v, \qquad B^{-1} = \frac{1}{2}\begin{bmatrix} 1 &amp; 1 &amp; -1 \\ -1 &amp; 1 &amp; 1 \\ 1 &amp; -1 &amp; 1 \end{bmatrix}.$$</p>
-<p>A quick consistency check on that fraction: the integer matrix inside has determinant $4$, so $\det B^{-1} = \tfrac{4}{2^3} = \tfrac12$, which matches $\tfrac{1}{\det B} = \tfrac{1}{2}$. ✓</p>
+<p>A quick consistency check on that fraction: the integer matrix inside has determinant $4$, so $\det B^{-1} = \tfrac{4}{2^3} = \tfrac12$, which matches $\tfrac{1}{\det B} = \tfrac{1}{2}$. $\checkmark$</p>
 <p class="ans">$[v]_B = (1, 2, 1)^T$; $B^{-1} = \tfrac12\begin{bmatrix} 1 &amp; 1 &amp; -1 \\ -1 &amp; 1 &amp; 1 \\ 1 &amp; -1 &amp; 1 \end{bmatrix}$.</p>
 </div>
 <div class="note">Coordinates in a non-standard basis are always "solve $Bc = v$". Once you have $B^{-1}$, every coordinate in this basis is a matrix multiply — and note the halves: a basis with entries $\pm1$ often has an inverse with halves in it.</div>
@@ -194,7 +195,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p>(b) $[w]_B$ comes from Problem 7's system: $c_1 + c_3 = 3$, $c_1 + c_2 = 1$, $c_2 + c_3 = 2$, which gives $c_1 = 1$, $c_2 = 0$, $c_3 = 2$. For $C$ we solve $C c = w$:</p>
 <p>$$d_1 + d_3 = 3,\quad d_2 + d_3 = 1,\quad d_3 = 2 \;\Longrightarrow\; d_1 = 1,\; d_2 = -1,\; d_3 = 2.$$</p>
 <p>Now check:</p>
-<p>$$S[w]_B = \begin{bmatrix} 1 &amp; -1 &amp; 0 \\ 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix} = \begin{bmatrix} 1 \\ -1 \\ 2 \end{bmatrix} = [w]_C \; ✓$$</p>
+<p>$$S[w]_B = \begin{bmatrix} 1 &amp; -1 &amp; 0 \\ 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix} = \begin{bmatrix} 1 \\ -1 \\ 2 \end{bmatrix} = [w]_C \; \checkmark$$</p>
 <p>(c) $S$ is the change of coordinates from $B$-coordinates to $C$-coordinates: it takes the coefficients in one basis and returns the coefficients of the same vector in another basis, without moving the vector itself.</p>
 <p class="ans">$S = \begin{bmatrix} 1 &amp; -1 &amp; 0 \\ 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}$; $[w]_B = (1,0,2)^T$, $[w]_C = (1,-1,2)^T$, and $S[w]_B = [w]_C$.</p>
 </div>
@@ -218,7 +219,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p>The system is inconsistent, so $q$ is not in the span. (With three equations and only two unknowns, a single failed equation is enough — the same "a row of zeros with a nonzero entry" test as Problem 4.)</p>
 <p>(c) We want $\alpha p_1 + \beta p_2$ to vanish at $x=1$. Evaluating at $1$: $p_1(1) = 1 + 2 - 1 = 2$, $p_2(1) = 3 + 1 + 2 = 6$, so we need $2\alpha + 6\beta = 0$, i.e. $\alpha = -3\beta$. Take $\beta = 1$:</p>
 <p>$$p = -3p_1 + p_2 = -3(1 + 2x - x^2) + (3 + x + 2x^2) = -3 - 6x + 3x^2 + 3 + x + 2x^2 = 5x^2 - 5x.$$</p>
-<p>Check: $p(1) = 5 - 5 = 0$ ✓. And indeed $p = 5x(x-1)$, so it vanishes at $x = 0$ as well.</p>
+<p>Check: $p(1) = 5 - 5 = 0$ $\checkmark$. And indeed $p = 5x(x-1)$, so it vanishes at $x = 0$ as well.</p>
 <p class="ans">(a) $p_3 = p_1 + p_2$; (b) no; (c) $5x^2 - 5x = 5x(x-1)$, up to any nonzero multiple.</p>
 </div>
 <div class="note">Part (b) is the honest limit of coefficient matching: two polynomials of degree $\le 2$ span a plane in $\mathbb{R}^3$, so a third direction ($q$) generally misses it. And (c) is the pattern you will reuse in least squares — solving for a <em>condition</em> on the coefficients rather than for the coefficients themselves.</div>
@@ -237,7 +238,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p>(a) The five points lie on a line exactly when there are $a, b$ with $aT_i + b = P_i$ for all five — i.e. when the $5 \times 2$ system is consistent. Stack the data:</p>
 <p>$$M = \begin{bmatrix} 0 &amp; 1 \\ 2 &amp; 1 \\ 4 &amp; 1 \\ 6 &amp; 1 \\ 8 &amp; 1 \end{bmatrix}, \qquad \text{rank}\,\begin{bmatrix} T \mid P \end{bmatrix} = \operatorname{rank}\begin{bmatrix} 0 &amp; 1 \\ 2 &amp; 2 \\ 4 &amp; 3 \\ 6 &amp; 41/10 \\ 8 &amp; 49/10 \end{bmatrix} = 2.$$</p>
 <p>Rank $2$ on the data columns means the two columns $T$ and $P$ are independent, which is exactly the statement "not all points share one line". (If the points were collinear, $P$ would be a multiple of $T$ plus a multiple of the all-ones column, and the rank would drop to $1$.)</p>
-<p>(b) Using the first three readings, $a \cdot 0 + b = 1$ gives $b = 1$; $2a + b = 2$ gives $a = \tfrac12$; and $4a + b = 3$ confirms $3 = 3$ ✓.</p>
+<p>(b) Using the first three readings, $a \cdot 0 + b = 1$ gives $b = 1$; $2a + b = 2$ gives $a = \tfrac12$; and $4a + b = 3$ confirms $3 = 3$ $\checkmark$.</p>
 <p>(c) Model $P = \tfrac12 T + 1$:</p>
 <p>$$T = 6:\quad P_{\text{model}} = 4.00,\ \text{residual} = 4.10 - 4.00 = +0.10,\ \frac{0.10}{4.10} \approx +2.4\%; \qquad T = 8:\quad P_{\text{model}} = 5.00,\ \text{residual} = 4.90 - 5.00 = -0.10,\ \frac{-0.10}{4.90} \approx -2.0\%.$$</p>
 <p>(d) Each reading contributes one linear constraint ($aT_i + b = P_i$) on two unknowns $(a, b)$. Three constraints on two unknowns must be redundant — some point is a combination of the others — so <em>any</em> three points are collinear. Five constraints on two unknowns are generically inconsistent, because $n+1$ vectors in $\mathbb{R}^n$ are dependent (Problem 11) and a dependent system can be either inconsistent or redundant; here the data chose inconsistent. That is why experimenters <em>fit</em> lines instead of demanding exact ones.</p>
@@ -281,7 +282,8 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p>$$A' = \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 4 &amp; 6 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}: \quad \text{row 2} = 2\cdot\text{row 1}, \text{ so the echelon form has a zero row and } \det A' = 0.$$</p>
 <p>Equivalently, in terms of columns: $a_1 = (1,2,1)^T$, $a_2 = (2,4,0)^T$, $a_3 = (3,6,1)^T$, and $a_3 = a_1 + a_2$ — the columns are dependent. (Careful here: it is <em>not</em> $a_2 = 2a_1$; $2a_1$ would be $(2,4,2)^T$. Compare the third entry.)</p>
 <p>Reduce $A'x = 0$:</p>
-<p>$$\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 4 &amp; 6 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}\xrightarrow{R_2 \leftarrow R_2 - 2R_1,\; R_3 \leftarrow R_3 - R_1}\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; -2 &amp; -2 \end{bmatrix}\xrightarrow{R_3 \leftarrow R_3 / (-2)}\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}.$$</p>
+<p>$$\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 4 &amp; 6 \\ 1 &amp; 0 &amp; 1 \end{bmatrix} \xrightarrow{\;R_2 \leftarrow R_2 - 2R_1,\; R_3 \leftarrow R_3 - R_1\;} \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; -2 &amp; -2 \end{bmatrix},$$
+<p>$$\xrightarrow{\;R_3 \leftarrow R_3\,/\,(-2)\;} \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}.$$</p>
 <p>$x_2 = -x_3$, and the first row gives $x_1 = -2x_2 - 3x_3 = 2x_3 - 3x_3 = -x_3$. Taking $x_3 = t$:</p>
 <p>$$x = t\begin{bmatrix} -1 \\ -1 \\ 1 \end{bmatrix}, \quad t \in \mathbb{R}.$$</p>
 <p>So a basis of the solution set is $\{(-1,-1,1)^T\}$, it is a line (dimension $1$, matching $\operatorname{rank} A' = 2 = 3 - 1$), and $A'$ is not invertible.</p>
