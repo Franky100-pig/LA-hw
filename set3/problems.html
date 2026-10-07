@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 3</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 3</h1>
+<div class="meta">Linear Independence, Bases &amp; Dimension · 12 problems · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Three ideas carry the whole set. <strong>(i) Independence is a question about solutions:</strong> $v_1,\dots,v_k$ are dependent exactly when $c_1v_1+\cdots+c_kv_k = 0$ has a solution with some $c_i \ne 0$ — that is a homogeneous system $Ac = 0$, so row reduction (Set 2) decides it, and for a square $A$ so does $\det A \ne 0$ (Set 1). <strong>(ii) Membership in a span is the same machinery, inhomogeneous:</strong> $b \in \operatorname{span}(v_1,\dots,v_k)$ iff $Ac = b$ is consistent. <strong>(iii) A basis is a maximal independent set inside a span</strong>, and its size — the number of pivots — is the dimension. Coordinates are just the solution of $Bc = v$, written in that basis instead of the standard one.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">In $\mathbb{R}^3$, decide whether the three vectors are linearly independent, and justify it by elimination rather than by eye:</p>
+<p class="prob">$$u_1 = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}, \qquad u_2 = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix}, \qquad u_3 = \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}.$$</p>
+<p class="prob">Give the rank, the value of $\det[u_1\;u_2\;u_3]$, and an explicit nontrivial relation among the three vectors.</p>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">In $\mathbb{R}^3$ consider</p>
+<p class="prob">$$u_1 = \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix}, \quad u_2 = \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \quad u_3 = \begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix}, \quad u_4 = \begin{bmatrix} 2 \\ 4 \\ 1 \end{bmatrix}.$$</p>
+<p class="prob">(a) Find a basis of $\operatorname{span}(u_1,u_2,u_3,u_4)$ — and justify that no smaller set spans it.<br>
+(b) Write each of the four vectors in that basis.<br>
+(c) Which vector did you have to drop, and what was the relation that made it drop out?</p>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">True or false? Give a counterexample or a correction for each false one.</p>
+<p class="prob">(a) Any four vectors in $\mathbb{R}^3$ are linearly dependent.<br>
+(b) A set that contains the zero vector is linearly independent.<br>
+(c) Two <em>nonzero</em> vectors in $\mathbb{R}^n$ are dependent if and only if one is a scalar multiple of the other.<br>
+(d) If $v_1,\dots,v_4$ are linearly independent in $\mathbb{R}^4$, then any three of them are still linearly independent.<br>
+(e) Adding a vector to a linearly independent set always keeps it linearly independent.</p>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Let $u = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}$, $v = \begin{bmatrix} 2 \\ 0 \\ 1 \end{bmatrix}$, $w = \begin{bmatrix} 3 \\ 2 \\ 4 \end{bmatrix}$ and $z = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}$.</p>
+<p class="prob">(a) Is $w \in \operatorname{span}(u,v)$?<br>
+(b) Is $z \in \operatorname{span}(u,v)$? Decide by solving the system, not by looking.<br>
+(c) Is $\{u,v,z\}$ linearly independent? Support your answer with a determinant.</p>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">In the plane, let $a = \begin{bmatrix} 1 \\ 3 \end{bmatrix}$ and $b = \begin{bmatrix} 2 \\ 1 \end{bmatrix}$.</p>
+<p class="prob">(a) Compute $\det[a\;b]$ and say what it measures geometrically.<br>
+(b) What is the area of the triangle with vertices $0,\ a,\ b$?<br>
+(c) Explain why <em>any</em> three vectors in $\mathbb{R}^2$ must be linearly dependent — and connect it to the value you computed in (a).</p>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Let $W = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}\right\}$.</p>
+<p class="prob">(a) Find $\dim W$ and a basis for it.<br>
+(b) Show that $W = \mathbb{R}^3$.<br>
+(c) Now replace the third vector by $\begin{bmatrix} 1 \\ 0 \\ -1 \end{bmatrix}$ and call the new span $W'$. Find $\dim W'$ and express the new vector in terms of the first two.</p>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">In $\mathbb{R}^3$ with respect to the basis $B = \left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}\right\}$:</p>
+<p class="prob">(a) First check that $B$ really is a basis, not just three vectors.<br>
+(b) Write $v = \begin{bmatrix} 2 \\ 3 \\ 3 \end{bmatrix}$ in that basis, i.e. solve $Bc = v$.<br>
+(c) Verify your answer by multiplying back, and then give the formula that writes an arbitrary $v = \begin{bmatrix} x \\ y \\ z \end{bmatrix}$ in basis $B$ — that is, compute $B^{-1}$.</p>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">Let $B$ be the basis from Problem 7 and let $C = \left\{\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}\right\}$.</p>
+<p class="prob">(a) Find the matrix $S$ satisfying $[v]_C = S\,[v]_B$ for every $v \in \mathbb{R}^3$.<br>
+(b) Check your matrix on $w = \begin{bmatrix} 3 \\ 1 \\ 2 \end{bmatrix}$: compute $[w]_B$ and $[w]_C$ separately, then verify $S[w]_B = [w]_C$.<br>
+(c) In one sentence, what does $S$ do geometrically? (Hint: it takes coordinates in one basis and returns coordinates in another.)</p>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">Identify every polynomial of degree $\le 2$ with its coefficient vector relative to $(1, x, x^2)$ — the polynomial $a + bx + cx^2$ becomes $(a, b, c)$. Let</p>
+<p class="prob">$$p_1 = 1 + 2x - x^2, \qquad p_2 = 3 + x + 2x^2, \qquad q = 5 - x + 4x^2.$$</p>
+<p class="prob">(a) Show that $p_1, p_2$ and $p_3 := 4 + 3x + x^2$ are linearly dependent, and identify the relation.<br>
+(b) Is $q$ in $\operatorname{span}(p_1,p_2)$?<br>
+(c) Find a nonzero polynomial in $\operatorname{span}(p_1,p_2)$ that has a zero at $x = 1$, and check it.</p>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">An experiment records a temperature $T$ and a pressure $P$:</p>
+<p class="prob">$$T = 0,\ 2,\ 4,\ 6,\ 8 \qquad\qquad P = 1.00,\ 2.00,\ 3.00,\ 4.10,\ 4.90.$$</p>
+<p class="prob">(a) Do all five points lie exactly on a line $P = aT + b$? Decide by rank.<br>
+(b) The first three points <em>do</em> lie on a line. Find it.<br>
+(c) Use that line on the last two readings: give the residuals $P_{\text{measured}} - P_{\text{model}}$ and the relative error as a percentage.<br>
+(d) Why does "three points in the plane always determine a line, five points generally do not" follow from the same counting argument as Problem 11?</p>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Prove that a linearly independent set in $\mathbb{R}^n$ contains at most $n$ vectors. Give two proofs:</p>
+<p class="prob">(a) By row reduction: put the vectors in as columns and count pivots.<br>
+(b) By determinants: use the fact that a homogeneous system with more unknowns than equations cannot have only the trivial solution.</p>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">For a square matrix $A$, prove the chain of equivalences</p>
+<p class="prob">$$\det A \ne 0 \iff \text{the columns of } A \text{ are linearly independent} \iff Ax = 0 \text{ has only the trivial solution} \iff A \text{ is invertible},$$</p>
+<p class="prob">then use it to analyse the two matrices</p>
+<p class="prob">$$A = \begin{bmatrix} 1 &amp; 2 &amp; 0 \\ 0 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}, \qquad A' = \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 4 &amp; 6 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}.$$</p>
+<p class="prob">For each, state which of the four conditions holds. For the second one, also give a basis of the solution set of $A'x = 0$.</p>
+</div>
+
+</div>
+</body>
+
+</html>
