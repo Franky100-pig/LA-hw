@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 3 — Solutions</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 3 — Solutions</h1>
+<div class="meta">Linear Independence, Bases &amp; Dimension · Full solutions · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">The workhorse is the linear system. Put vectors in as columns: independence is decided by $Ac = 0$, span membership by $Ac = b$, coordinates by $Bc = v$. Row reduction answers all three, and the number of pivots is the dimension. For a square $A$ the determinant gives the same independence answer in one line — which is exactly where Set 1 and Set 2 pay off.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">In $\mathbb{R}^3$, decide whether the three vectors are linearly independent, and justify it by elimination rather than by eye:</p>
+<p class="prob">$$u_1 = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}, \qquad u_2 = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix}, \qquad u_3 = \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}.$$</p>
+<p class="prob">Give the rank, the value of $\det[u_1\;u_2\;u_3]$, and an explicit nontrivial relation among the three vectors.</p>
+<div class="sol">
+<p>Put the vectors in as columns and clear below the first pivot:</p>
+<p>$$R_2 \leftarrow R_2 - 2R_1, \quad R_3 \leftarrow R_3 - R_1: \quad \begin{bmatrix} 1 &amp; 2 &amp; 1 \\ 0 &amp; 0 &amp; -1 \\ 0 &amp; 0 &amp; -2 \end{bmatrix}, \quad \text{then } R_3 \leftarrow R_3 - 2R_2: \quad \begin{bmatrix} 1 &amp; 2 &amp; 1 \\ 0 &amp; 0 &amp; -1 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}.$$</p>
+<p>There is a zero row, so the system $Ac = 0$ has free variables: rank $=2 &lt; 3$, and the vectors are <strong>dependent</strong>.</p>
+<p>The determinant agrees: expanding along the second row, $\det[u_1\;u_2\;u_3] = 0$. (Everything is zero there.)</p>
+<p>The relation: the second column is twice the first, so $u_2 - 2u_1 = 0$ is a nontrivial relation with coefficients $(c_1,c_2,c_3) = (-2, 1, 0)$.</p>
+<p class="ans">$\operatorname{rank} = 2$, $\det = 0$, dependent; $u_2 = 2u_1$.</p>
+</div>
+<div class="note">Eyes are fine for spotting $u_2 = 2u_1$, but the reason we reduce instead is that we often <em>can't</em> see it — and the rank also tells us the span is a plane, which the eyeball test does not.</div>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">In $\mathbb{R}^3$ consider</p>
+<p class="prob">$$u_1 = \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix}, \quad u_2 = \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \quad u_3 = \begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix}, \quad u_4 = \begin{bmatrix} 2 \\ 4 \\ 1 \end{bmatrix}.$$</p>
+<p class="prob">(a) Find a basis of $\operatorname{span}(u_1,u_2,u_3,u_4)$ — and justify that no smaller set spans it.<br>
+(b) Write each of the four vectors in that basis.<br>
+(c) Which vector did you have to drop, and what was the relation that made it drop out?</p>
+<div class="sol">
+<p>(a) Reduce the matrix with all four columns:</p>
+<p>$$\begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 2 &amp; 1 &amp; 3 &amp; 4 \\ 0 &amp; 1 &amp; 1 &amp; 1 \end{bmatrix} \xrightarrow{R_2 \leftarrow R_2 - 2R_1} \begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 1 \end{bmatrix} \xrightarrow{R_3 \leftarrow R_3 - R_2} \begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 2 \\ 0 &amp; 1 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}.$$</p>
+<p>Three pivots, so the span is all of $\mathbb{R}^3$ and its dimension is $3$. A spanning set of $4$ vectors with a redundancy must therefore lose at least one; any $3$ that survive independent will do. Take</p>
+<p>$$\mathcal{B} = \{u_1, u_2, u_4\}. \quad \text{Check: } \det[u_1\;u_2\;u_4] = \begin{vmatrix} 1 &amp; 0 &amp; 2 \\ 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 1 \end{vmatrix} = 1 \ne 0.$$</p>
+<p>The determinant is $1$, so those three are independent, and three independent vectors in $\mathbb{R}^3$ already span everything: <strong>no set of two can span $\mathbb{R}^3$</strong> (that is Problem 11).</p>
+<p>(b) Solve $\mathcal{B}c = v$ for each vector. The three basis vectors have trivial coordinates, so the only real work is $u_3$: solve $a u_1 + b u_2 + c u_4 = u_3$, i.e.</p>
+<p>$$\begin{bmatrix} 1 &amp; 0 &amp; 2 \\ 2 &amp; 1 &amp; 4 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}\begin{bmatrix} a \\ b \\ c \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix} \;\Longrightarrow\; a + 2c = 1,\; 2a + b + 4c = 3,\; b + c = 1.$$</p>
+<p>From the first and third, $a = 1 - 2c$ and $b = 1 - c$. Substituting into the middle equation:</p>
+<p>$$2(1 - 2c) + (1 - c) + 4c = 3 \;\Longrightarrow\; 3 - c = 3 \;\Longrightarrow\; c = 0, \quad a = 1,\; b = 1.$$</p>
+<p>$$u_3 = 1\,u_1 + 1\,u_2 + 0\,u_4 = \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \\ 1 \end{bmatrix}\; ✓$$</p>
+<p>So the full coordinate list in the basis $\mathcal{B} = \{u_1,u_2,u_4\}$ is</p>
+<p>$$[u_1] = (1,0,0)^T, \qquad [u_2] = (0,1,0)^T, \qquad [u_3] = (1,1,0)^T, \qquad [u_4] = (0,0,1)^T.$$</p>
+<p>(c) The dropped vector is $u_3$, and the relation is $u_3 - u_1 - u_2 = 0$. Had we tried to keep $u_1, u_2, u_3$ and drop $u_4$ instead, we would have found <em>no</em> solution: those three span a plane (the same relation kills the third dimension), and $u_4$ is not in it — check the first coordinate of $\alpha u_1 + \beta u_2 + \gamma u_3 = u_4$: $\alpha + \gamma = 2$, $2\alpha + \beta + 3\gamma = 4$, $\beta + \gamma = 1$ are inconsistent.</p>
+<p class="ans">A basis is $\{u_1, u_2, u_4\}$; the coordinates are $(1,0,0), (0,1,0), (1,1,0), (0,0,1)$ in that order, and $u_3 = u_1 + u_2$ is the vector that drops out.</p>
+</div>
+<div class="note">Do not read the dropped column's coordinates off the echelon form: the pivots belong to the <em>surviving</em> columns. After choosing a basis, always solve $\mathcal{B}c = v$ fresh — here that solve is the whole point of the problem.</div>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">True or false? Give a counterexample or a correction for each false one.</p>
+<p class="prob">(a) Any four vectors in $\mathbb{R}^3$ are linearly dependent.<br>
+(b) A set that contains the zero vector is linearly independent.<br>
+(c) Two <em>nonzero</em> vectors in $\mathbb{R}^n$ are dependent if and only if one is a scalar multiple of the other.<br>
+(d) If $v_1,\dots,v_4$ are linearly independent in $\mathbb{R}^4$, then any three of them are still linearly independent.<br>
+(e) Adding a vector to a linearly independent set always keeps it linearly independent.</p>
+<div class="sol">
+<p>(a) <strong>True.</strong> Four vectors in $\mathbb{R}^3$ put into a $3 \times 4$ matrix $A$ give $Ac = 0$ with $4$ unknowns and $3$ equations — a free variable is guaranteed, so a nontrivial solution exists.</p>
+<p>(b) <strong>False.</strong> Any set containing $0$ is dependent: the equation $1 \cdot 0 = 0$ is already a nontrivial relation (the coefficient of $0$ is nonzero, and the rest are $0$).</p>
+<p>(c) <strong>True.</strong> $av + bw = 0$ with $b \ne 0$ gives $w = -\tfrac{a}{b}v$; conversely if $w = cv$ then $w - cv = 0$ is nontrivial when $v \ne 0$. (The nonzero proviso matters: $v = 0$ is a scalar multiple of everything <em>and</em> makes every set dependent.)</p>
+<p>(d) <strong>True.</strong> A relation among three of them would be a relation among all four, so it would extend by zero coefficients to the full set.</p>
+<p>(e) <strong>False.</strong> Adding can only work until the space runs out. In $\mathbb{R}^3$, add $e_3 = \begin{bmatrix} 0\\0\\1\end{bmatrix}$ to the independent set $\{e_1, e_2\}$ and you may add that one; adding $e_1 + e_2$ as well gives four vectors in $\mathbb{R}^3$, which by (a) must be dependent — indeed $e_3$ is not involved: $(e_1+e_2) - e_1 - e_2 = 0$ is already a relation.</p>
+<p class="ans">(a) true, (b) false, (c) true, (d) true, (e) false.</p>
+</div>
+<div class="note">(d) is worth internalizing as a one-way street: subsets of independent sets stay independent, but supersets may not. Greedy algorithms for building a basis rely on exactly this.</div>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Let $u = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix}$, $v = \begin{bmatrix} 2 \\ 0 \\ 1 \end{bmatrix}$, $w = \begin{bmatrix} 3 \\ 2 \\ 4 \end{bmatrix}$ and $z = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}$.</p>
+<p class="prob">(a) Is $w \in \operatorname{span}(u,v)$?<br>
+(b) Is $z \in \operatorname{span}(u,v)$? Decide by solving the system, not by looking.<br>
+(c) Is $\{u,v,z\}$ linearly independent? Support your answer with a determinant.</p>
+<div class="sol">
+<p>(a) $ac_1 + bc_2 = w$ is the two-unknown system</p>
+<p>$$\begin{bmatrix} 1 &amp; 2 \\ 2 &amp; 0 \\ 3 &amp; 1 \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} 3 \\ 2 \\ 4 \end{bmatrix}. \quad \text{Take } c_1 = 1,\ c_2 = 1: \quad 1 + 2 = 3,\; 2 + 0 = 2,\; 3 + 1 = 4 \; ✓$$</p>
+<p>(b) Same system with right side $z$:</p>
+<p>$$\begin{bmatrix} 1 &amp; 2 \\ 2 &amp; 0 \\ 3 &amp; 1 \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix} \xrightarrow{\text{row reduce}} \text{inconsistent (a row of zeros } = \text{ a nonzero entry)}$$</p>
+<p>Explicitly, the equations are $c_1 + 2c_2 = 0$, $2c_1 = 1$, $3c_1 + c_2 = 0$. The second gives $c_1 = \tfrac12$, so the first gives $c_2 = -\tfrac14$; but then $3c_1 + c_2 = \tfrac32 - \tfrac14 = \tfrac54 \ne 0$. Contradiction.</p>
+<p>(c)</p>
+<p>$$\det[u\;v\;z] = \begin{vmatrix} 1 &amp; 2 &amp; 0 \\ 2 &amp; 0 &amp; 1 \\ 3 &amp; 1 &amp; 0 \end{vmatrix} = 1\cdot(0 \cdot 0 - 1 \cdot 1) - 2\cdot(2 \cdot 0 - 1 \cdot 3) + 0 = -1 + 6 = 5.$$</p>
+<p>Nonzero, so the three are independent.</p>
+<p class="ans">(a) yes, $w = u + v$; (b) no, $z \notin \operatorname{span}(u,v)$; (c) yes, $\det = 5 \ne 0$.</p>
+</div>
+<div class="note">(b) is the same two rows in an augmented matrix: once you get $[0\ 0\ |\ \text{nonzero}]$, the vector is <em>not</em> in the span. That row is the geometric signature of "out of the plane".</div>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">In the plane, let $a = \begin{bmatrix} 1 \\ 3 \end{bmatrix}$ and $b = \begin{bmatrix} 2 \\ 1 \end{bmatrix}$.</p>
+<p class="prob">(a) Compute $\det[a\;b]$ and say what it measures geometrically.<br>
+(b) What is the area of the triangle with vertices $0,\ a,\ b$?<br>
+(c) Explain why <em>any</em> three vectors in $\mathbb{R}^2$ must be linearly dependent — and connect it to the value you computed in (a).</p>
+<div class="sol">
+<p>(a)</p>
+<p>$$\det[a\;b] = \begin{vmatrix} 1 &amp; 2 \\ 3 &amp; 1 \end{vmatrix} = 1 \cdot 1 - 2 \cdot 3 = -5.$$</p>
+<p>Geometrically $|{-5}| = 5$ is the area of the parallelogram spanned by $a$ and $b$; the sign records orientation (here $b$ lies clockwise from $a$).</p>
+<p>(b) The triangle $0, a, b$ is exactly half of that parallelogram, so its area is $\tfrac{5}{2}$.</p>
+<p>(c) Three vectors $u,v,w$ in $\mathbb{R}^2$ give a $2 \times 3$ system $Ac = 0$ with more unknowns than equations, hence a nontrivial solution: $w = \alpha u + \beta v$ for some $\alpha,\beta$. In pictures, three vectors cannot all be "new directions" — the plane only has two. The determinant in (a) is the quantitative version of the same fact: as long as $\det \ne 0$, adding columns keeps independence possible; the moment a third column forces $\det = 0$, one of them became a combination of the others.</p>
+<p class="ans">$\det = -5$, parallelogram area $5$, triangle area $\tfrac{5}{2}$; any three vectors in $\mathbb{R}^2$ are dependent.</p>
+</div>
+<div class="note">Connecting "too many vectors" to "some vector is a combination of the rest" is the single most useful reframe in this set: dependence is not a failure of a particular triple, it is a counting consequence.</div>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Let $W = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}\right\}$.</p>
+<p class="prob">(a) Find $\dim W$ and a basis for it.<br>
+(b) Show that $W = \mathbb{R}^3$.<br>
+(c) Now replace the third vector by $\begin{bmatrix} 1 \\ 0 \\ -1 \end{bmatrix}$ and call the new span $W'$. Find $\dim W'$ and express the new vector in terms of the first two.</p>
+<div class="sol">
+<p>(a) With $p = (1,1,0)^T$, $q = (0,1,1)^T$, $r = (1,0,1)^T$ as columns,</p>
+<p>$$\det[p\;q\;r] = \begin{vmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{vmatrix} = 1 \cdot (1 \cdot 1 - 0 \cdot 1) + 1 \cdot (1 \cdot 1 - 1 \cdot 0) = 1 + 1 = 2 \ne 0.$$</p>
+<p>Three independent vectors in $\mathbb{R}^3$: they are a basis of their own span, so $\dim W = 3$.</p>
+<p>(b) A $3$-dimensional subspace of $\mathbb{R}^3$ is all of $\mathbb{R}^3$ — there is no room for anything bigger. So $W = \mathbb{R}^3$, and $\{p,q,r\}$ is a basis of $\mathbb{R}^3$.</p>
+<p>(c) With $r' = (1,0,-1)^T$,</p>
+<p>$$\det[p\;q\;r'] = \begin{vmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; -1 \end{vmatrix} = 1 \cdot (1 \cdot (-1) - 0 \cdot 1) + 1 \cdot (1 \cdot 1 - 1 \cdot 0) = -1 + 1 = 0.$$</p>
+<p>Now rank $2$, so $\dim W' = 2$ — one dimension was lost. Which one? Solve $ap + bq = r'$:</p>
+<p>$$\begin{bmatrix} 1 &amp; 0 \\ 1 &amp; 1 \\ 0 &amp; 1 \end{bmatrix}\begin{bmatrix} a \\ b \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ -1 \end{bmatrix} \Longrightarrow a = 1,\; a + b = 0 \Rightarrow b = -1,\; b = -1 \; ✓$$</p>
+<p>so $r' = p - q$.</p>
+<p class="ans">(a) $\dim W = 3$, basis $\{p,q,r\}$; (b) $W = \mathbb{R}^3$; (c) $\dim W' = 2$ with $r' = p - q$.</p>
+</div>
+<div class="note">Same three vectors, one entry sign-flipped, and the span drops from $\mathbb{R}^3$ to a plane. That is the practical reason determinants are worth computing rather than assuming independence.</div>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">In $\mathbb{R}^3$ with respect to the basis $B = \left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}\right\}$:</p>
+<p class="prob">(a) First check that $B$ really is a basis, not just three vectors.<br>
+(b) Write $v = \begin{bmatrix} 2 \\ 3 \\ 3 \end{bmatrix}$ in that basis, i.e. solve $Bc = v$.<br>
+(c) Verify your answer by multiplying back, and then give the formula that writes an arbitrary $v = \begin{bmatrix} x \\ y \\ z \end{bmatrix}$ in basis $B$ — that is, compute $B^{-1}$.</p>
+<div class="sol">
+<p>(a) "Three vectors" is not a basis; independence is what has to be checked, and the answer is the same determinant as in Problem 6(a): $\det B = 2 \ne 0$. So $B$ is a basis.</p>
+<p>(b) Solve $Bc = v$:</p>
+<p>$$\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \\ c_3 \end{bmatrix} = \begin{bmatrix} 2 \\ 3 \\ 3 \end{bmatrix} \;\Longrightarrow\; c_1 + c_3 = 2,\; c_1 + c_2 = 3,\; c_2 + c_3 = 3.$$</p>
+<p>Adding and subtracting: from the first and second, $c_2 = 3 - c_1$ and $c_3 = 2 - c_1$; the third gives $3 - c_1 + 2 - c_1 = 3$, so $2c_1 = 2$, $c_1 = 1$ and hence $c_2 = 2$, $c_3 = 1$.</p>
+<p>(c) Multiply back:</p>
+<p>$$1\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} + 2\begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix} + 1\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 + 0 + 1 \\ 1 + 2 + 0 \\ 0 + 2 + 1 \end{bmatrix} = \begin{bmatrix} 2 \\ 3 \\ 3 \end{bmatrix}\; ✓$$</p>
+<p>For a general vector, the same elimination with $(x,y,z)$ in place of $(2,3,3)$ gives $c_1 + c_3 = x$, $c_1 + c_2 = y$, $c_2 + c_3 = z$; solving, $c_1 = \tfrac{x + y - z}{2}$, $c_2 = \tfrac{-x + y + z}{2}$, $c_3 = \tfrac{x - y + z}{2}$. In matrix form,</p>
+<p>$$[v]_B = B^{-1}v, \qquad B^{-1} = \frac{1}{2}\begin{bmatrix} 1 &amp; 1 &amp; -1 \\ -1 &amp; 1 &amp; 1 \\ 1 &amp; -1 &amp; 1 \end{bmatrix}.$$</p>
+<p>A quick consistency check on that fraction: the integer matrix inside has determinant $4$, so $\det B^{-1} = \tfrac{4}{2^3} = \tfrac12$, which matches $\tfrac{1}{\det B} = \tfrac{1}{2}$. ✓</p>
+<p class="ans">$[v]_B = (1, 2, 1)^T$; $B^{-1} = \tfrac12\begin{bmatrix} 1 &amp; 1 &amp; -1 \\ -1 &amp; 1 &amp; 1 \\ 1 &amp; -1 &amp; 1 \end{bmatrix}$.</p>
+</div>
+<div class="note">Coordinates in a non-standard basis are always "solve $Bc = v$". Once you have $B^{-1}$, every coordinate in this basis is a matrix multiply — and note the halves: a basis with entries $\pm1$ often has an inverse with halves in it.</div>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">Let $B$ be the basis from Problem 7 and let $C = \left\{\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}\right\}$.</p>
+<p class="prob">(a) Find the matrix $S$ satisfying $[v]_C = S\,[v]_B$ for every $v \in \mathbb{R}^3$.<br>
+(b) Check your matrix on $w = \begin{bmatrix} 3 \\ 1 \\ 2 \end{bmatrix}$: compute $[w]_B$ and $[w]_C$ separately, then verify $S[w]_B = [w]_C$.<br>
+(c) In one sentence, what does $S$ do geometrically? (Hint: it takes coordinates in one basis and returns coordinates in another.)</p>
+<div class="sol">
+<p>(a) The standard-coordinate vector of any $v$ can be written both ways: $v = B[v]_B = C[v]_C$. Therefore $[v]_C = C^{-1}B\,[v]_B$, so $S = C^{-1}B$. With</p>
+<p>$$C = \begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 1 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}, \qquad C^{-1} = \begin{bmatrix} 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; -1 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}, \qquad B = \begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix},$$</p>
+<p>$$S = C^{-1}B = \begin{bmatrix} 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; -1 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\begin{bmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix} = \begin{bmatrix} 1 &amp; -1 &amp; 0 \\ 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}.$$</p>
+<p>(b) $[w]_B$ comes from Problem 7's system: $c_1 + c_3 = 3$, $c_1 + c_2 = 1$, $c_2 + c_3 = 2$, which gives $c_1 = 1$, $c_2 = 0$, $c_3 = 2$. For $C$ we solve $C c = w$:</p>
+<p>$$d_1 + d_3 = 3,\quad d_2 + d_3 = 1,\quad d_3 = 2 \;\Longrightarrow\; d_1 = 1,\; d_2 = -1,\; d_3 = 2.$$</p>
+<p>Now check:</p>
+<p>$$S[w]_B = \begin{bmatrix} 1 &amp; -1 &amp; 0 \\ 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}\begin{bmatrix} 1 \\ 0 \\ 2 \end{bmatrix} = \begin{bmatrix} 1 \\ -1 \\ 2 \end{bmatrix} = [w]_C \; ✓$$</p>
+<p>(c) $S$ is the change of coordinates from $B$-coordinates to $C$-coordinates: it takes the coefficients in one basis and returns the coefficients of the same vector in another basis, without moving the vector itself.</p>
+<p class="ans">$S = \begin{bmatrix} 1 &amp; -1 &amp; 0 \\ 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}$; $[w]_B = (1,0,2)^T$, $[w]_C = (1,-1,2)^T$, and $S[w]_B = [w]_C$.</p>
+</div>
+<div class="note">$S = C^{-1}B$ works because both bases span the same space, so the identity map can be written either way. The order matters: $B^{-1}C$ would convert in the opposite direction.</div>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">Identify every polynomial of degree $\le 2$ with its coefficient vector relative to $(1, x, x^2)$ — the polynomial $a + bx + cx^2$ becomes $(a, b, c)$. Let</p>
+<p class="prob">$$p_1 = 1 + 2x - x^2, \qquad p_2 = 3 + x + 2x^2, \qquad q = 5 - x + 4x^2.$$</p>
+<p class="prob">(a) Show that $p_1, p_2$ and $p_3 := 4 + 3x + x^2$ are linearly dependent, and identify the relation.<br>
+(b) Is $q$ in $\operatorname{span}(p_1,p_2)$?<br>
+(c) Find a nonzero polynomial in $\operatorname{span}(p_1,p_2)$ that has a zero at $x = 1$, and check it.</p>
+<div class="sol">
+<p>In coefficient vectors: $p_1 = (1,2,-1)$, $p_2 = (3,1,2)$, $p_3 = (4,3,1)$, $q = (5,-1,4)$. Everything now behaves exactly as in $\mathbb{R}^3$.</p>
+<p>(a) $(1,2,-1) + (3,1,2) = (4,3,1)$, so $p_1 + p_2 - p_3 = 0$: a nontrivial relation, hence dependent. Equivalently $\det[p_1\;p_2\;p_3] = 0$.</p>
+<p>(b) Solve $\alpha p_1 + \beta p_2 = q$ in coefficients:</p>
+<p>$$\alpha + 3\beta = 5,\quad 2\alpha + \beta = -1,\quad -\alpha + 2\beta = 4.$$</p>
+<p>From the first, $\alpha = 5 - 3\beta$; substitute into the second: $10 - 6\beta + \beta = -1$, so $5\beta = 11$, $\beta = \tfrac{11}{5}$, $\alpha = 5 - \tfrac{33}{5} = -\tfrac{8}{5}$. Check the third equation: $-\left(-\tfrac85\right) + 2\cdot\tfrac{11}{5} = \tfrac85 + \tfrac{22}{5} = \tfrac{30}{5} = 6 \ne 4$.</p>
+<p>The system is inconsistent, so $q$ is not in the span. (With three equations and only two unknowns, a single failed equation is enough — the same "a row of zeros with a nonzero entry" test as Problem 4.)</p>
+<p>(c) We want $\alpha p_1 + \beta p_2$ to vanish at $x=1$. Evaluating at $1$: $p_1(1) = 1 + 2 - 1 = 2$, $p_2(1) = 3 + 1 + 2 = 6$, so we need $2\alpha + 6\beta = 0$, i.e. $\alpha = -3\beta$. Take $\beta = 1$:</p>
+<p>$$p = -3p_1 + p_2 = -3(1 + 2x - x^2) + (3 + x + 2x^2) = -3 - 6x + 3x^2 + 3 + x + 2x^2 = 5x^2 - 5x.$$</p>
+<p>Check: $p(1) = 5 - 5 = 0$ ✓. And indeed $p = 5x(x-1)$, so it vanishes at $x = 0$ as well.</p>
+<p class="ans">(a) $p_3 = p_1 + p_2$; (b) no; (c) $5x^2 - 5x = 5x(x-1)$, up to any nonzero multiple.</p>
+</div>
+<div class="note">Part (b) is the honest limit of coefficient matching: two polynomials of degree $\le 2$ span a plane in $\mathbb{R}^3$, so a third direction ($q$) generally misses it. And (c) is the pattern you will reuse in least squares — solving for a <em>condition</em> on the coefficients rather than for the coefficients themselves.</div>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">An experiment records a temperature $T$ and a pressure $P$:</p>
+<p class="prob">$$T = 0,\ 2,\ 4,\ 6,\ 8 \qquad\qquad P = 1.00,\ 2.00,\ 3.00,\ 4.10,\ 4.90.$$</p>
+<p class="prob">(a) Do all five points lie exactly on a line $P = aT + b$? Decide by rank.<br>
+(b) The first three points <em>do</em> lie on a line. Find it.<br>
+(c) Use that line on the last two readings: give the residuals $P_{\text{measured}} - P_{\text{model}}$ and the relative error as a percentage.<br>
+(d) Why does "three points in the plane always determine a line, five points generally do not" follow from the same counting argument as Problem 11?</p>
+<div class="sol">
+<p>(a) The five points lie on a line exactly when there are $a, b$ with $aT_i + b = P_i$ for all five — i.e. when the $5 \times 2$ system is consistent. Stack the data:</p>
+<p>$$M = \begin{bmatrix} 0 &amp; 1 \\ 2 &amp; 1 \\ 4 &amp; 1 \\ 6 &amp; 1 \\ 8 &amp; 1 \end{bmatrix}, \qquad \text{rank}\,\begin{bmatrix} T \mid P \end{bmatrix} = \operatorname{rank}\begin{bmatrix} 0 &amp; 1 \\ 2 &amp; 2 \\ 4 &amp; 3 \\ 6 &amp; 41/10 \\ 8 &amp; 49/10 \end{bmatrix} = 2.$$</p>
+<p>Rank $2$ on the data columns means the two columns $T$ and $P$ are independent, which is exactly the statement "not all points share one line". (If the points were collinear, $P$ would be a multiple of $T$ plus a multiple of the all-ones column, and the rank would drop to $1$.)</p>
+<p>(b) Using the first three readings, $a \cdot 0 + b = 1$ gives $b = 1$; $2a + b = 2$ gives $a = \tfrac12$; and $4a + b = 3$ confirms $3 = 3$ ✓.</p>
+<p>(c) Model $P = \tfrac12 T + 1$:</p>
+<p>$$T = 6:\quad P_{\text{model}} = 4.00,\ \text{residual} = 4.10 - 4.00 = +0.10,\ \frac{0.10}{4.10} \approx +2.4\%; \qquad T = 8:\quad P_{\text{model}} = 5.00,\ \text{residual} = 4.90 - 5.00 = -0.10,\ \frac{-0.10}{4.90} \approx -2.0\%.$$</p>
+<p>(d) Each reading contributes one linear constraint ($aT_i + b = P_i$) on two unknowns $(a, b)$. Three constraints on two unknowns must be redundant — some point is a combination of the others — so <em>any</em> three points are collinear. Five constraints on two unknowns are generically inconsistent, because $n+1$ vectors in $\mathbb{R}^n$ are dependent (Problem 11) and a dependent system can be either inconsistent or redundant; here the data chose inconsistent. That is why experimenters <em>fit</em> lines instead of demanding exact ones.</p>
+<p class="ans">(a) no — rank $2$; (b) $P = \tfrac{1}{2}T + 1$; (c) $+0.10$ ($+2.4\%$) at $T=6$, $-0.10$ ($-2.0\%$) at $T = 8$; (d) more constraints than unknowns forces a dependence, and dependence means redundancy or contradiction — never a new direction.</p>
+</div>
+<div class="note">The two readings drift in <em>opposite</em> directions (+ then −), so a different pair of points would give a slightly different slope. That is not sloppiness in the data, it is what "over-determined" means; the least-squares line would split the difference.</div>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Prove that a linearly independent set in $\mathbb{R}^n$ contains at most $n$ vectors. Give two proofs:</p>
+<p class="prob">(a) By row reduction: put the vectors in as columns and count pivots.<br>
+(b) By determinants: use the fact that a homogeneous system with more unknowns than equations cannot have only the trivial solution.</p>
+<div class="sol">
+<p>(a) Let $A$ be the matrix whose $k$ columns are the vectors. $A$ has $n$ rows and $k$ columns, so its row echelon form has at most $n$ pivots — one per row. The system $Ac = 0$ has a free variable for every non-pivot column, so it has a nontrivial solution unless every column is a pivot column. Nontrivial solution $\iff$ dependent, so an independent set forces every column to be a pivot column, hence $k \le n$.</p>
+<p>(b) Same statement from the other side: $A$ is $n \times k$ with $k > n$, and each of the $n$ equations in the homogeneous system $Ac = 0$ can remove at most one degree of freedom, leaving at least one free variable. So there is a nonzero $c$ with $Ac = 0$, i.e. $\sum c_i v_i = 0$ with not all $c_i$ zero — dependence. If the vectors also happen to be $n$ of them (a square $A$), this is exactly $\det A = 0$, which is Set 1's criterion: a singular matrix has a nontrivial null vector.</p>
+<p>Equality is achievable: the standard vectors $e_1,\dots,e_n$ are $n$ independent vectors in $\mathbb{R}^n$, so the bound is sharp.</p>
+<p class="ans">At most $n$ vectors, and $n$ is attainable.</p>
+</div>
+<div class="note">Proof (a) is the one to remember: it also gives the practical version — the dimension of a span is the <em>number of pivots</em>, so you never have to hunt for a basis by trial and error.</div>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">For a square matrix $A$, prove the chain of equivalences</p>
+<p class="prob">$$\det A \ne 0 \iff \text{the columns of } A \text{ are linearly independent} \iff Ax = 0 \text{ has only the trivial solution} \iff A \text{ is invertible},$$</p>
+<p class="prob">then use it to analyse the two matrices</p>
+<p class="prob">$$A = \begin{bmatrix} 1 &amp; 2 &amp; 0 \\ 0 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}, \qquad A' = \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 4 &amp; 6 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}.$$</p>
+<p class="prob">For each, state which of the four conditions holds. For the second one, also give a basis of the solution set of $A'x = 0$.</p>
+<div class="sol">
+<p>Write the columns of $A$ as $a_1,\dots,a_n$.</p>
+<p>$(\det A \ne 0) \Rightarrow$ (independent): if the columns were dependent there would be $x \ne 0$ with $Ax = 0$; but $\det A = 0$ is precisely the failure of the elimination in Set 2 to reach a pivot in every row, so a free variable exists, so $Ax = 0$ has a nontrivial solution. Contrapositive gives the forward direction.</p>
+<p>(independent) $\iff$ ($Ax = 0$ trivial): independence is <em>defined</em> as "no nontrivial combination of columns equals zero", which is exactly the statement that $Ax=0$ has no nontrivial solution — no theorem needed.</p>
+<p>($Ax=0$ trivial) $\iff$ (invertible): Gaussian elimination writes $Ax = b$ as $Ux = \tilde b$ with $U$ the echelon form of $A$. Every $b$ has a unique solution exactly when $U$ has a pivot in every row and no free variables — i.e. when the homogeneous case has only $x = 0$. Hence $A$ is invertible exactly then.</p>
+<p>So all four statements are one fact wearing four coats: <em>no free variables</em>.</p>
+<p>Now the two matrices:</p>
+<p>$$A = \begin{bmatrix} 1 &amp; 2 &amp; 0 \\ 0 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}: \quad \det A = 1\cdot(1 \cdot 1 - 1 \cdot 0) - 2\cdot(0 \cdot 1 - 1 \cdot 1) + 0 = 1 + 2 = 3 \ne 0.$$</p>
+<p>All four conditions hold: columns independent, $Ax = 0$ only $x=0$, and $A$ invertible. (Its inverse is $\tfrac13\begin{bmatrix} 1 &amp; -2 &amp; 2 \\ -1 &amp; 1 &amp; -1 \\ -1 &amp; 2 &amp; 1\end{bmatrix}$, if you want it.)</p>
+<p>$$A' = \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 4 &amp; 6 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}: \quad \text{row 2} = 2\cdot\text{row 1}, \text{ so the echelon form has a zero row and } \det A' = 0.$$</p>
+<p>Equivalently, in terms of columns: $a_1 = (1,2,1)^T$, $a_2 = (2,4,0)^T$, $a_3 = (3,6,1)^T$, and $a_3 = a_1 + a_2$ — the columns are dependent. (Careful here: it is <em>not</em> $a_2 = 2a_1$; $2a_1$ would be $(2,4,2)^T$. Compare the third entry.)</p>
+<p>Reduce $A'x = 0$:</p>
+<p>$$\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 2 &amp; 4 &amp; 6 \\ 1 &amp; 0 &amp; 1 \end{bmatrix}\xrightarrow{R_2 \leftarrow R_2 - 2R_1,\; R_3 \leftarrow R_3 - R_1}\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; -2 &amp; -2 \end{bmatrix}\xrightarrow{R_3 \leftarrow R_3 / (-2)}\begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{bmatrix}.$$</p>
+<p>$x_2 = -x_3$, and the first row gives $x_1 = -2x_2 - 3x_3 = 2x_3 - 3x_3 = -x_3$. Taking $x_3 = t$:</p>
+<p>$$x = t\begin{bmatrix} -1 \\ -1 \\ 1 \end{bmatrix}, \quad t \in \mathbb{R}.$$</p>
+<p>So a basis of the solution set is $\{(-1,-1,1)^T\}$, it is a line (dimension $1$, matching $\operatorname{rank} A' = 2 = 3 - 1$), and $A'$ is not invertible.</p>
+<p class="ans">$A$: all four conditions, $\det = 3$. $A'$: none of them, $\det = 0$, solution set $= \{\,t(-1,-1,1)^T\,\}$.</p>
+</div>
+<div class="note">The null vector $(-1,-1,1)$ is the same dependence as "$a_2 = 2a_1$" seen from the other side: multiplying $A'$ by $x = (-1,-1,1)$ gives $-a_1 - a_2 + a_3$, and $a_3 = a_1 + a_2$ in this example.</div>
+</div>
+
+</div>
+</body>
+
+</html>
