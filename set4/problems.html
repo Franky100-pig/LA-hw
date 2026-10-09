@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 4</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 4</h1>
+<div class="meta">Vector Spaces &amp; Bases · 12 concept-first problems · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Set 3 asked <em>whether particular vectors</em> are independent. This set asks what the words <strong>mean</strong>. A vector space is an axiomatic generalization of $\mathbb{R}^n$: the only things that matter are the eight axioms, so the same arguments work for polynomials, matrices and functions. A <strong>subspace</strong> is a vector space sitting inside another one; a <strong>basis</strong> is a set that is simultaneously minimal (you cannot drop anything) and maximal (you cannot add anything) — those two descriptions are the same fact, and Problem 5 is about proving it. Dimension is what makes the word "basis" safe: it does not matter which basis you pick, the count is the same. Arithmetic is deliberately light here; the object of study is the <em>structure</em>, and the computations are there to keep the definitions honest. Mixed, exam-style problem sets will come later, once there is more machinery to mix.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">Test each set for being a <strong>subspace</strong> of $\mathbb{R}^2$, using the three-step test: (i) does it contain the zero vector, (ii) is it closed under addition, (iii) is it closed under scalar multiplication?</p>
+<p class="prob">$$S_1 = \left\{\begin{bmatrix} x \\ 0 \end{bmatrix}\right\}, \qquad S_2 = \left\{\begin{bmatrix} 1 \\ y \end{bmatrix}\right\}, \qquad S_3 = \left\{\begin{bmatrix} x \\ y \end{bmatrix} : xy = 0\right\}, \qquad S_4 = \left\{\begin{bmatrix} x \\ y \end{bmatrix} : x + y = 0\right\}.$$</p>
+<p class="prob">For each one that fails, name the <em>first</em> condition it fails and give a concrete counterexample. $S_3$ is the instructive one: it is a union of two lines, and it is worth understanding exactly why a union is usually not a subspace.</p>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">Which of the following are vector spaces over $\mathbb{R}$? For those that are not, name the first axiom that fails (and, if it is a subspace of something, say what subspace it <em>is</em>).</p>
+<p class="prob">(a) $\mathbb{R}^2$ with the usual operations.<br>
+(b) $\{(x,y) : x &gt; 0\}$.<br>
+(c) $\{(x,y) : x + y \geq 0\}$.<br>
+(d) $\mathbb{Z}^3$ (integer triples, usual operations).<br>
+(e) $\{a + bx + cx^2 : a, b, c \in \mathbb{R}\}$ — polynomials of degree <em>at most</em> $2$.<br>
+(f) $\{a + bx + cx^2 : \text{exactly one of } a, b, c \text{ is } \ne 0\}$ — polynomials of degree <em>exactly</em> $2$.</p>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">This set is about meaning, so here is a set about <em>why the axioms say what they say</em>. For each axiom below, explain in one or two sentences what it buys you — that is, what would go wrong in the rest of linear algebra if it were dropped.</p>
+<p class="prob">(a) $0$ belongs to the space, and every $v$ has an additive inverse $-v$.<br>
+(b) Addition and scalar multiplication are commutative.<br>
+(c) Closure under <em>all real</em> scalars, not just integers.<br>
+(d) $1v = v$ (the scalar $1$ is a neutral element for scaling).</p>
+<p class="prob">Then answer: why is $\{0\}$ a subspace of <em>every</em> vector space, and why is that fact worth having?</p>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Let $S$ be any set of vectors.</p>
+<p class="prob">(a) Prove that $\operatorname{span}(S)$ is a subspace.<br>
+(b) Explain in one sentence why $\operatorname{span}(S)$ is called the <em>smallest</em> subspace containing $S$.<br>
+(c) Is every subspace of $\mathbb{R}^3$ spanned by finitely many vectors? Justify your answer with the tools from Set 2 (not with a citation).</p>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">Three descriptions of a basis appear in textbooks:</p>
+<p class="prob">**(i)** a spanning set you cannot shrink; **(ii)** an independent set you cannot extend; **(iii)** a spanning set whose size equals the dimension of the space.</p>
+<p class="prob">Show that these describe the same thing. The tool is the <strong>exchange argument</strong>: if $S$ spans a subspace $W$ and $v \in W$ is not in $\operatorname{span}(S)$, then $S$ still spans $W$ after adding $v$, and — this is the part to prove — something must come out.</p>
+<p class="prob">Then answer: if a set $S$ spans $W$ and no vector of $S$ can be removed without losing the span, must $S$ be independent? (This direction is where students usually assume too much.)</p>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Describe the geometry of the subspaces of $\mathbb{R}^3$ — again, all through the origin.</p>
+<p class="prob">(a) What do all one-dimensional subspaces look like? Give a parametrization, and say why the line $\{t \cdot v : t \in \mathbb{R}\}$ for a <em>fixed</em> $v$ is the only shape.</p>
+<p class="prob">(b) Show that $\Pi = \{x + y + z = 0\}$ is a two-dimensional subspace, by exhibiting a basis (and checking it spans).</p>
+<p class="prob">(c) The set $\Pi' = \{x + y + z = 1\}$ is parallel to $\Pi$ and equally "plane-like". Explain in one line why it is not a subspace.<br>
+(d) How many planes through the origin contain a given nonzero vector $v$? (The answer is not "three" — explain why the intuition fails.)</p>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">Let</p>
+<p class="prob">$$U = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}\right\}, \qquad V = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix}\right\}.$$</p>
+<p class="prob">(a) Compute $\dim U$ and $\dim V$.<br>
+(b) Find a basis of $U \cap V$.<br>
+(c) Find $U + V$ and its dimension.<br>
+(d) Verify $\dim(U \cap V) + \dim(U + V) = \dim U + \dim V$, and say what the equality means geometrically.</p>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">In Set 3 we used two bases of $\mathbb{R}^3$:</p>
+<p class="prob">$$B = \left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}\right\}, \qquad C = \left\{\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}\right\}.$$</p>
+<p class="prob">For $w = \begin{bmatrix} 3 \\ 1 \\ 2 \end{bmatrix}$ we found $[w]_B = (1, 0, 2)^T$ and $[w]_C = (1, -1, 2)^T$.</p>
+<p class="prob">Answer in prose, not arithmetic:</p>
+<p class="prob">(a) What does a basis buy us that a bare list of vectors does not?<br>
+(b) "Dimension" counts something about a vector space. What exactly, and what does it <em>not</em> count?<br>
+(c) Why can two different bases of the same space disagree about a vector's coordinates while agreeing about how many vectors the basis has?</p>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">For each of the following linear maps $\mathbb{R}^2 \to \mathbb{R}^2$, find a basis of the kernel and a basis of the image, and decide whether the map is injective and whether it is surjective:</p>
+<p class="prob">$$T_1(x,y) = (x+y,\; x-y), \qquad T_2(x,y) = (x,\; 2y), \qquad T_3(x,y) = (x+y,\; x+y).$$</p>
+<p class="prob">Then explain, using the two middle maps, why "injective" and "surjective" are <em>different</em> failures: for these three maps, do the two properties ever disagree, and in which direction?</p>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">Let $T : \mathbb{R}^3 \to \mathbb{R}^2$ be $T(x,y,z) = (x + y,\; y + z)$.</p>
+<p class="prob">(a) Find a basis of $\ker T$ and a basis of $\operatorname{im} T$.<br>
+(b) Verify $\dim \ker T + \dim \operatorname{im} T = 3$.<br>
+(c) State the theorem that (b) is an instance of, and explain in two sentences what it means intuitively — in particular, why it says that a linear map can "collapse" some directions but never "create" new ones.</p>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Prove the <strong>rank–nullity theorem</strong>: for a linear map $T$ from an $n$-dimensional space to any space,</p>
+<p class="prob">$$\dim \ker T + \dim \operatorname{im} T = n.$$</p>
+<p class="prob">Use basis bookkeeping rather than matrices: take a basis of $\ker T$, extend it to a basis of the whole domain, and look at the images of the extended vectors.</p>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">True or false? For the false ones, give a counterexample; for the ones that depend on a convention, say which convention makes them true and why.</p>
+<p class="prob">(a) Every subspace contains a basis.<br>
+(b) $\dim \operatorname{span}(S) = |S|$ for every set $S$.<br>
+(c) $\{0\}$ is a subspace, and its basis is the empty set.<br>
+(d) $\operatorname{im} T$ is a subspace of the <em>domain</em> of $T$.<br>
+(e) Every linearly independent set is a basis of its own span.<br>
+(f) Two bases of the same space must share at least one vector.</p>
+</div>
+
+</div>
+</body>
+
+</html>
