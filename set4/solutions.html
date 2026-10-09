@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 4 — Solutions</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 4 — Solutions</h1>
+<div class="meta">Vector Spaces &amp; Bases · Full solutions · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Three ideas do all the work. <strong>(i) Everything is a subspace test:</strong> contain $0$, close under $+$ and $c\cdot$. <strong>(ii) Everything is "smallest containing":</strong> $\operatorname{span}(S)$ is the unique minimal subspace containing $S$, and a basis is that set made minimal by hand — minimal spanning and maximal independent are the same object. <strong>(iii) Dimension is well defined:</strong> any two bases of the same space have the same size (Problem 5), which is what makes "the dimension" safe to speak of, and rank–nullity (Problem 11) is the same fact applied to a map.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">Test each set for being a <strong>subspace</strong> of $\mathbb{R}^2$, using the three-step test: (i) does it contain the zero vector, (ii) is it closed under addition, (iii) is it closed under scalar multiplication?</p>
+<p class="prob">$$S_1 = \left\{\begin{bmatrix} x \\ 0 \end{bmatrix}\right\}, \qquad S_2 = \left\{\begin{bmatrix} 1 \\ y \end{bmatrix}\right\}, \qquad S_3 = \left\{\begin{bmatrix} x \\ y \end{bmatrix} : xy = 0\right\}, \qquad S_4 = \left\{\begin{bmatrix} x \\ y \end{bmatrix} : x + y = 0\right\}.$$</p>
+<p class="prob">For each one that fails, name the <em>first</em> condition it fails and give a concrete counterexample. $S_3$ is the instructive one: it is a union of two lines, and it is worth understanding exactly why a union is usually not a subspace.</p>
+<div class="sol">
+<p>$S_1$ (the $x$-axis): contains $\begin{bmatrix}0\\0\end{bmatrix}$; if two vectors have second entry $0$ so does their sum; $c \cdot \begin{bmatrix}x\\0\end{bmatrix} = \begin{bmatrix}cx\\0\end{bmatrix}$. <strong>Subspace.</strong></p>
+<p>$S_2$ (the vertical line $x = 1$): <strong>fails condition (i)</strong> — $\begin{bmatrix}0\\0\end{bmatrix} \notin S_2$. $S_2$ is a translate of a subspace, not a subspace. (Adding two of its points gives $\begin{bmatrix}2\\ \cdot\end{bmatrix}$, which leaves the line as well.)</p>
+<p>$S_3$ (the two axes, $xy = 0$): contains $0$, and it <em>is</em> closed under scalar multiplication — if $x = 0$ or $y = 0$ then so is $cx, cy$. But <strong>it fails condition (ii)</strong>:</p>
+<p>$$\begin{bmatrix} 1 \\ 0 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \end{bmatrix} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}, \qquad 1 \cdot 1 = 1 \ne 0 \;\Longrightarrow\; \begin{bmatrix} 1 \\ 1 \end{bmatrix} \notin S_3.$$</p>
+<p>The reason: $S_3$ is a <em>union</em> of two lines. Addition can send one member of the union to another member's line, and then the sum is in neither.</p>
+<p>$S_4$ (the line $x + y = 0$): $0$ has $0 + 0 = 0$; $(x_1 + x_2) + (y_1 + y_2) = (x_1+y_1) + (x_2+y_2) = 0$; and $c(x + y) = 0$. <strong>Subspace.</strong></p>
+<p class="ans">$S_1$ and $S_4$ are subspaces. $S_2$ fails (i) (no $0$); $S_3$ passes (i) and (iii) but fails (ii), with $\begin{bmatrix}1\\0\end{bmatrix} + \begin{bmatrix}0\\1\end{bmatrix}$ as the counterexample.</p>
+</div>
+<div class="note">Checking condition (i) first is the cheapest move: $0$ is one vector, and "no $0$" kills $S_2$ immediately. But condition (ii) is the one unions fail, and unions are the seductive case — $S_3$ is a perfectly reasonable-looking object that is not a subspace.</div>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">Which of the following are vector spaces over $\mathbb{R}$? For those that are not, name the first axiom that fails (and, if it is a subspace of something, say what subspace it <em>is</em>).</p>
+<p class="prob">(a) $\mathbb{R}^2$ with the usual operations.<br>
+(b) $\{(x,y) : x &gt; 0\}$.<br>
+(c) $\{(x,y) : x + y \geq 0\}$.<br>
+(d) $\mathbb{Z}^3$ (integer triples, usual operations).<br>
+(e) $\{a + bx + cx^2 : a, b, c \in \mathbb{R}\}$ — polynomials of degree <em>at most</em> $2$.<br>
+(f) $\{a + bx + cx^2 : \text{exactly one of } a, b, c \text{ is } \ne 0\}$ — polynomials of degree <em>exactly</em> $2$.</p>
+<div class="sol">
+<p>(a) <strong>Yes</strong> — the model example.</p>
+<p>(b) <strong>No:</strong> no additive inverse and no zero. $\begin{bmatrix}-1\\0\end{bmatrix} \notin$ the set. (It is the set where the half-plane $x>0$ lives — convex, but not a subspace.)</p>
+<p>(c) <strong>No:</strong> $\begin{bmatrix}1\\0\end{bmatrix}$ is in it, but $\begin{bmatrix}-1\\0\end{bmatrix}$ is not, so additive inverses fail. It is a half-plane; its boundary line $\{x+y = 0\}$ <em>is</em> a subspace, so this set is "the subspace plus one side".</p>
+<p>(d) <strong>No:</strong> closure under scalars. $\begin{bmatrix}1\\0\\0\end{bmatrix} \in \mathbb{Z}^3$ but $\tfrac12\begin{bmatrix}1\\0\\0\end{bmatrix}$ is not. This is the single axiom that distinguishes $\mathbb{R}^3$ from $\mathbb{Z}^3$ — and it is why the phrase "over $\mathbb{R}$" matters.</p>
+<p>(e) <strong>Yes.</strong> Identified with its coefficient vectors $(a, b, c) \in \mathbb{R}^3$ it <em>is</em> $\mathbb{R}^3$ — same axioms, different clothes. Note it contains the zero polynomial (degree $\le 2$ includes $a=b=c=0$), which is exactly what (f) loses.</p>
+<p>(f) <strong>No:</strong> no zero polynomial, and addition can lower the degree: $\left(x^2 + 1\right) + \left(-x^2 + 1\right) = 2$, which has degree $0$. Two traps in one: no $0$, and not closed under addition.</p>
+<p class="ans">(a) yes, (b) no (no inverses / no $0$), (c) no (no inverses), (d) no (not closed under real scalars), (e) yes, (f) no (no $0$, and not closed under addition).</p>
+</div>
+<div class="note">The degree example is the one that bites in practice. "Degree exactly $k$" is a natural-sounding phrase and it is never a subspace; "degree <em>at most</em> $k$" always is. Whenever a set is defined by an inequality like that, ask what happens to the boundary.</div>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">This set is about meaning, so here is a set about <em>why the axioms say what they say</em>. For each axiom below, explain in one or two sentences what it buys you — that is, what would go wrong in the rest of linear algebra if it were dropped.</p>
+<p class="prob">(a) $0$ belongs to the space, and every $v$ has an additive inverse $-v$.<br>
+(b) Addition and scalar multiplication are commutative.<br>
+(c) Closure under <em>all real</em> scalars, not just integers.<br>
+(d) $1v = v$ (the scalar $1$ is a neutral element for scaling).</p>
+<p class="prob">Then answer: why is $\{0\}$ a subspace of <em>every</em> vector space, and why is that fact worth having?</p>
+<div class="sol">
+<p>(a) $0$ and $-v$ are what let you <em>move terms across an equation</em>. Solving $v_1 + v_2 = v_3$ for $v_3$ means adding $-v_2$; proving $v_1 \in \operatorname{span}(v_2, v_3)$ when $v_1 = v_2 + v_3$ means subtracting. Without these axioms, "the general solution" and "linear combination" stop being computable.</p>
+<p>(b) Commutativity lets you reorder terms to line coefficients up with each other. In the independence definition we compare $\sum c_i v_i$ and $\sum c_i v'_i$ term by term; if we cannot swap the order in which the sums were built, matching coefficients is no longer legal, and the whole proof style of Set 3 collapses.</p>
+<p>(c) Real scalars give you division. Elimination divides by pivots ($R_i \leftarrow R_i / p$), and clearing a column uses $c = -a/p$ which is typically not an integer. Over $\mathbb{Z}$ none of the arithmetic of Sets 1–3 exists, which is exactly why Problem 2(d) fails.</p>
+<p>(d) It makes scalar multiplication a genuine action: scaling by $1$ is the identity, so "linear map" and "matrix" refer to the same structure rather than to two things that happen to agree in practice.</p>
+<p>Now the punchline: $\{0\}$ contains $0$; $\{0\} + \{0\} = \{0\}$; and $c \cdot 0 = 0$. All three subspace conditions hold for <em>any</em> vector space, so $\{0\}$ is always a subspace of every one.</p>
+<p>Why that is worth having: it is the base case of the induction in "every subspace has a basis" (Problem 12(a)) — when a subspace has dimension $0$, its basis is the empty set and nothing else needs proving. It also means "there is always at least one subspace" and gives the rank–nullity theorem its trivial case.</p>
+<p class="ans">The axioms exist to make algebra possible: moving terms, reordering, dividing by pivots, and scaling by $1$. And $\{0\}$ is a subspace of every vector space because all three subspace conditions hold in it — which is the base case for everything induction-shaped later.</p>
+</div>
+<div class="note">Read these axioms as a list of permissions, not a list of chores. Every theorem in the rest of the course is a consequence of one of them being available.</div>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Let $S$ be any set of vectors.</p>
+<p class="prob">(a) Prove that $\operatorname{span}(S)$ is a subspace.<br>
+(b) Explain in one sentence why $\operatorname{span}(S)$ is called the <em>smallest</em> subspace containing $S$.<br>
+(c) Is every subspace of $\mathbb{R}^3$ spanned by finitely many vectors? Justify your answer with the tools from Set 2 (not with a citation).</p>
+<div class="sol">
+<p>(a) Take $x, y \in \operatorname{span}(S)$, so $x = \sum c_i v_i$ and $y = \sum d_i v_i$ (different index sets; pad with zeros). Then:</p>
+<p>$$x + y = \sum (c_i + d_i) v_i \in \operatorname{span}(S), \qquad c\,x = \sum (c c_i) v_i \in \operatorname{span}(S).$$</p>
+<p>Both are combinations of members of $S$ with new coefficients — that is the whole argument, and it is exactly the definition of closure under $+$. And $0 = 0 \cdot v$ for any $v \in S$ (or $0 = 0x$ if $S$ is empty), so $0 \in \operatorname{span}(S)$. Since addition and scalar multiplication are inherited from the ambient space, the subspace conditions hold.</p>
+<p>(b) It is called the smallest because $\operatorname{span}(S)$ <em>is</em> a subspace containing $S$ (by (a)), and it sits inside every other one: if $W$ is a subspace with $S \subseteq W$, then every combination of members of $S$ lies in $W$ by closure — so $\operatorname{span}(S) \subseteq W$.</p>
+<p>(c) <strong>Yes, and here is the proof.</strong> Let $W$ be a subspace of $\mathbb{R}^3$. Take any basis $\mathcal{B}$ of the ambient $\mathbb{R}^3$ (the standard vectors work). Because $\mathcal{B}$ spans $\mathbb{R}^3$, it spans $W$. Row reduce: take any basis of $\mathcal{B}$ consisting of members of $W$ — by Set 2, the pivot columns of $\operatorname{REF}$ of the matrix with those columns are independent, and they lie in $W$. The non-pivot columns are combinations of the pivot columns (that is what elimination does), and those combinations lie in $W$ too since $W$ is closed under addition and scaling. Hence the pivot columns span $W$, and there are at most $3$ of them.</p>
+<p class="ans">(a) closure follows because a combination of combinations is a combination; (b) because it is contained in every subspace that contains $S$; (c) yes — the pivot columns of the elimination form a finite spanning set inside $W$.</p>
+</div>
+<div class="note">Part (c) is the "smallest containing" idea being used as a computational tool: because $\operatorname{span}(\mathcal{B}) = \mathbb{R}^3 \supseteq W$, the smallest containing $\mathcal{B}$ is inside $W$. No theorem about bases needed.</div>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">Three descriptions of a basis appear in textbooks:</p>
+<p class="prob">**(i)** a spanning set you cannot shrink; **(ii)** an independent set you cannot extend; **(iii)** a spanning set whose size equals the dimension of the space.</p>
+<p class="prob">Show that these describe the same thing. The tool is the <strong>exchange argument</strong>: if $S$ spans a subspace $W$ and $v \in W$ is not in $\operatorname{span}(S)$, then $S$ still spans $W$ after adding $v$, and — this is the part to prove — something must come out.</p>
+<p class="prob">Then answer: if a set $S$ spans $W$ and no vector of $S$ can be removed without losing the span, must $S$ be independent? (This direction is where students usually assume too much.)</p>
+<div class="sol">
+<p><strong>The exchange step.</strong> Let $S = \{s_1,\dots,s_k\}$ span $W$, and let $v \in W$ with $v \notin \operatorname{span}(S)$. Since $S$ spans $W$, write $v = c_1s_1 + \cdots + c_ks_k$. Not all $c_i$ are zero (otherwise $v = 0 \in \operatorname{span}(S)$). Choose $c_j \ne 0$. Then</p>
+<p>$$v = c_j\left(s_j + \frac{c_1}{c_j}s_1 + \cdots + \widehat{\frac{c_j}{c_j}s_j} + \cdots + \frac{c_k}{c_j}s_k\right) \;\Longrightarrow\; s_j = \frac{1}{c_j}v - \sum_{i \ne j}\frac{c_i}{c_j}s_i.$$</p>
+<p>So $s_j$ lies in the span of $(S \setminus \{s_j\}) \cup \{v\}$, and conversely $v$ lies in the span of $(S\setminus\{s_j\}) \cup \{v\}$ by the equation above. Therefore</p>
+<p>$$\operatorname{span}(S \cup \{v\}) = \operatorname{span}\bigl((S \setminus \{s_j\}) \cup \{v\}\bigr).$$</p>
+<p><strong>Something must come out: one vector.</strong> Adding a vector that is not in the current span swaps one member out — the size never grows.</p>
+<p><strong>(i) $\iff$ (ii).</strong> Start with an independent set and try to extend it. Any new vector in $W$ that is not already in the span is exactly the vector the exchange step replaces, and the result is still independent (replace, then check: the swapped pair spans the same space, and a dependence among the new set would pull back to a dependence among the old). So a maximal independent set cannot grow, and by (a)-type arguments in Problem 4 it spans. Symmetrically, shrink a spanning set until you cannot: no removal was possible, and that forces independence — see the last paragraph.</p>
+<p><strong>The direction you flagged.</strong> Yes — and the exchange step is exactly the proof. Suppose $S$ spans $W$ and $S$ were dependent: some subset $T \subseteq S$, $|T| \le |S|$, already spans $W$ (drop the vectors whose coefficients are zero in a nontrivial relation). Then some vector of $S \setminus T$ could be removed without losing the span — contradiction. So "cannot shrink" implies independent.</p>
+<p><strong>(iii).</strong> Once (i) $\iff$ (ii) holds, the size of a minimal spanning set is fixed: any two of them are connected by exchanges that preserve size, so they all have the same number of elements. That common number is what "dimension" <em>means</em>, which makes (iii) circular in the best way — it is a definition, not a test.</p>
+<p class="ans">Minimal spanning = maximal independent = size $\dim W$. And yes: if no vector of a spanning set $S$ can be removed, $S$ is independent — a dependence would exhibit a proper subset of $S$ that already spans.</p>
+</div>
+<div class="note">The exchange step is the single most useful lemma in the subject: "add a vector, remove one, span unchanged" is what makes dimension counting possible, and it is why <em>any</em> basis you find has the same number of vectors as any other.</div>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Describe the geometry of the subspaces of $\mathbb{R}^3$ — again, all through the origin.</p>
+<p class="prob">(a) What do all one-dimensional subspaces look like? Give a parametrization, and say why the line $\{t \cdot v : t \in \mathbb{R}\}$ for a <em>fixed</em> $v$ is the only shape.</p>
+<p class="prob">(b) Show that $\Pi = \{x + y + z = 0\}$ is a two-dimensional subspace, by exhibiting a basis (and checking it spans).</p>
+<p class="prob">(c) The set $\Pi' = \{x + y + z = 1\}$ is parallel to $\Pi$ and equally "plane-like". Explain in one line why it is not a subspace.<br>
+(d) How many planes through the origin contain a given nonzero vector $v$? (The answer is not "three" — explain why the intuition fails.)</p>
+<div class="sol">
+<p>(a) Pick $v \ne 0$. Then $L_v = \{t \cdot v : t \in \mathbb{R}\}$ is a subspace (span of one vector) and it is one-dimensional because $v$ itself is a basis. Every 1-dimensional subspace $W$ has some nonzero $v$, and since $\dim W = 1$ that single vector spans it, so $W = L_v$. To parametrize without $v$: if $v = (a,b,c)$ with, say, $a \ne 0$, the points are $\left(t,\; \frac{b}{a}t,\; \frac{c}{a}t\right)$ — a line through the origin. Lines <em>not</em> through the origin are not subspaces.</p>
+<p>(b) $\Pi$ contains $0$. Take $p = \begin{bmatrix}1\\-1\\0\end{bmatrix}$ and $q = \begin{bmatrix}0\\1\\-1\end{bmatrix}$: both have coordinate sum $0$. They are independent — $q$'s first coordinate is $0$ while $p$'s is $1$, so they are not multiples.</p>
+<p>To check that they span, solve $ap + bq = \begin{bmatrix}x\\y\\z\end{bmatrix}$ for a vector of $\Pi$:</p>
+<p>$$a = x, \qquad -a + b = y, \qquad -b = z.$$</p>
+<p>So $a = x$, $b = y + x$, and the last equation demands $-b = z$, i.e. $-x - y = z$, which is exactly the condition $x + y + z = 0$. Hence every vector of $\Pi$ is $x\,p + (x+y)\,q$, and $\{p,q\}$ is a basis with $\dim \Pi = 2$.</p>
+<p>(c) $0 \notin \Pi'$: the sum at the origin is $0$, not $1$. One line, and it is all that is needed.</p>
+<p>(d) <strong>Infinitely many</strong> — a one-parameter family, not three. The intuition fails because we tend to count <em>directions we know</em>: the coordinate planes $xy$, $xz$, $yz$ contain $v$ only when $v$ has a zero coordinate. For a general $v = (a,b,c)$ with all entries nonzero, the planes through the origin containing $v$ are obtained by pairing $v$ with any vector $w$ not parallel to $v$: the plane $\operatorname{span}(v, w)$. As $w$ varies continuously, so does the plane. Since the third plane in each "triple" can tilt freely about the line through $v$, there are infinitely many.</p>
+<p class="ans">(a) all lines through the origin, $L_v = \{tv\}$; (b) $\{(1,-1,0),(0,1,-1)\}$ is a basis, $\dim \Pi = 2$; (c) $0 \notin \Pi'$; (d) infinitely many — the plane must contain the <em>line</em> $L_v$, and there is a continuous family of planes through a given line.</p>
+</div>
+<div class="note">Fix a line, rotate a plane about it: continuous freedom, not a discrete count. This is the same reason infinitely many bases of $\mathbb{R}^3$ exist — the space of choices is a parameter space, not a list.</div>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">Let</p>
+<p class="prob">$$U = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}\right\}, \qquad V = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix}\right\}.$$</p>
+<p class="prob">(a) Compute $\dim U$ and $\dim V$.<br>
+(b) Find a basis of $U \cap V$.<br>
+(c) Find $U + V$ and its dimension.<br>
+(d) Verify $\dim(U \cap V) + \dim(U + V) = \dim U + \dim V$, and say what the equality means geometrically.</p>
+<div class="sol">
+<p>(a) $\det\begin{bmatrix} 1 &amp; 0 \\ 1 &amp; 1 \\ 0 &amp; 1\end{bmatrix} = 1 \ne 0$, so $U$ has two independent vectors and $\dim U = 2$. Similarly $\det\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \\ 1 &amp; -1\end{bmatrix} = -1 \ne 0$, so $\dim V = 2$.</p>
+<p>(b) $U \cap V$ consists of vectors we can write both ways. Set up one system with four unknowns:</p>
+<p>$$\begin{bmatrix} 1 &amp; 0 &amp; -1 &amp; 0 \\ 1 &amp; 1 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; -1 &amp; 1 \end{bmatrix}\begin{bmatrix} a \\ b \\ c \\ d \end{bmatrix} = 0 \;\Longrightarrow\; \text{(row reduction) } \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; -1 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; -1 \end{bmatrix}$$</p>
+<p>So $a = d$, $b = 0$, $c = d$. Taking $d = 1$, the common vector is $1 \cdot u_1 + 0 \cdot u_2 = u_1$, and on the $V$ side we need $-c = -1$, $-d = -1$, i.e.</p>
+<p>$$\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} - \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} - \begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \;=\; u_1 - v_1 - v_2 \;\checkmark$$</p>
+<p>Equivalently, and this is the memorable form:</p>
+<p>$$\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} \;=\; \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix} + \begin{bmatrix} 0 \\ 1 \\ -1 \end{bmatrix} \;=\; v_1 + v_2 \;\checkmark$$</p>
+<p>Exactly one free variable, so the intersection is one-dimensional:</p>
+<p>$$U \cap V = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}\right\} = \operatorname{span}\{u_1\}, \qquad \dim(U\cap V) = 1.$$</p>
+<p>(c) $U + V$ is spanned by all four vectors; their determinant is</p>
+<p>$$\det\begin{bmatrix} 1 &amp; 0 &amp; 1 &amp; 0 \\ 1 &amp; 1 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 1 &amp; -1 \end{bmatrix} \text{ (three columns suffice) } \begin{vmatrix} 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 0 \\ 0 &amp; 1 &amp; 1 \end{vmatrix} = 1(1\cdot1 - 0\cdot1) + 1(1\cdot1 - 1\cdot0) = 2 \ne 0.$$</p>
+<p>So $U + V$ is 3-dimensional, i.e. $U + V = \mathbb{R}^3$.</p>
+<p>(d) $1 + 3 = 2 + 2 = 4$. Geometrically: the overlap $U \cap V$ is exactly the "double-counted" part, and the formula says the total dimension you get by adding two subspaces equals what you started with, counted without double counting. Here the two planes together fill all of space, and the line they share is counted twice in $\dim U + \dim V$.</p>
+<p class="ans">$\dim U = \dim V = 2$; $U \cap V = \operatorname{span}\{(1,1,0)^T\}$ of dimension $1$; $U + V = \mathbb{R}^3$ of dimension $3$; and $1 + 3 = 2 + 2$.</p>
+</div>
+<div class="note">"Two planes fill space" is the standard picture: any two planes through the origin in $\mathbb{R}^3$ are 2-dimensional, their intersection is at least a line, and the sum has dimension $2+2-\dim(\text{overlap}) = 3$.</div>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">In Set 3 we used two bases of $\mathbb{R}^3$:</p>
+<p class="prob">$$B = \left\{\begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}, \begin{bmatrix} 1 \\ 0 \\ 1 \end{bmatrix}\right\}, \qquad C = \left\{\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}, \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix}\right\}.$$</p>
+<p class="prob">For $w = \begin{bmatrix} 3 \\ 1 \\ 2 \end{bmatrix}$ we found $[w]_B = (1, 0, 2)^T$ and $[w]_C = (1, -1, 2)^T$.</p>
+<p class="prob">Answer in prose, not arithmetic:</p>
+<p class="prob">(a) What does a basis buy us that a bare list of vectors does not?<br>
+(b) "Dimension" counts something about a vector space. What exactly, and what does it <em>not</em> count?<br>
+(c) Why can two different bases of the same space disagree about a vector's coordinates while agreeing about how many vectors the basis has?</p>
+<div class="sol">
+<p>(a) A basis supplies two things a bare list does not: <strong>a way to write any vector uniquely</strong> (surjectivity plus independence), and <strong>a way to read a vector as data</strong> — three numbers instead of a point in space. Once a basis is fixed, the abstract space $\mathbb{R}^3$ becomes a coordinate system, and every question about vectors becomes a question about triples of numbers.</p>
+<p>(b) Dimension counts <strong>independent directions</strong> — equivalently, the number of vectors in any basis, or the number of pivots in any elimination. It does not count coordinates in a particular basis (that number is always $n$, and says nothing), nor the length or size of the vectors involved, nor how many vectors you happen to have written down before removing dependencies.</p>
+<p>(c) Because coordinates are <em>relative</em>: $[w]_B$ answers "what coefficients do I need with respect to <em>this</em> list", and the answer changes when the list changes — but the exchange argument (Problem 5) shows that any two bases of the same space have the same cardinality. So the coordinate <em>values</em> are a choice-dependent encoding, while the coordinate <em>count</em> is an intrinsic property. This is exactly the difference between a basis and a basis-like spanning set with redundancies: those can change the count, and they are not bases.</p>
+<p class="ans">(a) uniqueness of representation plus the ability to treat vectors as numbers; (b) independent directions, not coordinates; (c) coordinates are relative to a choice, while the size of a basis is forced to be the same by the exchange argument.</p>
+</div>
+<div class="note">This is the same phenomenon as units in physics: meters versus feet change the numbers, not the object. Dimension is the invariant; the coordinates are the convention.</div>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">For each of the following linear maps $\mathbb{R}^2 \to \mathbb{R}^2$, find a basis of the kernel and a basis of the image, and decide whether the map is injective and whether it is surjective:</p>
+<p class="prob">$$T_1(x,y) = (x+y,\; x-y), \qquad T_2(x,y) = (x,\; 2y), \qquad T_3(x,y) = (x+y,\; x+y).$$</p>
+<p class="prob">Then explain, using the two middle maps, why "injective" and "surjective" are <em>different</em> failures: for these three maps, do the two properties ever disagree, and in which direction?</p>
+<div class="sol">
+<p>$T_1$: the matrix is $\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}$ with $\det = -2 \ne 0$. So $\ker T_1 = \{0\}$ (no basis — or the empty basis, by convention) and $\operatorname{im} T_1 = \mathbb{R}^2$, e.g. from $(1,1)$ and $(1,-1)$. <strong>Injective and surjective.</strong></p>
+<p>$T_2$: matrix $\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 2\end{bmatrix}$, $\det = 2 \ne 0$. Again $\ker T_2 = \{0\}$ and $\operatorname{im} T_2 = \mathbb{R}^2$ (the images of $(1,0)$ and $(0,1)$ are $(1,0)$ and $(0,2)$, independent). <strong>Injective and surjective.</strong></p>
+<p>$T_3$: matrix $\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1\end{bmatrix}$, $\det = 0$, rank $1$. $T_3(x,y) = 0$ means $x + y = 0$, so</p>
+<p>$$\ker T_3 = \operatorname{span}\left\{\begin{bmatrix} 1 \\ -1 \end{bmatrix}\right\}, \qquad \operatorname{im} T_3 = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 1 \end{bmatrix}\right\}.$$</p>
+<p><strong>Neither injective nor surjective.</strong></p>
+<p>For these three maps the two properties always agree — because the domain and codomain have the same dimension. The general fact is:</p>
+<p>$$T \text{ injective} \iff \ker T = \{0\} \iff \dim \ker T = 0, \qquad T \text{ surjective} \iff \operatorname{im} T = \text{codomain} \iff \dim \operatorname{im} T = n.$$</p>
+<p>They come apart as soon as the dimensions differ. Example: $T : \mathbb{R}^3 \to \mathbb{R}^2$, $T(x,y,z) = (x + y,\; y + z)$ — it cannot be injective (three-dimensional domain, two-dimensional target) but it <em>is</em> surjective (solve $x + y = a$, $y + z = b$ with any free choice of $y$). Conversely, a map $\mathbb{R}^2 \to \mathbb{R}^3$ can be injective but not surjective.</p>
+<p class="ans">$T_1$: $\ker = 0$, $\operatorname{im} = \mathbb{R}^2$ — injective and surjective. $T_2$: same. $T_3$: $\ker = \operatorname{span}\{(1,-1)^T\}$, $\operatorname{im} = \operatorname{span}\{(1,1)^T\}$ — neither. For equal dimensions the two properties coincide; they differ only when the dimensions do.</p>
+</div>
+<div class="note">Injectivity is about the domain ("nothing gets squashed"), surjectivity about the codomain ("nothing gets missed"). Keeping the two straight is what makes rank–nullity in the next problem obvious rather than mysterious.</div>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">Let $T : \mathbb{R}^3 \to \mathbb{R}^2$ be $T(x,y,z) = (x + y,\; y + z)$.</p>
+<p class="prob">(a) Find a basis of $\ker T$ and a basis of $\operatorname{im} T$.<br>
+(b) Verify $\dim \ker T + \dim \operatorname{im} T = 3$.<br>
+(c) State the theorem that (b) is an instance of, and explain in two sentences what it means intuitively — in particular, why it says that a linear map can "collapse" some directions but never "create" new ones.</p>
+<div class="sol">
+<p>(a) $\ker T$: solve $x + y = 0$ and $y + z = 0$, so $x = z = -y$. Taking $y = 1$:</p>
+<p>$$\ker T = \operatorname{span}\left\{\begin{bmatrix} -1 \\ 1 \\ -1 \end{bmatrix}\right\}.$$</p>
+<p>$\operatorname{im} T$: the image of a basis of $\mathbb{R}^3$ spans the image. $T(1,0,0) = (1,0)$, $T(0,1,0) = (1,1)$, $T(0,0,1) = (0,1)$ — the first and third are independent, so</p>
+<p>$$\operatorname{im} T = \operatorname{span}\left\{\begin{bmatrix} 1 \\ 0 \end{bmatrix}, \begin{bmatrix} 1 \\ 1 \end{bmatrix}\right\} = \mathbb{R}^2.$$</p>
+<p>(b) $\dim \ker T = 1$ and $\dim \operatorname{im} T = 2$, and $1 + 2 = 3$. $\checkmark$</p>
+<p>(c) This is an instance of the <strong>rank–nullity theorem</strong> (Problem 11): $\dim \ker T + \dim \operatorname{im} T = \dim(\text{domain}) = 3$.</p>
+<p>Intuition: imagine the domain as a 3-dimensional space of directions and the map as a funnel. The kernel counts the directions that fall straight through the funnel — the direction $(1,-1,1)$ survives as nothing at all. Everything else is redirected into the image, and the image counts how many independent directions actually come out. The theorem says the budget is exactly conserved: a direction lost to the kernel is a direction missing from the image, so you can collapse directions but never manufacture them.</p>
+<p class="ans">$\ker T = \operatorname{span}\{(-1,1,-1)^T\}$ (dimension $1$), $\operatorname{im} T = \mathbb{R}^2$ (dimension $2$), and $1+2=3$ by rank–nullity — directions are conserved, not created.</p>
+</div>
+<div class="note">Note that the kernel direction $(1,-1,1)$ is exactly the null vector that appeared in Set 3's Problem 12 — same mathematics, now with a name and a use.</div>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Prove the <strong>rank–nullity theorem</strong>: for a linear map $T$ from an $n$-dimensional space to any space,</p>
+<p class="prob">$$\dim \ker T + \dim \operatorname{im} T = n.$$</p>
+<p class="prob">Use basis bookkeeping rather than matrices: take a basis of $\ker T$, extend it to a basis of the whole domain, and look at the images of the extended vectors.</p>
+<div class="sol">
+<p>Let $V$ be the domain, $\dim V = n$, and let $k_1,\dots,k_r$ be a basis of $\ker T$. Extend it to a basis of $V$:</p>
+<p>$$k_1,\dots,k_r,\; v_1,\dots,v_s \quad\text{with } r + s = n.$$</p>
+<p>Claim: $T(v_1),\dots,T(v_s)$ form a basis of $\operatorname{im} T$.</p>
+<p><strong>They span.</strong> Any $v \in V$ writes as $\sum a_i k_i + \sum b_j v_j$, so $T(v) = \sum a_i T(k_i) + \sum b_j T(v_j) = \sum b_j T(v_j)$, because $T(k_i) = 0$. Since $V$ is spanned by the basis, $\operatorname{im} T$ is spanned by the images of the $v_j$.</p>
+<p><strong>They are independent.</strong> Suppose $\sum b_j T(v_j) = 0$. Then $T\left(\sum b_j v_j\right) = 0$, so $\sum b_j v_j \in \ker T$ — it is a combination of $k_1,\dots,k_r$. But $k_1,\dots,k_r, v_1,\dots,v_s$ is a <em>basis</em> of $V$, and a combination of basis vectors is zero only when all coefficients are zero. So all $b_j = 0$.</p>
+<p>Therefore $\dim \operatorname{im} T = s$, and</p>
+<p>$$\dim \ker T + \dim \operatorname{im} T = r + s = n \qquad\checkmark$$</p>
+<p class="ans">$\dim \ker T + \dim \operatorname{im} T = n$, proved by extending a kernel basis to a basis of the domain: the images of the added vectors form a basis of the image.</p>
+</div>
+<div class="note">This proof explains why the theorem is <em>true</em> rather than just true: the kernel basis is precisely the part of the domain that gets thrown away, and everything left over maps injectively. No determinants, no row reduction — only that a basis is a basis.</div>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">True or false? For the false ones, give a counterexample; for the ones that depend on a convention, say which convention makes them true and why.</p>
+<p class="prob">(a) Every subspace contains a basis.<br>
+(b) $\dim \operatorname{span}(S) = |S|$ for every set $S$.<br>
+(c) $\{0\}$ is a subspace, and its basis is the empty set.<br>
+(d) $\operatorname{im} T$ is a subspace of the <em>domain</em> of $T$.<br>
+(e) Every linearly independent set is a basis of its own span.<br>
+(f) Two bases of the same space must share at least one vector.</p>
+<div class="sol">
+<p>(a) <strong>True.</strong> Take any nonzero vector in the subspace and keep adding vectors not in the current span; the exchange argument (Problem 5) bounds the process, so it stops at a spanning independent set — a basis. The zero subspace case is the empty basis.</p>
+<p>(b) <strong>False.</strong> Take $S = \{(1,0)^T, (0,1)^T, (1,1)^T\}$: $|S| = 3$ but $\dim \operatorname{span}(S) = 2$. Dimension counts <em>independent</em> directions, and a set can have more vectors than that.</p>
+<p>(c) <strong>True, by convention</strong> — and the convention is the point. $\{0\}$ is a subspace (all three conditions hold). Its dimension is $0$, and the empty set is linearly independent (the definition "no nontrivial combination is zero" is vacuously true) and spans $\{0\}$ (the only combination is the empty sum $= 0$). So "the empty set is a basis of $\{0\}$" is a true statement in the standard convention. Some texts disallow the empty basis for beginners; the theorem statements just stop one case earlier.</p>
+<p>(d) <strong>False.</strong> $\operatorname{im} T$ is a subspace of the <em>codomain</em>. Example: $T : \mathbb{R}^2 \to \mathbb{R}^3$, $T(x,y) = (x, y, 0)$; then $\operatorname{im} T$ is the $xy$-plane inside $\mathbb{R}^3$, which is not even a subset of $\mathbb{R}^2$.</p>
+<p>(e) <strong>True.</strong> By definition of $\operatorname{span}(S)$, every vector in it is a combination of members of $S$; so $S$ spans $\operatorname{span}(S)$ tautologically, and $S$ is independent by assumption. Hence $S$ is a basis of its own span. (This is why "maximal independent" can be replaced by "independent in its own span".)</p>
+<p>(f) <strong>False.</strong> $\{(1,0)^T, (0,1)^T\}$ and $\{(1,0)^T, (1,1)^T\}$ are both bases of $\mathbb{R}^2$ and share exactly one vector; to share none, take $\{(1,0)^T,(0,1)^T\}$ and $\{(1,1)^T, (1,-1)^T\}$ — both bases (the second has determinant $-2$), no common vector.</p>
+<p class="ans">(a) true; (b) false; (c) true under the standard convention (empty basis for $\{0\}$); (d) false — it is a subspace of the codomain; (e) true; (f) false.</p>
+</div>
+<div class="note">(e) is the workhorse reformulation: a set is a basis of a space iff it is independent <em>and lives in</em> that space. It is what lets you treat "is this a basis?" as a two-step check — are they independent, and do they span the intended space?</div>
+</div>
+
+</div>
+</body>
+
+</html>
