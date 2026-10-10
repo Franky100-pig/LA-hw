@@ -26,3 +26,13 @@ Solution formats:
 - **`.docx`** — editable, native Word equations (opens in Word, Pages, WPS, Google Docs)
 - **`.pdf`** — LaTeX-typeset, fixed layout
 - **`.html`** — self-contained, MathJax-rendered (open in a browser)
+
+## 应用科普 · Applied reading
+
+Short, plain-language notes on where the linear algebra from these sets actually shows up — vectors, matrices and inner products doing real work. No prerequisites, no proofs, and no formulas to grind through.
+
+| Article | Concepts | Read |
+|---|---|---|
+| [你以为手机在偷听你，其实是线性代数在算你](应用科普/线性代数与推荐算法.md) | Vectors, cosine similarity, sparse matrices and matrix factorization inside a recommender system | [`.md`](应用科普/线性代数与推荐算法.md) |
+
+New articles go in the [`应用科普/`](应用科普/) folder.
