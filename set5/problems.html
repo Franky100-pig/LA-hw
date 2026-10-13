@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 5</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 5</h1>
+<div class="meta">Column, Row &amp; Null Spaces · Basis, Dimension, Rank &amp; Nullity · 13 problems · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Set 4 asked what the words <em>mean</em>. This set asks what they <strong>compute to</strong>. Every matrix $A$ carries three subspaces — $\operatorname{Col}(A)$, $\operatorname{Row}(A)$ and $\operatorname{Nul}(A)$ — and the whole machinery of row reduction exists to describe them. One fact organizes everything: <strong>row operations preserve the row space and the dependence pattern of the columns, but not the column space itself.</strong> That single asymmetry explains why the basis for $\operatorname{Col}(A)$ is taken from the original matrix while the basis for $\operatorname{Row}(A)$ is taken from the reduced one (Problems 9, 10). The set ends with rank–nullity, which converts "shape plus one number" into answers about pivots, independence and solvability (Problems 11–13).</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">Two sets in $\mathbb{R}^3$ differ by a single number:</p>
+<p class="prob">$$V = \left\{\begin{bmatrix} x \\ y \\ z \end{bmatrix} : x + 2y - z = 0\right\}, \qquad W = \left\{\begin{bmatrix} x \\ y \\ z \end{bmatrix} : x + 2y - z = 1\right\}.$$</p>
+<p class="prob">(a) Apply the subspace test to each, justifying every condition.<br>
+(b) Exactly one of them is a subspace. Name the <em>first</em> condition that fails for the other, with a concrete counterexample.<br>
+(c) Give a geometric description of each set, and say in one sentence why changing $0$ to $1$ makes the difference between a subspace and a non-subspace.<br>
+(d) For the one that is a subspace, find $\dim V$ and a basis.</p>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">Let $S = \operatorname{Span}\left\{\begin{bmatrix}1\\1\end{bmatrix}\right\}$ and $T = \operatorname{Span}\left\{\begin{bmatrix}1\\-1\end{bmatrix}\right\}$, two lines through the origin in $\mathbb{R}^2$.</p>
+<p class="prob">(a) Describe $S + T$ as explicitly as you can, and prove your claim.<br>
+(b) Describe $S \cup T$.<br>
+(c) Is $S + T$ a subspace? Is $S \cup T$ a subspace? Justify both answers.<br>
+(d) Now answer the same two questions for $S = \operatorname{Span}\{(1,1)\}$ and $T = \operatorname{Span}\{(2,2)\}$ — i.e. the <em>same</em> line twice. What general rule about unions of subspaces do your two experiments suggest?</p>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">Let $A$ be a $5 \times 3$ matrix. Without knowing any entry of $A$, state the ambient vector space containing each of $\operatorname{Col}(A)$, $\operatorname{Row}(A)$ and $\operatorname{Nul}(A)$, and justify each answer by counting entries.</p>
+<p class="prob">Then answer, again without knowing the entries: what is the largest possible value of $\operatorname{rank}(A)$, and what is the largest possible value of $\operatorname{nullity}(A)$?</p>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix}1 &amp; 2 &amp; 0 &amp; 1\\ 0 &amp; 1 &amp; 1 &amp; 2\\ 1 &amp; 3 &amp; 1 &amp; 3\end{bmatrix}$, and write its columns as $a_1, a_2, a_3, a_4$.</p>
+<p class="prob">(a) Is $\mathbf{b} = \begin{bmatrix}1\\1\\1\end{bmatrix} \in \operatorname{Col}(A)$?<br>
+(b) Is $\mathbf{b} = \begin{bmatrix}3\\1\\4\end{bmatrix} \in \operatorname{Col}(A)$? If so, exhibit it as a linear combination of the columns.<br>
+(c) Is $\mathbf{x} = \begin{bmatrix}2\\-1\\1\\0\end{bmatrix} \in \operatorname{Nul}(A)$?<br>
+(d) Is $\mathbf{x} = \begin{bmatrix}1\\1\\1\\1\end{bmatrix} \in \operatorname{Nul}(A)$?<br>
+(e) Find a basis for $\operatorname{Nul}(A)$.</p>
+<p class="prob">For (a) and (b), justify by comparing ranks; do not guess from the picture.</p>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix}1 &amp; 2 &amp; 0\\ 0 &amp; 1 &amp; 1\\ 1 &amp; 3 &amp; 1\\ 2 &amp; 5 &amp; 1\end{bmatrix}$.</p>
+<p class="prob">(a) Explain why $\mathbf{v} \in \operatorname{Row}(A) \iff A^T\mathbf{x} = \mathbf{v}$ is consistent, and why that makes the row-space question a consistency question.<br>
+(b) Use this to decide whether $\mathbf{v} = \begin{bmatrix}1 &amp; 3 &amp; 1\end{bmatrix}$ belongs to $\operatorname{Row}(A)$.<br>
+(c) And whether $\mathbf{v} = \begin{bmatrix}2 &amp; 1 &amp; 1\end{bmatrix}$ belongs to $\operatorname{Row}(A)$.<br>
+(d) Find a basis for $\operatorname{Row}(A)$ and state its dimension.</p>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">For each subset of $M_{2\times 2}$ below, decide whether it is a <strong>subspace</strong>. For those that are, prove it with the subspace test. For those that are not, name the first condition that fails and give an explicit counterexample (actual matrices, with numbers).</p>
+<p class="prob">(a) The symmetric matrices, $\{A : A^T = A\}$.<br>
+(b) The trace-zero matrices, $\{A : \operatorname{tr}(A) = 0\}$.<br>
+(c) The invertible matrices.<br>
+(d) $\{A : A^2 = 0\}$.<br>
+(e) The upper triangular matrices.<br>
+(f) For the fixed matrix $B = \begin{bmatrix}0 &amp; 1\\ 0 &amp; 0\end{bmatrix}$, the set $\{A : AB = BA\}$ (the matrices that commute with $B$).</p>
+<p class="prob">Then: how many of the six are subspaces, and what do the failing ones have in common?</p>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">Consider the four vectors $w_1 = \begin{bmatrix}1\\0\\1\end{bmatrix}$, $w_2 = \begin{bmatrix}0\\1\\2\end{bmatrix}$, $w_3 = \begin{bmatrix}1\\1\\3\end{bmatrix}$, $w_4 = \begin{bmatrix}2\\-1\\0\end{bmatrix}$, and let $H = \operatorname{Span}\{w_1, w_2, w_3, w_4\}$.</p>
+<p class="prob">(a) Find a basis for $H$ containing as few of the original vectors as possible.<br>
+(b) State $\dim H$.<br>
+(c) Prove carefully that your basis still spans all four original vectors — not just the ones you kept. Write out the algebra.<br>
+(d) Is $H$ a subspace of $\mathbb{R}^3$? Can $H = \mathbb{R}^3$? Justify with dimensions.</p>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">Let $W = \{p(x) \in P_3 : p(1) = 0\}$, the polynomials of degree at most $3$ that vanish at $x = 1$.</p>
+<p class="prob">(a) Show $W$ is a subspace of $P_3$.<br>
+(b) Write a general polynomial of $W$ using free parameters, and read a basis off that representation.<br>
+(c) State $\dim W$ and $\dim P_3$, and check that they differ by exactly the number of conditions imposed.<br>
+(d) Is $\{x - 1,\ x^2 - 1\}$ a basis for $W$? Explain in one sentence why not.</p>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix}2 &amp; 1 &amp; 0 &amp; 1 &amp; 3\\ 4 &amp; 2 &amp; 1 &amp; 2 &amp; 5\\ 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\ 3 &amp; 1 &amp; 1 &amp; 2 &amp; 4\end{bmatrix}$. Row reduction gives</p>
+<p class="prob">$$R = \begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 1 &amp; 2\\ 0 &amp; 1 &amp; 0 &amp; -1 &amp; -1\\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; -1\\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\end{bmatrix}.$$</p>
+<p class="prob">(a) Mark the pivot columns and the free variables.<br>
+(b) Find a basis for $\operatorname{Col}(A)$.<br>
+(c) Find a basis for $\operatorname{Row}(A)$.<br>
+(d) Find a basis for $\operatorname{Nul}(A)$.<br>
+(e) State $\operatorname{rank}(A)$ and $\operatorname{nullity}(A)$, and verify rank–nullity.<br>
+(f) In part (b), which matrix did you take the vectors from — $A$ or $R$? In part (c)? Explain the asymmetry in one sentence.</p>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">A student writes: <em>"After row reducing $A$ to $R$, I should use the pivot columns of $R$ as a basis for $\operatorname{Col}(A)$, since $A$ and $R$ are row equivalent."</em></p>
+<p class="prob">(a) Show with a concrete $2 \times 2$ example that $\operatorname{Col}(A) \ne \operatorname{Col}(R)$ in general, so the proposed vectors need not even lie in $\operatorname{Col}(A)$.<br>
+(b) Explain what row operations <em>do</em> preserve: the row space, and the dependence pattern of the columns. Prove the second claim using $R = EA$ with $E$ invertible.<br>
+(c) Using (b), justify both correct rules: take pivot columns from $A$ for $\operatorname{Col}(A)$, and nonzero rows of $R$ for $\operatorname{Row}(A)$.<br>
+(d) Conclude with one sentence stating what row operations preserve and what they do not.</p>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Suppose $A$ is a $6 \times 9$ matrix with $\operatorname{rank}(A) = 4$.</p>
+<p class="prob">(a) How many pivot columns? (b) How many free variables in $A\mathbf{x} = \mathbf{0}$? (c) $\dim\operatorname{Col}(A)$? (d) $\dim\operatorname{Row}(A)$? (e) $\dim\operatorname{Nul}(A)$? (f) Can the columns of $A$ be linearly independent? (g) Can $\operatorname{Col}(A) = \mathbb{R}^6$? (h) Must $A\mathbf{x} = \mathbf{b}$ have a solution for every $\mathbf{b} \in \mathbb{R}^6$? (i) Can $A\mathbf{x} = \mathbf{b}$ have a unique solution for some $\mathbf{b}$?</p>
+<p class="prob">Answer all nine, then write one paragraph explaining how the answers are <em>connected</em> rather than nine unrelated facts. In particular, identify which two comparisons of $\operatorname{rank}(A)$ against the dimensions $6$ and $9$ decide everything.</p>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">Let $v_1 = \begin{bmatrix}1\\0\\1\\0\end{bmatrix}$, $v_2 = \begin{bmatrix}0\\1\\-1\\1\end{bmatrix}$, $v_3 = \begin{bmatrix}1\\1\\1\\0\end{bmatrix}$ in $\mathbb{R}^4$.</p>
+<p class="prob">(a) Are $v_1, v_2, v_3$ linearly independent? Justify.<br>
+(b) Let $S = \operatorname{Span}\{v_1, v_2, v_3\}$. State $\dim S$.<br>
+(c) Extend $\{v_1, v_2, v_3\}$ to a <strong>basis of $\mathbb{R}^4$</strong> by adding one standard basis vector. Which standard vectors $e_1, e_2, e_3, e_4$ would work, and which would not?<br>
+(d) Explain the general method for extending an independent set to a basis, and why it must terminate.</p>
+</div>
+
+<!-- ===================== 13 ===================== -->
+<h2>Problem 13</h2>
+<div class="q">
+<p class="prob">Let $A$ be an $n \times n$ matrix.</p>
+<p class="prob">(a) Prove that the following four statements are equivalent: (i) $\operatorname{rank}(A) = n$; (ii) $\operatorname{nullity}(A) = 0$; (iii) $A\mathbf{x} = \mathbf{0}$ has only the trivial solution; (iv) $A$ has a pivot in every column.<br>
+(b) Explain how these four relate to $A$ being invertible, and why "pivot in every column" is enough for a square matrix when it would not be enough for a rectangular one.<br>
+(c) Close the loop with Set 4: explain why all of the above are also equivalent to $\det A \ne 0$ and to the columns of $A$ being linearly independent.</p>
+</div>
+
+</div>
+</body>
+</html>
