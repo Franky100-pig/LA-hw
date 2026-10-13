@@ -12,6 +12,8 @@ Set 3 turns those tools onto vectors — linear independence, bases and dimensio
 
 Set 4 steps back from computation to concepts: what makes a set a vector space or a subspace (the three-step test), why each axiom exists, span as closure, bases as coordinate systems, and the kernel–image pair with rank-nullity — deliberately light on computation, building the vocabulary that later problem sets will combine.
 
+Set 5 turns that vocabulary into computation. Every matrix carries three subspaces — Col(A), Row(A) and Nul(A) — and the whole point of row reduction is to describe them. One asymmetry organizes the entire set: **row operations preserve the row space and the dependence pattern of the columns, but not the column space itself.** That is why the basis for Col(A) is read off the original matrix while the basis for Row(A) is read off the reduced one, and Problem 10 is devoted to the misconception that comes from getting this backwards. The set closes with rank–nullity, which converts "shape plus one number" into answers about pivots, independence and solvability, and with the equivalence chain that ties rank, nullity, pivots and invertibility into a single fact.
+
 ## Contents
 
 | Set | Topics | Problems | Solutions |
@@ -20,6 +22,7 @@ Set 4 steps back from computation to concepts: what makes a set a vector space o
 | Set 2 | Row Echelon Form & the Determinant | [`.pdf`](set2/problems.pdf) · [`.html`](set2/problems.html) | [`.pdf`](set2/solutions.pdf) · [`.docx`](set2/solutions.docx) · [`.html`](set2/solutions.html) |
 | Set 3 | Linear Independence, Bases & Dimension | [`.pdf`](set3/problems.pdf) · [`.html`](set3/problems.html) | [`.pdf`](set3/solutions.pdf) · [`.docx`](set3/solutions.docx) · [`.html`](set3/solutions.html) |
 | Set 4 | Vector Spaces & Bases | [`.pdf`](set4/problems.pdf) · [`.html`](set4/problems.html) | [`.pdf`](set4/solutions.pdf) · [`.docx`](set4/solutions.docx) · [`.html`](set4/solutions.html) |
+| Set 5 | Column, Row & Null Spaces; Rank & Nullity | [`.pdf`](set5/problems.pdf) · [`.html`](set5/problems.html) | [`.pdf`](set5/solutions.pdf) · [`.docx`](set5/solutions.docx) · [`.html`](set5/solutions.html) |
 
 Solution formats:
 
