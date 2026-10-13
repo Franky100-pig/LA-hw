@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 5 — Solutions</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 5 — Solutions</h1>
+<div class="meta">Column, Row &amp; Null Spaces · Basis, Dimension, Rank &amp; Nullity · Full solutions · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Everything here comes from one asymmetry, stated once and used a dozen times: <strong>row operations preserve the row space and the dependence pattern of the columns, but not the column space itself.</strong> That is why the basis for $\operatorname{Col}(A)$ is read off the original matrix while the basis for $\operatorname{Row}(A)$ is read off the reduced one. Membership questions split the same way: $\mathbf{b} \in \operatorname{Col}(A)$ is a consistency question about $A\mathbf{x} = \mathbf{b}$; $\mathbf{v} \in \operatorname{Row}(A)$ is the same question about $A^T\mathbf{x} = \mathbf{v}$; and $\mathbf{x} \in \operatorname{Nul}(A)$ needs no solving at all — just multiply. Rank–nullity then converts "shape plus one number" into answers about pivots, independence and solvability.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">$$V = \left\{\begin{bmatrix} x \\ y \\ z \end{bmatrix} : x + 2y - z = 0\right\}, \qquad W = \left\{\begin{bmatrix} x \\ y \\ z \end{bmatrix} : x + 2y - z = 1\right\}.$$</p>
+<p class="prob">(a) Apply the subspace test to each. (b) Name the first condition that fails for the non-subspace, with a counterexample. (c) Give a geometric description of each. (d) For the subspace, find $\dim V$ and a basis.</p>
+<div class="sol">
+<p><strong>(a) $V$ is a subspace.</strong></p>
+<p><em>(i)</em> $0 + 2(0) - 0 = 0$, so $\mathbf{0} \in V$.</p>
+<p><em>(ii)</em> If $\mathbf{u}, \mathbf{v} \in V$ then $x_1 + 2y_1 - z_1 = 0$ and $x_2 + 2y_2 - z_2 = 0$, so</p>
+<p>$$(x_1 + x_2) + 2(y_1 + y_2) - (z_1 + z_2) = (x_1 + 2y_1 - z_1) + (x_2 + 2y_2 - z_2) = 0.$$</p>
+<p><em>(iii)</em> $cx + 2(cy) - (cz) = c(x + 2y - z) = c \cdot 0 = 0$.</p>
+<p><strong>$W$ is not a subspace.</strong> Condition (i) fails immediately: $0 + 2(0) - 0 = 0 \ne 1$, so $\mathbf{0} \notin W$. (Condition (ii) fails too: $\begin{bmatrix}1\\0\\0\end{bmatrix}, \begin{bmatrix}0\\0\\-1\end{bmatrix} \in W$ but their sum $\begin{bmatrix}1\\0\\-1\end{bmatrix}$ gives $1 + 0 + 1 = 2 \ne 1$.)</p>
+<p><strong>(c)</strong> $V$ is the plane through the origin with normal vector $\begin{bmatrix}1\\2\\-1\end{bmatrix}$. $W$ is the plane with the same normal but shifted — it does not pass through the origin. Changing $0$ to $1$ moves the plane off the origin, and a subspace must contain the zero vector, so the shifted plane cannot be one.</p>
+<p><strong>(d)</strong> Solve $x + 2y - z = 0$ for the pivot: $z = x + 2y$, with $x$ and $y$ free. Then</p>
+<p>$$\begin{bmatrix}x\\y\\z\end{bmatrix} = x\begin{bmatrix}1\\0\\1\end{bmatrix} + y\begin{bmatrix}0\\1\\2\end{bmatrix}.$$</p>
+<p class="ans">A basis is $\left\{\begin{bmatrix}1\\0\\1\end{bmatrix}, \begin{bmatrix}0\\1\\2\end{bmatrix}\right\}$, so $\dim V = 2$. The two vectors are independent (different zero patterns) and both satisfy the equation, and every solution is a combination of them.</p>
+</div>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">$S = \operatorname{Span}\{(1,1)\}$, $T = \operatorname{Span}\{(1,-1)\}$. (a) Describe $S+T$ and prove it. (b) Describe $S \cup T$. (c) Is each a subspace? (d) Repeat for $S = T = \operatorname{Span}\{(1,1)\}$. What general rule emerges?</p>
+<div class="sol">
+<p>Let $s = (1,1)$ and $t = (1,-1)$.</p>
+<p><strong>(a)</strong> Elements of $S + T$ are $as + bt = (a + b,\ a - b)$ with $a, b \in \mathbb{R}$. Given any $(p, q) \in \mathbb{R}^2$, set $a = \tfrac{p+q}{2}$ and $b = \tfrac{p-q}{2}$; then $a + b = p$ and $a - b = q$. So every vector of $\mathbb{R}^2$ is reached, and</p>
+<p class="ans">$S + T = \mathbb{R}^2$.</p>
+<p><strong>(b)</strong> $S \cup T$ is the union of the two lines $y = x$ and $y = -x$ — an "X" shape: $\{(x, y) : y = x \text{ or } y = -x\}$.</p>
+<p><strong>(c)</strong> $S + T = \mathbb{R}^2$ is a vector space, hence a subspace of itself. $S \cup T$ is <strong>not</strong> a subspace: $(1,1) \in S \cup T$ and $(1,-1) \in T \subseteq S \cup T$, but</p>
+<p>$$(1,1) + (1,-1) = (2, 0),$$</p>
+<p>and $(2,0)$ lies on neither line, so $(2,0) \notin S \cup T$. Condition (ii) fails.</p>
+<p><strong>(d)</strong> If $S = T$, then $S + T = S + S = S$ (sums of two vectors on the line stay on the line), and $S \cup T = S$. Both are subspaces.</p>
+<p class="ans">General rule: $S + T$ is <em>always</em> a subspace (it is $\operatorname{Span}(S \cup T)$, and spans are subspaces), but $S \cup T$ is a subspace only in the degenerate case where one of the two already contains the other. A union is "too small" — adding fills in, unioning does not.</p>
+</div>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">Let $A$ be a $5 \times 3$ matrix. State the ambient space of $\operatorname{Col}(A)$, $\operatorname{Row}(A)$, $\operatorname{Nul}(A)$, justifying by counting entries. Then give the largest possible $\operatorname{rank}(A)$ and $\operatorname{nullity}(A)$.</p>
+<div class="sol">
+<p>Here $m = 5$ rows and $n = 3$ columns.</p>
+<p><strong>$\operatorname{Col}(A) \subseteq \mathbb{R}^5$.</strong> Each column has one entry per row, i.e. $5$ entries.</p>
+<p><strong>$\operatorname{Row}(A) \subseteq \mathbb{R}^3$.</strong> Each row has one entry per column, i.e. $3$ entries.</p>
+<p><strong>$\operatorname{Nul}(A) \subseteq \mathbb{R}^3$.</strong> $\mathbf{x}$ in $A\mathbf{x}$ needs one entry per column, i.e. $3$ entries.</p>
+<p><strong>Largest possible rank.</strong> Rank is the number of pivots, and pivots are limited by both the number of rows and the number of columns: $\operatorname{rank}(A) \le \min(m, n) = \min(5, 3) = 3$.</p>
+<p><strong>Largest possible nullity.</strong> By rank–nullity, $\operatorname{nullity}(A) = n - \operatorname{rank}(A) = 3 - \operatorname{rank}(A)$, which is largest when the rank is smallest. The rank can be as low as $0$ (the zero matrix), so $\operatorname{nullity}(A) \le 3$.</p>
+<p class="ans">$\operatorname{Col}(A) \subseteq \mathbb{R}^5$, $\operatorname{Row}(A) \subseteq \mathbb{R}^3$, $\operatorname{Nul}(A) \subseteq \mathbb{R}^3$; $\max \operatorname{rank}(A) = 3$ and $\max \operatorname{nullity}(A) = 3$. Note the column space lives in the "row-count" space and the other two in the "column-count" space.</p>
+</div>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">$A = \begin{bmatrix}1 &amp; 2 &amp; 0 &amp; 1\\ 0 &amp; 1 &amp; 1 &amp; 2\\ 1 &amp; 3 &amp; 1 &amp; 3\end{bmatrix}$. (a) Is $\mathbf{b} = (1,1,1) \in \operatorname{Col}(A)$? (b) Is $\mathbf{b} = (3,1,4) \in \operatorname{Col}(A)$? (c) Is $\mathbf{x} = (2,-1,1,0) \in \operatorname{Nul}(A)$? (d) Is $\mathbf{x} = (1,1,1,1) \in \operatorname{Nul}(A)$? (e) Find a basis for $\operatorname{Nul}(A)$.</p>
+<div class="sol">
+<p>First row reduce: $A \sim \begin{bmatrix}1 &amp; 0 &amp; -2 &amp; -3\\ 0 &amp; 1 &amp; 1 &amp; 2\\ 0 &amp; 0 &amp; 0 &amp; 0\end{bmatrix}$, so $\operatorname{rank}(A) = 2$ and the columns satisfy $a_3 = -2a_1 + a_2$, $a_4 = -3a_1 + 2a_2$.</p>
+<p><strong>(a) No.</strong> $\mathbf{b} \in \operatorname{Col}(A) \iff A\mathbf{x} = \mathbf{b}$ is consistent $\iff \operatorname{rank}[A \mid \mathbf{b}] = \operatorname{rank}(A)$. Row reduce the augmented matrix:</p>
+<p>$$\left[\begin{array}{cccc|c} 1 &amp; 2 &amp; 0 &amp; 1 &amp; 1\\ 0 &amp; 1 &amp; 1 &amp; 2 &amp; 1\\ 1 &amp; 3 &amp; 1 &amp; 3 &amp; 1\end{array}\right] \sim \left[\begin{array}{cccc|c} 1 &amp; 0 &amp; -2 &amp; -3 &amp; -1\\ 0 &amp; 1 &amp; 1 &amp; 2 &amp; 1\\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right].$$</p>
+<p>The last row reads $0 = 1$, so the system is inconsistent, and $\operatorname{rank}[A \mid \mathbf{b}] = 3 > 2 = \operatorname{rank}(A)$. Hence $\mathbf{b} \notin \operatorname{Col}(A)$.</p>
+<p><strong>(b) Yes.</strong> Notice $\mathbf{b} = (3,1,4) = a_1 + a_2 = (1,0,1) + (2,1,3)$, which exhibits $\mathbf{b}$ directly as a linear combination of the columns. (Equivalently $\operatorname{rank}[A \mid \mathbf{b}] = 2$.)</p>
+<p><strong>(c) Yes.</strong> Just multiply:</p>
+<p>$$A\begin{bmatrix}2\\-1\\1\\0\end{bmatrix} = \begin{bmatrix} 2 - 2 + 0 + 0\\ 0 - 1 + 1 + 0\\ 2 - 3 + 1 + 0\end{bmatrix} = \begin{bmatrix}0\\0\\0\end{bmatrix}.$$</p>
+<p><strong>(d) No.</strong> The first entry is $1 + 2 + 0 + 1 = 4 \ne 0$; in fact</p>
+<p>$$A\begin{bmatrix}1\\1\\1\\1\end{bmatrix} = \begin{bmatrix}4\\4\\8\end{bmatrix} \ne \mathbf{0}.$$</p>
+<p><strong>(e)</strong> From the reduced form: $x_1 = 2x_3 + 3x_4$ and $x_2 = -x_3 - 2x_4$, with $x_3, x_4$ free. Writing $x_3 = s$, $x_4 = t$:</p>
+<p>$$\mathbf{x} = \begin{bmatrix}2s + 3t\\ -s - 2t\\ s\\ t\end{bmatrix} = s\begin{bmatrix}2\\-1\\1\\0\end{bmatrix} + t\begin{bmatrix}3\\-2\\0\\1\end{bmatrix}.$$</p>
+<p class="ans">A basis for $\operatorname{Nul}(A)$ is $\left\{\begin{bmatrix}2\\-1\\1\\0\end{bmatrix}, \begin{bmatrix}3\\-2\\0\\1\end{bmatrix}\right\}$, and $\operatorname{nullity}(A) = 2$. Two lessons: for $\operatorname{Col}$, compare ranks and look for the vector among the columns; for $\operatorname{Nul}$, just multiply.</p>
+</div>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">$A = \begin{bmatrix}1 &amp; 2 &amp; 0\\ 0 &amp; 1 &amp; 1\\ 1 &amp; 3 &amp; 1\\ 2 &amp; 5 &amp; 1\end{bmatrix}$. (a) Explain why $\mathbf{v} \in \operatorname{Row}(A) \iff A^T\mathbf{x} = \mathbf{v}$ is consistent. (b) Is $(1,3,1) \in \operatorname{Row}(A)$? (c) Is $(2,1,1) \in \operatorname{Row}(A)$? (d) Find a basis for $\operatorname{Row}(A)$ and its dimension.</p>
+<div class="sol">
+<p><strong>(a)</strong> The rows of $A$ are the columns of $A^T$, so $\operatorname{Row}(A) = \operatorname{Col}(A^T)$. Therefore $\mathbf{v} \in \operatorname{Row}(A)$ exactly when $\mathbf{v}$ is a linear combination of the columns of $A^T$ — which by the definition of matrix multiplication is exactly the statement that $A^T\mathbf{x} = \mathbf{v}$ has a solution. So the row-space question has been converted into a consistency question, decided by comparing $\operatorname{rank}(A^T)$ with $\operatorname{rank}[A^T \mid \mathbf{v}]$.</p>
+<p><strong>(b)</strong> Row reduce $\left[\begin{array}{ccc|c} 1 &amp; 0 &amp; 1 &amp; 1\\ 2 &amp; 1 &amp; 3 &amp; 3\\ 0 &amp; 1 &amp; 1 &amp; 1\end{array}\right]$:</p>
+<p>$$\sim \left[\begin{array}{ccc|c} 1 &amp; 0 &amp; 1 &amp; 1\\ 0 &amp; 1 &amp; 1 &amp; 1\\ 0 &amp; 0 &amp; 0 &amp; 0\end{array}\right].$$</p>
+<p>No row of the form $0 = \text{nonzero}$ appears, so the system is consistent: $\operatorname{rank}(A^T) = \operatorname{rank}[A^T \mid \mathbf{v}] = 2$. Hence <strong>yes</strong>, $(1,3,1) \in \operatorname{Row}(A)$. Indeed $(1,3,1)$ is the third row of $A$, and it equals $(1,2,0) + (0,1,1)$.</p>
+<p><strong>(c)</strong> For $\mathbf{v} = (2,1,1)$, row reduction of $\left[\begin{array}{ccc|c} 1 &amp; 0 &amp; 1 &amp; 2\\ 2 &amp; 1 &amp; 3 &amp; 1\\ 0 &amp; 1 &amp; 1 &amp; 1\end{array}\right]$ gives</p>
+<p>$$\sim \left[\begin{array}{ccc|c} 1 &amp; 0 &amp; 1 &amp; 2\\ 0 &amp; 1 &amp; 1 &amp; 1\\ 0 &amp; 0 &amp; 0 &amp; -2\end{array}\right],$$</p>
+<p>and the last row says $0 = -2$. The system is inconsistent, so <strong>no</strong>, $(2,1,1) \notin \operatorname{Row}(A)$. (It is the fourth row of $A$, and that row is independent of the first two.)</p>
+<p><strong>(d)</strong> $A \sim \begin{bmatrix}1 &amp; 0 &amp; -2\\ 0 &amp; 1 &amp; 1\\ 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0\end{bmatrix}$, so the nonzero reduced rows give</p>
+<p class="ans">A basis for $\operatorname{Row}(A)$ is $\left\{\begin{bmatrix}1 &amp; 2 &amp; 0\end{bmatrix}, \begin{bmatrix}0 &amp; 1 &amp; 1\end{bmatrix}\right\}$ (the two independent original rows), and $\dim\operatorname{Row}(A) = 2$.</p>
+</div>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Decide which subsets of $M_{2\times 2}$ are subspaces: (a) symmetric; (b) trace zero; (c) invertible; (d) $\{A : A^2 = 0\}$; (e) upper triangular; (f) $\{A : AB = BA\}$ for fixed $B = \begin{bmatrix}0 &amp; 1\\ 0 &amp; 0\end{bmatrix}$.</p>
+<div class="sol">
+<p><strong>(a) Symmetric matrices — subspace.</strong> (i) $0^T = 0$. (ii) $(A + C)^T = A^T + C^T = A + C$. (iii) $(kA)^T = kA^T = kA$. All three hold.</p>
+<p><strong>(b) Trace-zero matrices — subspace.</strong> (i) $\operatorname{tr}(0) = 0$. (ii) $\operatorname{tr}(A + C) = \operatorname{tr}(A) + \operatorname{tr}(C) = 0 + 0 = 0$, since the trace of a sum is the sum of the traces. (iii) $\operatorname{tr}(kA) = k\operatorname{tr}(A) = 0$.</p>
+<p><strong>(c) Invertible matrices — not a subspace.</strong> Condition (i) fails: the zero matrix is not invertible, so $0 \notin$ the set. (Condition (ii) fails as well: $I + (-I) = 0$ is not invertible even though $I$ and $-I$ are.)</p>
+<p><strong>(d) $\{A : A^2 = 0\}$ — not a subspace.</strong> The zero matrix is in the set, and it <em>is</em> closed under scalar multiplication, since $(kA)^2 = k^2 A^2 = 0$. But condition (ii) fails. Counterexample:</p>
+<p>$$N_1 = \begin{bmatrix}0 &amp; 1\\ 0 &amp; 0\end{bmatrix}, \quad N_2 = \begin{bmatrix}0 &amp; 0\\ 1 &amp; 0\end{bmatrix}, \qquad N_1^2 = N_2^2 = 0,$$</p>
+<p>$$N_1 + N_2 = \begin{bmatrix}0 &amp; 1\\ 1 &amp; 0\end{bmatrix}, \qquad (N_1 + N_2)^2 = \begin{bmatrix}1 &amp; 0\\ 0 &amp; 1\end{bmatrix} = I \ne 0.$$</p>
+<p><strong>(e) Upper triangular matrices — subspace.</strong> (i) The zero matrix is upper triangular. (ii) The sum of two upper triangular matrices is upper triangular (zeros below the diagonal stay zero). (iii) A scalar multiple of an upper triangular matrix is upper triangular.</p>
+<p><strong>(f) The centralizer of $B$ — subspace.</strong> Write $A = \begin{bmatrix}a &amp; b\\ c &amp; d\end{bmatrix}$. Then</p>
+<p>$$AB = \begin{bmatrix}0 &amp; a\\ 0 &amp; c\end{bmatrix}, \qquad BA = \begin{bmatrix}c &amp; d\\ 0 &amp; 0\end{bmatrix},$$</p>
+<p>so $AB = BA \iff c = 0$ and $a = d$. Hence the set is $\left\{\begin{bmatrix}a &amp; b\\ 0 &amp; a\end{bmatrix}\right\} = \operatorname{Span}\left\{\begin{bmatrix}1 &amp; 0\\ 0 &amp; 1\end{bmatrix}, \begin{bmatrix}0 &amp; 1\\ 0 &amp; 0\end{bmatrix}\right\}$, a span, and therefore a subspace (of dimension $2$). The three test conditions follow from linearity of the map $A \mapsto AB - BA$.</p>
+<p class="ans">Four of the six are subspaces: (a), (b), (e), (f). The failing two, (c) and (d), are defined by a <em>nonlinear</em> condition — "invertible" and "$A^2 = 0$" both behave badly under addition. That is the general warning sign: conditions built from products (rather than sums and scalar multiples) tend to destroy closure.</p>
+</div>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">$w_1 = (1,0,1)$, $w_2 = (0,1,2)$, $w_3 = (1,1,3)$, $w_4 = (2,-1,0)$; $H = \operatorname{Span}\{w_1, w_2, w_3, w_4\}$. (a) Basis with as few original vectors as possible. (b) $\dim H$. (c) Prove the basis still spans all four. (d) Is $H$ a subspace? Can $H = \mathbb{R}^3$?</p>
+<div class="sol">
+<p><strong>(a)</strong> Two relations are visible:</p>
+<p>$$w_3 = w_1 + w_2, \qquad w_4 = 2w_1 - w_2 \quad\left(\text{check: } 2(1,0,1) - (0,1,2) = (2,-1,0)\right).$$</p>
+<p>So $w_3, w_4 \in \operatorname{Span}\{w_1, w_2\}$, and $H = \operatorname{Span}\{w_1, w_2\}$. The two kept vectors are independent (neither is a multiple of the other).</p>
+<p class="ans">A basis using as few original vectors as possible is $\{w_1, w_2\}$.</p>
+<p><strong>(b)</strong> $\dim H = 2$.</p>
+<p><strong>(c)</strong> Take any combination of all four and reduce it:</p>
+<p>$$c_1 w_1 + c_2 w_2 + c_3 w_3 + c_4 w_4 = c_1 w_1 + c_2 w_2 + c_3(w_1 + w_2) + c_4(2w_1 - w_2) = (c_1 + c_3 + 2c_4)w_1 + (c_2 + c_3 - c_4)w_2.$$</p>
+<p>Every vector built from all four is therefore built from $w_1$ and $w_2$ alone, so $\operatorname{Span}\{w_1, w_2, w_3, w_4\} \subseteq \operatorname{Span}\{w_1, w_2\}$. The reverse inclusion is immediate because $w_1, w_2$ are among the original four. The spans are equal, so dropping the redundant vectors lost nothing. (This is exactly what row reduction formalizes: pivot columns are the keepers, non-pivot columns were redundant.)</p>
+<p><strong>(d)</strong> Yes, $H$ is a subspace — it is a span, and spans are subspaces. But $H \ne \mathbb{R}^3$: $\dim H = 2 < 3 = \dim \mathbb{R}^3$, and a proper-dimensional subspace cannot equal its ambient space.</p>
+</div>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">$W = \{p(x) \in P_3 : p(1) = 0\}$. (a) Show $W$ is a subspace. (b) Write a general polynomial of $W$ with free parameters and read off a basis. (c) State $\dim W$ and $\dim P_3$. (d) Is $\{x-1, x^2-1\}$ a basis for $W$?</p>
+<div class="sol">
+<p><strong>(a)</strong> (i) The zero polynomial satisfies $0(1) = 0$. (ii) $(p + q)(1) = p(1) + q(1) = 0$. (iii) $(kp)(1) = k\,p(1) = 0$. So $W$ is a subspace; equivalently it is the kernel of the evaluation map $\mathrm{ev}_1 : P_3 \to \mathbb{R}$.</p>
+<p><strong>(b)</strong> A general polynomial of $P_3$ is $p(x) = a + bx + cx^2 + dx^3$. The condition $p(1) = 0$ reads</p>
+<p>$$a + b + c + d = 0 \quad\Longrightarrow\quad a = -b - c - d,$$</p>
+<p>leaving $b, c, d$ free. Substituting back:</p>
+<p>$$p(x) = b(x - 1) + c(x^2 - 1) + d(x^3 - 1).$$</p>
+<p>Each free parameter multiplies one polynomial, and all three vanish at $x = 1$.</p>
+<p class="ans">A basis is $\{x - 1,\ x^2 - 1,\ x^3 - 1\}$.</p>
+<p><strong>(c)</strong> $\dim W = 3$ (three free parameters) and $\dim P_3 = 4$ (basis $\{1, x, x^2, x^3\}$). They differ by exactly $1$, the number of independent conditions imposed — the same "one equation, dimension drops by one" pattern as a plane inside $\mathbb{R}^3$.</p>
+<p><strong>(d)</strong> No. $\{x-1, x^2-1\}$ is independent and both polynomials lie in $W$, but there are only two of them, while $\dim W = 3$ — a basis of a $3$-dimensional space needs three vectors. (That pair <em>is</em> a basis for the $P_2$ version of this problem, where the condition leaves two free parameters.)</p>
+</div>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">$A = \begin{bmatrix}2 &amp; 1 &amp; 0 &amp; 1 &amp; 3\\ 4 &amp; 2 &amp; 1 &amp; 2 &amp; 5\\ 1 &amp; 0 &amp; 1 &amp; 1 &amp; 1\\ 3 &amp; 1 &amp; 1 &amp; 2 &amp; 4\end{bmatrix}$ with $R = \begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 1 &amp; 2\\ 0 &amp; 1 &amp; 0 &amp; -1 &amp; -1\\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; -1\\ 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0\end{bmatrix}$. Find bases for $\operatorname{Col}(A)$, $\operatorname{Row}(A)$, $\operatorname{Nul}(A)$; state rank and nullity; verify rank–nullity.</p>
+<div class="sol">
+<p><strong>(a)</strong> Pivots in columns <strong>1, 2, 3</strong>; free variables $\mathbf{x_4, x_5}$. So $\operatorname{rank}(A) = 3$.</p>
+<p><strong>(b)</strong> Pivot columns of the <em>original</em> matrix:</p>
+<p>$$\left\{\begin{bmatrix}2\\4\\1\\3\end{bmatrix}, \begin{bmatrix}1\\2\\0\\1\end{bmatrix}, \begin{bmatrix}0\\1\\1\\1\end{bmatrix}\right\}.$$</p>
+<p><strong>(c)</strong> Nonzero rows of $R$:</p>
+<p>$$\left\{\begin{bmatrix}1 &amp; 0 &amp; 0 &amp; 1 &amp; 2\end{bmatrix}, \begin{bmatrix}0 &amp; 1 &amp; 0 &amp; -1 &amp; -1\end{bmatrix}, \begin{bmatrix}0 &amp; 0 &amp; 1 &amp; 0 &amp; -1\end{bmatrix}\right\}.$$</p>
+<p><strong>(d)</strong> From $R$: $x_1 = -x_4 - 2x_5$, $x_2 = x_4 + x_5$, $x_3 = x_5$, with $x_4, x_5$ free. Hence</p>
+<p>$$\mathbf{x} = x_4\begin{bmatrix}-1\\1\\0\\1\\0\end{bmatrix} + x_5\begin{bmatrix}-2\\1\\1\\0\\1\end{bmatrix}.$$</p>
+<p>So a basis for $\operatorname{Nul}(A)$ is $\left\{\begin{bmatrix}-1\\1\\0\\1\\0\end{bmatrix}, \begin{bmatrix}-2\\1\\1\\0\\1\end{bmatrix}\right\}$.</p>
+<p><strong>(e)</strong> $\operatorname{rank}(A) = 3$, $\operatorname{nullity}(A) = 2$. Since $A$ has $n = 5$ columns,</p>
+<p>$$\operatorname{rank}(A) + \operatorname{nullity}(A) = 3 + 2 = 5 = n. \checkmark$$</p>
+<p><strong>(f)</strong> In (b) the vectors came from $A$; in (c) from $R$. The asymmetry is exactly the fact from Problem 10: row operations do not preserve the column space, so only the <em>positions</em> of the pivots can be borrowed from $R$ and the vectors themselves must be taken from $A$; but they do preserve the row space, so the rows themselves can be taken from $R$.</p>
+<p class="ans">$\dim\operatorname{Col}(A) = \dim\operatorname{Row}(A) = 3$, $\dim\operatorname{Nul}(A) = 2$. Sanity check: $A$ is $4 \times 5$, so $\operatorname{Col}(A) \subseteq \mathbb{R}^4$ (our three basis vectors have four entries $\checkmark$) and $\operatorname{Row}(A), \operatorname{Nul}(A) \subseteq \mathbb{R}^5$ (five entries $\checkmark$).</p>
+</div>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">A student proposes using the pivot columns of $R$ as a basis for $\operatorname{Col}(A)$. (a) Give a concrete counterexample. (b) Prove what row operations preserve. (c) Justify the two correct rules. (d) One-sentence conclusion.</p>
+<div class="sol">
+<p><strong>(a)</strong> Take $A = \begin{bmatrix}1 &amp; 1\\ 1 &amp; 1\end{bmatrix}$. Then $R = \begin{bmatrix}1 &amp; 1\\ 0 &amp; 0\end{bmatrix}$, whose pivot column is $\begin{bmatrix}1\\0\end{bmatrix}$. But</p>
+<p>$$\operatorname{Col}(A) = \operatorname{Span}\left\{\begin{bmatrix}1\\1\end{bmatrix}\right\} = \left\{t\begin{bmatrix}1\\1\end{bmatrix}\right\},$$</p>
+<p>the line $y = x$, and $\begin{bmatrix}1\\0\end{bmatrix}$ is not on that line. So the proposed vector does not even belong to $\operatorname{Col}(A)$ — it cannot be part of any basis for it.</p>
+<p><strong>(b)</strong> Row operations replace $A$ by $R = EA$ for some invertible $E$ (each elementary row operation is invertible, and so is their product).</p>
+<p><em>Row space is preserved.</em> Each row of $R$ is a combination of rows of $A$ (row operations only form combinations), so $\operatorname{Row}(R) \subseteq \operatorname{Row}(A)$. Since $E$ is invertible, $A = E^{-1}R$, and the same argument gives $\operatorname{Row}(A) \subseteq \operatorname{Row}(R)$. Hence $\operatorname{Row}(A) = \operatorname{Row}(R)$.</p>
+<p><em>Column dependence pattern is preserved.</em> For any coefficient vector $\mathbf{x}$,</p>
+<p>$$A\mathbf{x} = \mathbf{0} \iff EA\mathbf{x} = E\mathbf{0} = \mathbf{0} \iff R\mathbf{x} = \mathbf{0},$$</p>
+<p>where the forward direction uses only $E\mathbf{0} = \mathbf{0}$ and the reverse uses that $E$ is invertible (apply $E^{-1}$). So $A\mathbf{x} = \mathbf{0}$ and $R\mathbf{x} = \mathbf{0}$ have <em>exactly the same solution set</em>. Column $j$ of $A$ is redundant exactly when column $j$ of $R$ is redundant.</p>
+<p><strong>(c)</strong> <em>Why pivot columns of $A$ work.</em> Let the pivot columns be $a_{j_1}, \dots, a_{j_r}$. If a combination of them were zero, the same coefficients would give a combination of the pivot columns of $R$ equal to zero (by the preservation just proved) — but the pivot columns of $R$ are plainly independent (each has a $1$ in its own pivot row and $0$ in the others), so all coefficients are zero: the chosen columns of $A$ are independent. For spanning: every non-pivot column $a_j$ of $A$ is a combination of the earlier pivot columns of $A$, using precisely the coefficients displayed in column $j$ of $R$ (which expresses $x_j$ in terms of the free variables). Hence the pivot columns span all of $\operatorname{Col}(A)$.</p>
+<p><em>Why nonzero rows of $R$ work.</em> They span $\operatorname{Row}(R) = \operatorname{Row}(A)$, and they are independent because each contains a pivot entry that the rows below it do not — so they form a basis.</p>
+<p class="ans">Row operations preserve the row space and the dependence pattern of the columns, but not the column space itself. Hence: pivot <em>positions</em> from $R$, pivot <em>vectors</em> from $A$ for the column space; the rows themselves from $R$ for the row space.</p>
+</div>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">$A$ is $6 \times 9$ with $\operatorname{rank}(A) = 4$. Answer nine questions, then explain how they are connected.</p>
+<div class="sol">
+<p>$m = 6$ rows, $n = 9$ columns, $\operatorname{rank}(A) = 4$.</p>
+<p><strong>(a)</strong> Rank counts pivots, one per pivot column: $\mathbf{4}$.</p>
+<p><strong>(b)</strong> Every column is pivot or free: $9 - 4 = \mathbf{5}$.</p>
+<p><strong>(c)</strong> $\dim\operatorname{Col}(A) = \operatorname{rank}(A) = \mathbf{4}$.</p>
+<p><strong>(d)</strong> $\dim\operatorname{Row}(A) = \operatorname{rank}(A) = \mathbf{4}$.</p>
+<p><strong>(e)</strong> Rank–nullity: $\operatorname{nullity}(A) = 9 - 4 = \mathbf{5}$, and $\dim\operatorname{Nul}(A) = \operatorname{nullity}(A)$.</p>
+<p><strong>(f) No.</strong> Independence of $9$ columns requires $9$ pivots, i.e. $\operatorname{rank}(A) = 9$. Here $4 < 9$.</p>
+<p><strong>(g) No.</strong> $\operatorname{Col}(A) = \mathbb{R}^6$ requires $\dim\operatorname{Col}(A) = 6$, i.e. $\operatorname{rank}(A) = m = 6$. Here $4 < 6$.</p>
+<p><strong>(h) No.</strong> By the column-space characterization, $A\mathbf{x} = \mathbf{b}$ is solvable exactly when $\mathbf{b} \in \operatorname{Col}(A)$; by (g) that is not all of $\mathbb{R}^6$.</p>
+<p><strong>(i) No.</strong> When a solution exists, the full solution set is (one particular solution) $+ \operatorname{Nul}(A)$, and $\dim\operatorname{Nul}(A) = 5 > 0$, so there are always infinitely many — never exactly one.</p>
+<p class="ans">How they connect: all nine answers are readings of the single number $4$ against the two sizes $9$ (columns) and $6$ (rows). Compare rank with $n = 9$: $\operatorname{rank} = n \iff$ columns independent $\iff \operatorname{Nul}(A) = \{\mathbf{0}\} \iff$ solutions, when they exist, are unique. Compare rank with $m = 6$: $\operatorname{rank} = m \iff \operatorname{Col}(A) = \mathbb{R}^m \iff A\mathbf{x} = \mathbf{b}$ solvable for every $\mathbf{b}$. Here $4$ is smaller than <em>both</em>, so $A$ fails on both counts: dependent columns (f), and not every $\mathbf{b}$ is reachable (g, h). And because the nullity is positive (b, e), uniqueness is impossible (i). The three "no"s in (f)–(i) are one fact seen from three sides.</p>
+</div>
+</div>
+
+<!-- ===================== 12 ===================== -->
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">$v_1 = (1,0,1,0)$, $v_2 = (0,1,-1,1)$, $v_3 = (1,1,1,0)$ in $\mathbb{R}^4$. (a) Independent? (b) $\dim S$ for $S = \operatorname{Span}\{v_1,v_2,v_3\}$. (c) Extend to a basis of $\mathbb{R}^4$ with one standard vector — which ones work? (d) General method.</p>
+<div class="sol">
+<p><strong>(a)</strong> Suppose $a v_1 + b v_2 + c v_3 = \mathbf{0}$. Reading the four components:</p>
+<p>$$a + c = 0, \qquad b + c = 0, \qquad a - b + c = 0, \qquad b = 0.$$</p>
+<p>From $b = 0$ and $b + c = 0$ we get $c = 0$, and then $a + c = 0$ gives $a = 0$ (the third equation is then automatic). The only combination giving zero is the trivial one, so the three vectors are <strong>linearly independent</strong>.</p>
+<p><strong>(b)</strong> $\dim S = 3$.</p>
+<p><strong>(c)</strong> We need a standard vector that is <em>not</em> already in $S$. Test each by solving $a v_1 + b v_2 + c v_3 = e_j$:</p>
+<p>For $e_1 = (1,0,0,0)$: $a + c = 1$, $b + c = 0$, $a - b + c = 0$, $b = 0$ $\Rightarrow$ $c = 0$, $a = 1$, and $1 - 0 + 0 = 1 \ne 0$. Inconsistent, so $e_1 \notin S$ — <strong>$e_1$ works.</strong></p>
+<p>For $e_2 = (0,1,0,0)$: $a + c = 0$, $b + c = 1$, $a - b + c = 0$, $b = 0$ $\Rightarrow$ $c = 1$, $a = -1$, and $-1 - 0 + 1 = 0$ $\checkmark$. Consistent, so $e_2 = -v_1 + v_3 \in S$ — <strong>$e_2$ does not work.</strong></p>
+<p>For $e_3 = (0,0,1,0)$: $a + c = 0$, $b + c = 0$, $a - b + c = 1$, $b = 0$ $\Rightarrow$ $c = 0$, $a = 0$, and $0 - 0 + 0 = 0 \ne 1$. Inconsistent — <strong>$e_3$ works.</strong></p>
+<p>For $e_4 = (0,0,0,1)$: $a + c = 0$, $b + c = 0$, $a - b + c = 0$, $b = 1$ $\Rightarrow$ $c = -1$, $a = 1$, and $1 - 1 - 1 = -1 \ne 0$. Inconsistent — <strong>$e_4$ works.</strong></p>
+<p class="ans">Adding $e_1$, $e_3$ or $e_4$ gives a basis of $\mathbb{R}^4$; adding $e_2$ does not. For example $\{v_1, v_2, v_3, e_1\}$ is a basis — four independent vectors in a $4$-dimensional space.</p>
+<p><strong>(d)</strong> General method: start with the independent set and add candidate vectors one at a time, keeping a candidate only if it increases the rank (equivalently, only if it is not already in the span of the vectors kept so far). This must terminate because the rank can never exceed the dimension of the ambient space: once you hold $d$ independent vectors in a $d$-dimensional space, you have a basis, and no further vector can be independent of them. Here $d = 4$ and we started with $3$, so a single successful addition finishes the job.</p>
+</div>
+</div>
+
+<!-- ===================== 13 ===================== -->
+<h2>Problem 13</h2>
+<div class="q">
+<p class="prob">Let $A$ be $n \times n$. (a) Prove the equivalence of: $\operatorname{rank}(A) = n$; $\operatorname{nullity}(A) = 0$; $A\mathbf{x} = \mathbf{0}$ has only the trivial solution; $A$ has a pivot in every column. (b) Relate these to invertibility. (c) Close the loop with $\det A \ne 0$ and column independence.</p>
+<div class="sol">
+<p>Since $A$ is $n \times n$ it has $n$ columns (and $n$ rows), and $\operatorname{rank}(A)$ is the number of pivots. Rank–nullity gives $\operatorname{rank}(A) + \operatorname{nullity}(A) = n$.</p>
+<p><strong>(i) $\iff$ (iv).</strong> There are $n$ columns, so "$n$ pivots" and "a pivot in every column" are the same statement.</p>
+<p><strong>(i) $\iff$ (ii).</strong> From $\operatorname{rank}(A) + \operatorname{nullity}(A) = n$: if $\operatorname{rank}(A) = n$ then $\operatorname{nullity}(A) = n - n = 0$; and if $\operatorname{nullity}(A) = 0$ then $\operatorname{rank}(A) = n - 0 = n$.</p>
+<p><strong>(ii) $\iff$ (iii).</strong> $\operatorname{Nul}(A) = \{\mathbf{x} : A\mathbf{x} = \mathbf{0}\}$, and $\dim \operatorname{Nul}(A) = \operatorname{nullity}(A)$. A nullity of $0$ means the null space is $\{\mathbf{0}\}$, i.e. the only solution of $A\mathbf{x} = \mathbf{0}$ is $\mathbf{x} = \mathbf{0}$; any positive nullity supplies nonzero vectors in the null space, i.e. nontrivial solutions.</p>
+<p>So (i) $\to$ (iv), (i) $\to$ (ii) $\to$ (iii), and each implication reverses, giving a cycle: all four statements are equivalent.</p>
+<p><strong>(b) Relation to invertibility.</strong> $A$ invertible means $A\mathbf{x} = \mathbf{b}$ has a unique solution for every $\mathbf{b}$, which requires a pivot in every row <em>and</em> a pivot in every column. For a square matrix these collapse into one condition: $n$ pivots fill all $n$ rows and all $n$ columns simultaneously. So "pivot in every column" — statement (iv) — is already enough, whereas for a rectangular $m \times n$ matrix a pivot in every column (rank $= n$) says nothing about the rows and would not imply invertibility.</p>
+<p><strong>(c) Closing the loop.</strong> The columns of $A$ are independent exactly when $A\mathbf{x} = \mathbf{0}$ has only the trivial solution — a nontrivial solution <em>is</em> a dependence relation among the columns — so (iii) is equivalent to column independence. And from the determinant material: $A$ is invertible $\iff \det A \ne 0$. Therefore</p>
+<p class="ans">$\operatorname{rank}(A) = n \iff \operatorname{nullity}(A) = 0 \iff A\mathbf{x} = \mathbf{0}$ has only the trivial solution $\iff$ pivot in every column $\iff$ columns independent $\iff A$ invertible $\iff \det A \ne 0$. In one phrase, a square matrix with "full rank" is an invertible matrix, and every one of these tests detects the same property.</p>
+</div>
+</div>
+
+</div>
+</body>
+</html>
