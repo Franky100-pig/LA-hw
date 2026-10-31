@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 6</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 6</h1>
+<div class="meta">Eigenvalues &amp; Eigenvectors · Mostly 2×2, deliberately computational-light · 11 problems · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Sets 1–5 built the vocabulary — determinants, elimination, independence, the three subspaces. This set asks what happens when a single vector meets a matrix and survives: $A\mathbf{v} = \lambda \mathbf{v}$. The whole payoff fits in one sentence: <strong>on an eigenvector, multiplication by $A$ is multiplication by a number</strong> — which is why $A^{100}\mathbf{v}$, the long-run behaviour of a repeated process, and even the shape of $A$ itself become arithmetic on $\lambda$ instead of matrix algebra. The numbers here are deliberately tiny so the effort goes into <em>why</em> rather than <em>how long</em>; almost every answer can be checked with a single multiplication, and failures are part of the syllabus: repeated roots with too few vectors (Problems 7), complex roots with no real direction (Problem 8), and $\lambda = 0$ (Problem 5). Structurally the set is one idea defended from three sides — recognise eigenvectors without grinding (Problems 2, 3), understand the eigenspace as a subspace (Problem 4), and know what survives a change of coordinates (Problems 9, 10). Verification at any point is one click away in the <a href="https://la-helper.app.workbuddy.host/" style="color:var(--accent)">LA Helper</a> calculator.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1 — What the definition says (and why $\mathbf{v} \ne \mathbf{0}$)</h2>
+<div class="q">
+<p class="prob">$$A = \begin{bmatrix} 3 & 0 \\ 0 & -1 \end{bmatrix}$$</p>
+<p class="prob">(a) Compute $A\mathbf{v}$ for each of $\mathbf{v} = (1,0),\ (0,1),\ (1,1),\ (2,0)$. In which cases is $A\mathbf{v}$ a scalar multiple of $\mathbf{v}$? Name the eigenvalue each time.</p>
+<p class="prob">(b) A student argues: &ldquo;$A\mathbf{0} = \mathbf{0} = \lambda\,\mathbf{0}$ for <em>every</em> number $\lambda$, so every scalar is an eigenvalue of every matrix, with eigenvector $\mathbf{0}$.&rdquo; Which word of the definition rules this out, and — more usefully — what information would the word &ldquo;eigenvalue&rdquo; retain if we allowed it?</p>
+<p class="prob">(c) Describe geometrically what $A$ does to the unit square with corners $(0,0),(1,0),(1,1),(0,1)$. Explain why the directions you found in (a) are exactly the ones that survive as lines through the origin.</p>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2 — Spotting eigenvectors without a characteristic polynomial</h2>
+<div class="q">
+<p class="prob">$$B = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}, \qquad C = \begin{bmatrix} 0 & 1 & 1 \\ 1 & 0 & 1 \\ 1 & 1 & 0 \end{bmatrix}$$</p>
+<p class="prob">(a) Multiply $B(1,1)$ and $B(1,-1)$. Without computing $\det(B - \lambda I)$, read off two eigenvalues of $B$.</p>
+<p class="prob">(b) Explain how $\operatorname{tr} B$ and $\det B$ let you conclude those are <em>all</em> the eigenvalues — say precisely what two facts you are using.</p>
+<p class="prob">(c) Every row of $C$ adds to the same number $s$. Prove in one line that $(1,1,1)$ is an eigenvector of $C$, then verify it by multiplication.</p>
+<p class="prob">(d) Using only $\operatorname{tr} C$, $\det C$ and the eigenvalue from (c), determine the remaining two eigenvalues of $C$ without writing $\det(C - \lambda I)$.</p>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3 — The full procedure, once and carefully</h2>
+<div class="q">
+<p class="prob">$$A = \begin{bmatrix} 4 & 1 \\ 2 & 3 \end{bmatrix}$$</p>
+<p class="prob">(a) Write down $A - \lambda I$, compute $\det(A - \lambda I)$, and factor it to obtain the characteristic equation.</p>
+<p class="prob">(b) Solve for the eigenvalues. Check them two ways: their sum against $\operatorname{tr} A$, their product against $\det A$.</p>
+<p class="prob">(c) For each eigenvalue, substitute it into $A - \lambda I$ and solve $(A - \lambda I)\mathbf{v} = \mathbf{0}$. Give each eigenspace as a basis times a free parameter.</p>
+<p class="prob">(d) Verify both answers by computing $A\mathbf{v}$ and comparing it with $\lambda\mathbf{v}$. Why is this last step not optional?</p>
+<p class="prob">(e) Both reduced matrices in (c) have rank 1. Explain what would have gone wrong if one of them had come out rank 0.</p>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4 — The eigenspace is a subspace; the eigenvectors are not</h2>
+<div class="q">
+<p class="prob">Keep $A = \begin{bmatrix}4 & 1 \\ 2 & 3\end{bmatrix}$ from Problem 3, where the results are $A(1,1) = 5(1,1)$ and $A(1,-2) = 2(1,-2)$. Let $E_\lambda$ denote the eigenspace for $\lambda$ <em>together with</em> the zero vector.</p>
+<p class="prob">(a) Prove directly from $A\mathbf{v} = \lambda\mathbf{v}$ — no null spaces yet — that if $\mathbf{v}, \mathbf{w} \in E_\lambda$ then every combination $c\mathbf{v} + d\mathbf{w}$ is also in $E_\lambda$.</p>
+<p class="prob">(b) Now identify $E_\lambda$ with $\operatorname{Nul}(A - \lambda I)$ and explain why (a) was guaranteed before you started.</p>
+<p class="prob">(c) Compute $A\big((1,1) + (1,-2)\big) = A(2,-1)$ and decide whether the sum is an eigenvector. What does this say about the union $E_5 \cup E_2$ as a subspace?</p>
+<p class="prob">(d) Under what precise condition is the sum of two eigenvectors again an eigenvector? State the corrected version of the tempting rule &ldquo;eigenvectors are closed under addition&rdquo;.</p>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5 — $\lambda = 0$, invertibility, and reading eigenvalues off trace and determinant</h2>
+<div class="q">
+<p class="prob">(a) Prove that $0$ is an eigenvalue of $A$ if and only if $A$ is singular. (Chain the equivalences explicitly.)</p>
+<p class="prob">(b) $M = \begin{bmatrix}1 & 2 \\ 2 & 4\end{bmatrix}$. Without forming a characteristic polynomial, find both eigenvalues. Then find a basis for each eigenspace.</p>
+<p class="prob">(c) $N$ is $3 \times 3$ with $\det N = 6$, $\operatorname{tr} N = 6$, and two known eigenvalues $1$ and $2$. Find the third eigenvalue, say whether $N$ is invertible, and list the eigenvalues of $N^{-1}$ and of $N^2$.</p>
+<p class="prob">(d) Explain in general why $\det A$ being the <em>product</em> of the eigenvalues makes &ldquo;$A$ is singular&rdquo; and &ldquo;some eigenvalue is $0$&rdquo; the same statement.</p>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6 — Distinct eigenvalues buy independence</h2>
+<div class="q">
+<p class="prob">(a) Suppose $A\mathbf{v} = \lambda\mathbf{v}$, $A\mathbf{w} = \mu\mathbf{w}$ with $\lambda \ne \mu$. Prove that $\mathbf{v}$ and $\mathbf{w}$ are linearly independent. (Start with $c\mathbf{v} + d\mathbf{w} = \mathbf{0}$, apply $A$, then subtract $\lambda$ times the original equation.) Point out exactly where $\lambda \ne \mu$ and $\mathbf{w} \ne \mathbf{0}$ are used.</p>
+<p class="prob">(b) Explain why (a) immediately gives: an $n \times n$ matrix with $n$ distinct eigenvalues is diagonalisable. Apply it to the matrix $A$ of Problem 3.</p>
+<p class="prob">(c) Is the converse true — must a diagonalisable matrix have distinct eigenvalues? Give a counterexample and explain why being <em>already diagonal</em> is the extreme case.</p>
+<p class="prob">(d) Does anything in (a) require the eigenvalues to be real? Discuss briefly.</p>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7 — Repeated root, missing vectors: the shear</h2>
+<div class="q">
+<p class="prob">$$S = \begin{bmatrix} 2 & 1 \\ 0 & 2 \end{bmatrix}$$</p>
+<p class="prob">(a) Compute the characteristic polynomial of $S$ and state the algebraic multiplicity of its eigenvalue.</p>
+<p class="prob">(b) Solve $(S - 2I)\mathbf{v} = \mathbf{0}$. How many linearly independent eigenvectors are there? Give the geometric multiplicity.</p>
+<p class="prob">(c) Give two independent arguments that $S$ is not diagonalisable: one counting eigenvectors, and one arguing that if $S = PDP^{-1}$ then every diagonal entry of $D$ would have to be $2$, forcing $S = 2I$.</p>
+<p class="prob">(d) Contrast with $2I = \begin{bmatrix}2 & 0 \\ 0 & 2\end{bmatrix}$: same eigenvalue, same algebraic multiplicity, but it <em>is</em> diagonalisable. Name exactly what separates them.</p>
+<p class="prob">(e) Describe geometrically what $S$ does to the plane, and why the single eigendirection you found is the only line that stays put.</p>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8 — Complex eigenvalues mean rotate-and-scale</h2>
+<div class="q">
+<p class="prob">$$R = \begin{bmatrix} 0 & -1 \\ 1 & 0 \end{bmatrix}, \qquad H = \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}, \qquad K = \begin{bmatrix} 1 & -1 \\ 1 & 1 \end{bmatrix}$$</p>
+<p class="prob">(a) Compute the characteristic polynomial of $R$ and its eigenvalues. Explain, without any algebra, why $R$ can have <em>no</em> real eigenvector.</p>
+<p class="prob">(b) Do the same for the reflection $H$, and find its eigenvectors. Why does swapping two numbers change complex roots into real ones? (Compare $\det R$ and $\det H$; both have trace $0$.)</p>
+<p class="prob">(c) For $K$, compute the eigenvalues $1 \pm i$. Write them in polar form $re^{\pm i\theta}$ and predict what $K$ does to a vector geometrically. Test the prediction on $(1,0) \mapsto K(1,0)$: does the length scale by $r$ and the direction turn by $\theta$?</p>
+<p class="prob">(d) State the general dictionary: a conjugate pair $a \pm bi$ corresponds to what combination of rotation and scaling? What real matrices are guaranteed never to produce complex eigenvalues?</p>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9 — Diagonalisation and the power of powers</h2>
+<div class="q">
+<p class="prob">Back to $A = \begin{bmatrix}4 & 1 \\ 2 & 3\end{bmatrix}$ (Problem 3: $\lambda = 5$ with $(1,1)$, $\lambda = 2$ with $(1,-2)$). Take $$P = \begin{bmatrix} 1 & 1 \\ 1 & -2 \end{bmatrix}, \qquad D = \begin{bmatrix} 5 & 0 \\ 0 & 2 \end{bmatrix}.$$</p>
+<p class="prob">(a) Compute $AP$ and $PD$ column by column. Explain why checking $AP = PD$ is the <em>same</em> statement as &ldquo;the columns of $P$ are eigenvectors of $A$&rdquo;, and why that means you never have to invert anything to recognise a diagonalisation.</p>
+<p class="prob">(b) Compute $P^{-1}$ and verify $A = PDP^{-1}$ explicitly.</p>
+<p class="prob">(c) Write $(2,-1)$ as a combination of the two eigenvectors. Then give a formula for $A^k(2,-1)$ for every $k \ge 1$ with no matrix multiplication at all. Check it at $k = 1$ and $k = 2$.</p>
+<p class="prob">(d) What does $A^k(2,-1)$ look like when divided by $5^k$ and $k \to \infty$? Explain why the largest $|\lambda|$ governs the long run, and identify that limiting direction geometrically.</p>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10 — Similar matrices: what survives a change of coordinates</h2>
+<div class="q">
+<p class="prob">Let $B = P^{-1}AP$ for some invertible $P$.</p>
+<p class="prob">(a) Show that $A$ and $B$ have the same characteristic polynomial, hence the same eigenvalues with the same algebraic multiplicities. (Use $\det(XY) = \det X \det Y$.)</p>
+<p class="prob">(b) Show that eigenvectors are <em>not</em> preserved: if $A\mathbf{v} = \lambda \mathbf{v}$, prove $B(P^{-1}\mathbf{v}) = \lambda (P^{-1}\mathbf{v})$. Verify this concretely using $A$ and $P$ from Problem 9, where $B = \begin{bmatrix}5 & 0 \\ 0 & 2\end{bmatrix}$: compute $P^{-1}(1,1)$ and $P^{-1}(1,-2)$.</p>
+<p class="prob">(c) Show the converse of (a) fails: exhibit two matrices with identical eigenvalues (counting multiplicity) that are not similar. Use $S$ from Problem 7 and $2I$, and argue from eigenvalues alone that no invertible $P$ can connect them.</p>
+<p class="prob">(d) List three quantities that are the same for all similar matrices, and explain why &ldquo;same eigenvalues&rdquo; is a statement about an invariant while &ldquo;same eigenvectors&rdquo; is not.</p>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11 — True or false, with a one-line reason</h2>
+<div class="q">
+<p class="prob">Decide each statement. A correct answer with the wrong justification is a wrong answer — give the counterexample or the proof.</p>
+<p class="prob">(i) Every real $2 \times 2$ matrix has a real eigenvalue.</p>
+<p class="prob">(ii) If $0$ is an eigenvalue of $A$, then $A$ is singular — and conversely.</p>
+<p class="prob">(iii) If $\mathbf{v}$ is an eigenvector of $A$ with eigenvalue $\lambda$, then $\mathbf{v}$ is an eigenvector of $A + 3I$ with eigenvalue $\lambda + 3$.</p>
+<p class="prob">(iv) If $\mathbf{v}$ is an eigenvector of $A$, then $\mathbf{v}$ is an eigenvector of $A^{T}$. (Test $(1,1)$ with the matrix of Problem 3, then say what $A$ and $A^{T}$ <em>do</em> share.)</p>
+<p class="prob">(v) The sum of two eigenvectors of $A$ is always an eigenvector of $A$.</p>
+<p class="prob">(vi) Eigenvectors belonging to distinct eigenvalues are linearly independent.</p>
+<p class="prob">(vii) Two matrices with the same characteristic polynomial are similar.</p>
+</div>
+
+<p class="note">Stuck, or found an error? Every problem here is original work — please open an <a href="https://github.com/Franky100-pig/LA-hw/issues/new" style="color:var(--accent)">issue on LA-hw</a> and quote the problem number.</p>
+
+</div>
+</body>
+</html>

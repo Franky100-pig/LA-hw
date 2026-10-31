@@ -14,6 +14,8 @@ Set 4 steps back from computation to concepts: what makes a set a vector space o
 
 Set 5 turns that vocabulary into computation. Every matrix carries three subspaces — Col(A), Row(A) and Nul(A) — and the whole point of row reduction is to describe them. One asymmetry organizes the entire set: **row operations preserve the row space and the dependence pattern of the columns, but not the column space itself.** That is why the basis for Col(A) is read off the original matrix while the basis for Row(A) is read off the reduced one, and Problem 10 is devoted to the misconception that comes from getting this backwards. The set closes with rank–nullity, which converts "shape plus one number" into answers about pivots, independence and solvability, and with the equivalence chain that ties rank, nullity, pivots and invertibility into a single fact.
 
+Set 6 is the conceptual set on eigenvalues and eigenvectors, and it is deliberately light on arithmetic: the numbers are almost all 2×2, so the work goes into *why* rather than *how long*. The payoff has one sentence behind it — **on an eigenvector, multiplication by $A$ is multiplication by a number** — and everything else is a consequence: powers $A^k\mathbf{v}$ become $\lambda^k\mathbf{v}$, and the long-run behaviour of a repeated process is decided by the largest $|\lambda|$. Three failure modes are treated as part of the syllabus rather than as exceptions: repeated roots with too few eigenvectors (the shear $\begin{bmatrix}2&1\\0&2\end{bmatrix}$, Problem 7), complex roots with no real direction (the rotation $\begin{bmatrix}0&-1\\1&0\end{bmatrix}$, Problem 8), and $\lambda = 0$ sitting exactly at singularity (Problem 5). Problems 4, 10 and 11 are the misconception patrol — the sum of eigenvectors is *not* an eigenvector, same eigenvalues do *not* imply similar, and diagonalisable does *not* require distinct eigenvalues. Every answer is checkable with one multiplication, which is the point: verification should cost less than the original computation.
+
 ## Contents
 
 | Set | Topics | Problems | Solutions |
@@ -23,12 +25,22 @@ Set 5 turns that vocabulary into computation. Every matrix carries three subspac
 | Set 3 | Linear Independence, Bases & Dimension | [`.pdf`](set3/problems.pdf) · [`.html`](set3/problems.html) | [`.pdf`](set3/solutions.pdf) · [`.docx`](set3/solutions.docx) · [`.html`](set3/solutions.html) |
 | Set 4 | Vector Spaces & Bases | [`.pdf`](set4/problems.pdf) · [`.html`](set4/problems.html) | [`.pdf`](set4/solutions.pdf) · [`.docx`](set4/solutions.docx) · [`.html`](set4/solutions.html) |
 | Set 5 | Column, Row & Null Spaces; Rank & Nullity | [`.pdf`](set5/problems.pdf) · [`.html`](set5/problems.html) | [`.pdf`](set5/solutions.pdf) · [`.docx`](set5/solutions.docx) · [`.html`](set5/solutions.html) |
+| Set 6 | Eigenvalues & Eigenvectors (conceptual) | [`.pdf`](set6/problems.pdf) · [`.html`](set6/problems.html) | [`.pdf`](set6/solutions.pdf) · [`.docx`](set6/solutions.docx) · [`.html`](set6/solutions.html) |
 
 Solution formats:
 
 - **`.docx`** — editable, native Word equations (opens in Word, Pages, WPS, Google Docs)
 - **`.pdf`** — LaTeX-typeset, fixed layout
 - **`.html`** — self-contained, MathJax-rendered (open in a browser)
+
+## Questions & corrections
+
+If a solution looks wrong, an assumption is unstated, or a problem does not make sense, please **open an issue on [LA-hw/issues](https://github.com/Franky100-pig/LA-hw/issues/new)** and quote the set and problem number (e.g. `Set 6, Problem 7(c)`). Corrections with a counterexample are especially welcome.
+
+Two separate places, to keep reports from getting lost:
+
+- **Problem sets** (statements, solutions, typos) → [LA-hw issues](https://github.com/Franky100-pig/LA-hw/issues)
+- **The calculator** (engine errors, wrong output, UI) → [LA-Helper issues](https://github.com/Franky100-pig/LA-Helper/issues)
 
 ## 应用科普 · Applied reading
 

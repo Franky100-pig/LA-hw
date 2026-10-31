@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 6 — Solutions</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 6 — Solutions</h1>
+<div class="meta">Eigenvalues &amp; Eigenvectors · Full solutions · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">Two habits run through every solution below. First, <strong>eigenvectors are verified, never derived in silence</strong>: once a candidate is produced, one multiplication $A\mathbf{v}$ settles whether it is right, and that check is written out each time. Second, <strong>trace and determinant are used as a standing audit</strong> — the eigenvalues must sum to $\operatorname{tr}A$ and multiply to $\det A$ — which is why several problems ask for the spectrum without ever expanding $\det(A - \lambda I)$. Where a problem exposes a misconception (Problems 4, 7, 11) the counterexample is the answer; keep the specific numbers $\bigl((2,-1)$, the shear $\begin{bmatrix}2&1\\0&2\end{bmatrix}$, the rotation $\begin{bmatrix}0&-1\\1&0\end{bmatrix}\bigr)$ in memory, since they settle almost every tempting false statement.</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">$A = \begin{bmatrix}3&0\\0&-1\end{bmatrix}$. (a) Test four vectors. (b) Why $\mathbf{v}\ne\mathbf{0}$ in the definition. (c) Geometric picture.</p>
+<div class="sol">
+<p><strong>(a)</strong> Multiply each one out:</p>
+<p>$$A\begin{bmatrix}1\\0\end{bmatrix} = \begin{bmatrix}3\\0\end{bmatrix} = 3\begin{bmatrix}1\\0\end{bmatrix}, \qquad A\begin{bmatrix}0\\1\end{bmatrix} = \begin{bmatrix}0\\-1\end{bmatrix} = (-1)\begin{bmatrix}0\\1\end{bmatrix}, \qquad A\begin{bmatrix}1\\1\end{bmatrix} = \begin{bmatrix}3\\-1\end{bmatrix}, \qquad A\begin{bmatrix}2\\0\end{bmatrix} = \begin{bmatrix}6\\0\end{bmatrix} = 3\begin{bmatrix}2\\0\end{bmatrix}.$$</p>
+<p>So $(1,0)$ and $(2,0)$ are eigenvectors with $\lambda = 3$ (they lie on the same line, which is why the second one adds nothing new), $(0,1)$ is an eigenvector with $\lambda = -1$, and $(1,1)$ is <em>not</em> an eigenvector: $(3,-1) = c(1,1)$ would force $c = 3$ and $c = -1$ at once.</p>
+<p class="ans">Eigenvalues found: $\lambda = 3$ (direction $(1,0)$) and $\lambda = -1$ (direction $(0,1)$).</p>
+<p><strong>(b)</strong> The definition requires the eigenvector to be <strong>non-zero</strong>. If $\mathbf{0}$ were allowed, then $A\mathbf{0} = \mathbf{0} = \lambda\mathbf{0}$ would hold for every scalar $\lambda$, so every matrix would have every number as an eigenvalue. The spectrum would carry zero information, and every theorem that depends on it would collapse: there would be no finite list of $n$ roots to speak of, "$\det A$ = product of the eigenvalues" and "$\operatorname{tr}A$ = sum of the eigenvalues" would be meaningless, and "there is a basis of eigenvectors" would be trivially true everywhere. Insisting on $\mathbf{v} \ne \mathbf{0}$ is exactly what makes the eigenvalue list finite and worth computing.</p>
+<p><strong>(c)</strong> Corners go $(0,0)\mapsto(0,0)$, $(1,0)\mapsto(3,0)$, $(1,1)\mapsto(3,-1)$, $(0,1)\mapsto(0,-1)$: the unit square becomes a $3\times 1$ rectangle below the $x$-axis. Horizontally everything is stretched by $3$; vertically everything is flipped through the origin (length unchanged, sign reversed). The horizontal direction therefore stays on itself, and the vertical direction also stays on its <em>line</em> — being reversed still means $A\mathbf{v}$ lies on the same line through the origin, which is all $A\mathbf{v} = \lambda \mathbf{v}$ asks for, with $\lambda = -1$. Every other direction fails: the line $y = x$ lands along $(3,-1)$, slope $-\tfrac13 \ne 1$.</p>
+</div>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">Eigenvalues without the characteristic polynomial, for $B = \begin{bmatrix}2&1\\1&2\end{bmatrix}$ and $C = \begin{bmatrix}0&1&1\\1&0&1\\1&1&0\end{bmatrix}$.</p>
+<div class="sol">
+<p><strong>(a)</strong> Just multiply the two obvious symmetric directions:</p>
+<p>$$B\begin{bmatrix}1\\1\end{bmatrix} = \begin{bmatrix}3\\3\end{bmatrix} = 3\begin{bmatrix}1\\1\end{bmatrix}, \qquad B\begin{bmatrix}1\\-1\end{bmatrix} = \begin{bmatrix}1\\-1\end{bmatrix} = 1\cdot\begin{bmatrix}1\\-1\end{bmatrix}.$$</p>
+<p class="ans">So $\lambda = 3$ (direction $(1,1)$) and $\lambda = 1$ (direction $(1,-1)$) — no determinant expansion needed.</p>
+<p><strong>(b)</strong> Two facts close the door on anything else. (i) $\det(B - \lambda I)$ is a polynomial of degree $2$ in $\lambda$, so counting multiplicity there are exactly $2$ eigenvalues and no more; we have already found two <em>distinct</em> ones. (ii) The two identities act as an audit: $\lambda_1 + \lambda_2 = 3 + 1 = 4 = \operatorname{tr}B = 2 + 2$ and $\lambda_1\lambda_2 = 3\cdot 1 = 3 = \det B = 4 - 1$, both matching. So the list $\{1, 3\}$ is complete.</p>
+<p><strong>(c)</strong> If every row of $A$ sums to $s$, then the $i$-th entry of $A\mathbf{1}$ is (row $i$ of $A)\cdot\mathbf{1} = s$, i.e.</p>
+<p>$$A\begin{bmatrix}1\\ \vdots \\ 1\end{bmatrix} = \begin{bmatrix}s\\ \vdots \\ s\end{bmatrix} = s\begin{bmatrix}1\\ \vdots \\ 1\end{bmatrix},$$</p>
+<p>so $(1,\dots,1)$ is an eigenvector with eigenvalue $s$ — the vector of all ones always "sums up" a row. Here: $C(1,1,1) = (1+1,\ 1+1,\ 1+1) = (2,2,2) = 2(1,1,1)$, so $\lambda = 2$. (Note the columns also sum to $2$, which is not what we used — the statement is about rows.)</p>
+<p><strong>(d)</strong> For a $3\times3$ matrix $-\lambda^3 + (\operatorname{tr}C)\lambda^2 - \cdots$ shows $\lambda_1+\lambda_2+\lambda_3 = \operatorname{tr}C = 0$ and $\lambda_1\lambda_2\lambda_3 = \det C = 2$. With $\lambda_1 = 2$: the other two satisfy $\lambda_2+\lambda_3 = -2$ and $\lambda_2\lambda_3 = 2/2 = 1$, so they are the roots of $x^2 + 2x + 1 = (x+1)^2$. Hence the remaining eigenvalues coincide:</p>
+<p class="ans">Spectrum of $C$: $\{2, -1, -1\}$ (with $-1$ of algebraic multiplicity $2$). Audit: $2 + (-1) + (-1) = 0 = \operatorname{tr}C$ and $2(-1)(-1) = 2 = \det C$.</p>
+<p class="note">The moral of (a)–(c): verifying a guessed eigenvector costs one multiplication, whereas grinding the polynomial costs half a page. Structure (symmetry, equal row sums, diagonal shape) is usually telling you the answer for free.</p>
+</div>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3 — Full procedure for $A = \begin{bmatrix}4&1\\2&3\end{bmatrix}$</h2>
+<div class="q">
+<p class="prob">(a) characteristic polynomial, (b) eigenvalues with the trace/determinant audit, (c) both eigenspaces, (d) verification, (e) what rank $0$ would have meant.</p>
+<div class="sol">
+<p><strong>(a)</strong> Subtracting $\lambda$ touches only the diagonal:</p>
+<p>$$A - \lambda I = \begin{bmatrix}4-\lambda & 1\\ 2 & 3-\lambda\end{bmatrix}, \qquad \det(A-\lambda I) = (4-\lambda)(3-\lambda) - 2\cdot 1 = \lambda^2 - 7\lambda + 12 - 2 = \lambda^2 - 7\lambda + 10 = (\lambda-2)(\lambda-5).$$</p>
+<p><strong>(b)</strong> Characteristic equation $(\lambda-2)(\lambda-5) = 0$ gives $\lambda = 2$ and $\lambda = 5$. Audit: sum $= 7 = \operatorname{tr}A = 4+3$ ✓, product $= 10 = \det A = 12 - 2$ ✓.</p>
+<p><strong>(c)</strong> Each eigenvalue gets its own substitution and its own reduction.</p>
+<p>$\lambda = 5$: $\; A - 5I = \begin{bmatrix}-1 & 1\\ 2 & -2\end{bmatrix} \longrightarrow \begin{bmatrix}1 & -1\\ 0 & 0\end{bmatrix}$, so $-x + y = 0$, i.e. $y = x$ with $x$ free:</p>
+<p>$$\mathbf{v} = t\begin{bmatrix}1\\1\end{bmatrix}, \quad t \ne 0.$$</p>
+<p>$\lambda = 2$: $\; A - 2I = \begin{bmatrix}2 & 1\\ 2 & 1\end{bmatrix} \longrightarrow \begin{bmatrix}2 & 1\\ 0 & 0\end{bmatrix}$, so $2x + y = 0$, i.e. $y = -2x$ with $x$ free:</p>
+<p>$$\mathbf{v} = t\begin{bmatrix}1\\-2\end{bmatrix}, \quad t \ne 0.$$</p>
+<p class="ans">Eigenspace $E_5 = \operatorname{Span}\{(1,1)\}$, &nbsp; $E_2 = \operatorname{Span}\{(1,-2)\}$. Each is a <em>line</em>: write answers with the free parameter and remember $t \ne 0$ (Problem 1(b)).</p>
+<p><strong>(d)</strong> Two multiplications:</p>
+<p>$$A\begin{bmatrix}1\\1\end{bmatrix} = \begin{bmatrix}4+1\\2+3\end{bmatrix} = \begin{bmatrix}5\\5\end{bmatrix} = 5\begin{bmatrix}1\\1\end{bmatrix}\ \checkmark, \qquad A\begin{bmatrix}1\\-2\end{bmatrix} = \begin{bmatrix}4-2\\2-6\end{bmatrix} = \begin{bmatrix}2\\-4\end{bmatrix} = 2\begin{bmatrix}1\\-2\end{bmatrix}\ \checkmark .$$</p>
+<p>This step is not optional because it is the <em>definition</em> — everything before it was bookkeeping. It catches exactly the errors that are easy to make and hard to see: a sign slip in expanding $(4-\lambda)(3-\lambda)$, a wrong constant term (it is $-2$, from the off-diagonal product), and the classic mix-up of pairing $\lambda = 5$ with the vector computed for $\lambda = 2$.</p>
+<p><strong>(e)</strong> In $\mathbb{R}^2$ an eigenspace of dimension $1$ needs $\operatorname{rank}(A-\lambda I) = 1$: one pivot, one free variable, a line of eigenvectors. If $A - \lambda I$ had come out rank $0$ it would be the zero matrix, meaning $A = \lambda I$ itself — then every non-zero vector is an eigenvector, the eigenspace is the whole plane, and this $\lambda$ is the only eigenvalue. (Rank $2$ would be the other failure: only $\mathbf{v}=\mathbf{0}$ solves it, so "$\lambda$" was never an eigenvalue.)</p>
+</div>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Eigenspaces versus the set of eigenvectors.</p>
+<div class="sol">
+<p><strong>(a)</strong> Directly, using nothing but linearity of $A$. Take $\mathbf{v}, \mathbf{w} \in E_\lambda$ and scalars $c, d$:</p>
+<p>$$A(c\mathbf{v} + d\mathbf{w}) = c\,A\mathbf{v} + d\,A\mathbf{w} = c(\lambda\mathbf{v}) + d(\lambda\mathbf{w}) = \lambda(c\mathbf{v} + d\mathbf{w}).$$</p>
+<p>So $c\mathbf{v}+d\mathbf{w}$ is again in $E_\lambda$ (and $A\mathbf{0} = \mathbf{0} = \lambda\mathbf{0}$ puts $\mathbf{0}$ in $E_\lambda$, which is why the definition of $E_\lambda$ adds it explicitly). Closure under addition and scalar multiplication: $E_\lambda$ is a subspace.</p>
+<p><strong>(b)</strong> Rewrite the defining equation:</p>
+<p>$$A\mathbf{v} = \lambda\mathbf{v} \iff A\mathbf{v} - \lambda\mathbf{v} = \mathbf{0} \iff (A-\lambda I)\mathbf{v} = \mathbf{0} \iff \mathbf{v} \in \operatorname{Nul}(A - \lambda I).$$</p>
+<p>So $E_\lambda$ <em>is</em> a null space, and null spaces are subspaces automatically — part (a) was guaranteed all along. This identification is also the practical route to computing eigenvectors: find the special solutions of $(A-\lambda I)\mathbf{v} = \mathbf{0}$, exactly as in Problem 3(c).</p>
+<p><strong>(c)</strong> The sum is $(1,1)+(1,-2) = (2,-1)$, and</p>
+<p>$$A\begin{bmatrix}2\\-1\end{bmatrix} = \begin{bmatrix}8-1\\4-3\end{bmatrix} = \begin{bmatrix}7\\1\end{bmatrix}.$$</p>
+<p>For $(7,1)$ to be a multiple of $(2,-1)$ we would need $7 = 2c$ and $1 = -c$, i.e. $c = 7/2$ and $c = -1$ simultaneously — impossible. So the sum of two eigenvectors need not be an eigenvector, and consequently</p>
+<p class="ans">$E_5 \cup E_2$ is not a subspace: it contains $(1,1)$ and $(1,-2)$ but not their sum. (Each piece separately <em>is</em> a subspace; taking the union destroys closure.)</p>
+<p><strong>(d)</strong> The correct statement: <em>eigenvectors belonging to the same eigenvalue form a subspace, and only then can you add them freely.</em> If $\mathbf{v} \in E_\lambda$ and $\mathbf{w} \in E_\lambda$, part (a) gives $\mathbf{v}+\mathbf{w} \in E_\lambda$. If they belong to <em>different</em> eigenvalues, the sum generally is not an eigenvector at all — as (c) shows, and once independence of eigenvectors from distinct eigenvalues is available (Problem 6) one can show it never is: from $A(\mathbf{v}+\mathbf{w}) = \nu(\mathbf{v}+\mathbf{w})$ we would get $(\lambda-\nu)\mathbf{v} + (\mu-\nu)\mathbf{w} = \mathbf{0}$, forcing $\lambda = \mu = \nu$.</p>
+</div>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">$\lambda = 0$, singularity, and reading eigenvalues off trace and determinant.</p>
+<div class="sol">
+<p><strong>(a)</strong> Chain the equivalences one at a time:</p>
+<p>$$0 \text{ is an eigenvalue} \iff \exists\,\mathbf{v}\ne\mathbf{0},\ A\mathbf{v} = 0\mathbf{v} = \mathbf{0} \iff \operatorname{Nul}(A) \text{ contains a non-zero vector} \iff A \text{ is not invertible} \iff \det A = 0.$$</p>
+<p>The middle link is the invertible-matrix theorem (for a square matrix: trivial null space $\iff$ invertible), and it is precisely what "singular" means.</p>
+<p><strong>(b)</strong> Row 2 is twice row 1, so $\det M = 0$ and by (a) one eigenvalue is $0$. Then $\operatorname{tr}M = 1 + 4 = 5 = \lambda_1 + \lambda_2 = 0 + \lambda_2$, so the other is $5$.</p>
+<p>$\lambda = 0$: solve $M\mathbf{v} = \mathbf{0}$, i.e. $x + 2y = 0$ → $\mathbf{v} = t(-2, 1)$. Check: $M(-2,1) = (-2+2,\,-4+4) = (0,0)$ ✓.</p>
+<p>$\lambda = 5$: $M - 5I = \begin{bmatrix}-4 & 2\\ 2 & -1\end{bmatrix} \to \begin{bmatrix}-4 & 2\\ 0 & 0\end{bmatrix}$, so $-4x + 2y = 0$, i.e. $y = 2x$ → $\mathbf{v} = t(1,2)$. Check: $M(1,2) = (1+4,\,2+8) = (5,10) = 5(1,2)$ ✓.</p>
+<p class="ans">Eigenvalues $\{0, 5\}$; eigenspaces $\operatorname{Span}\{(-2,1)\}$ and $\operatorname{Span}\{(1,2)\}$.</p>
+<p><strong>(c)</strong> From the trace: $\lambda_1+\lambda_2+\lambda_3 = \operatorname{tr}N = 6$, so the third eigenvalue is $6 - 1 - 2 = 3$. Consistency check with the determinant: $1\cdot 2\cdot 3 = 6 = \det N$ ✓. No eigenvalue is $0$ (equivalently $\det N = 6 \ne 0$), so</p>
+<p class="ans">Third eigenvalue $3$, and $N$ is invertible. Eigenvalues of $N^{-1}$: $1,\ \tfrac12,\ \tfrac13$ (reciprocals, since $N\mathbf{v} = \lambda\mathbf{v} \Rightarrow N^{-1}\mathbf{v} = \lambda^{-1}\mathbf{v}$). Eigenvalues of $N^2$: $1,\ 4,\ 9$ (squares, since $N^2\mathbf{v} = \lambda^2\mathbf{v}$).</p>
+<p><strong>(d)</strong> Because $\det A = \lambda_1\lambda_2\cdots\lambda_n$, a product vanishes exactly when one of its factors does: $\det A = 0 \iff$ some $\lambda_i = 0$. That restatement of part (a) is why computing a single determinant already answers the invertibility question, long before any eigenvector appears.</p>
+</div>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Distinct eigenvalues force independence of eigenvectors.</p>
+<div class="sol">
+<p><strong>(a)</strong> Suppose $c\mathbf{v} + d\mathbf{w} = \mathbf{0}$. Apply $A$ to both sides:</p>
+<p>$$c\,A\mathbf{v} + d\,A\mathbf{w} = \mathbf{0} \quad\Longrightarrow\quad c\lambda\mathbf{v} + d\mu\mathbf{w} = \mathbf{0}.$$</p>
+<p>Now multiply the original equation by $\lambda$ and subtract it:</p>
+<p>$$(c\lambda\mathbf{v} + d\mu\mathbf{w}) - (c\lambda\mathbf{v} + d\lambda\mathbf{w}) = \mathbf{0} \quad\Longrightarrow\quad d(\mu - \lambda)\mathbf{w} = \mathbf{0}.$$</p>
+<p>Since $\mu \ne \lambda$ we may divide by $\mu - \lambda$, and since $\mathbf{w} \ne \mathbf{0}$ (an eigenvector), this forces $d = 0$. Substituting back, $c\mathbf{v} = \mathbf{0}$ with $\mathbf{v} \ne \mathbf{0}$ forces $c = 0$. Both coefficients vanish, so $\mathbf{v}, \mathbf{w}$ are linearly independent. Note the three hypotheses being spent: $\mu \ne \lambda$ (to divide), $\mathbf{w} \ne \mathbf{0}$ and $\mathbf{v} \ne \mathbf{0}$ (to conclude) — the last two are exactly why the definition insists eigenvectors are non-zero.</p>
+<p><strong>(b)</strong> Pick one eigenvector per eigenvalue: $n$ distinct eigenvalues give $n$ eigenvectors, and applying (a) pairwise shows the whole set is linearly independent. (The argument extends past pairs: if $\sum c_i\mathbf{v}_i = \mathbf{0}$, apply $A$ and eliminate term by term, or apply $\prod_{j\ne i}(A-\lambda_j I)$ to isolate a single term.) Independent $n$ vectors in an $n$-dimensional space form a basis, so with $P = [\mathbf{v}_1 \cdots \mathbf{v}_n]$ we get $AP = PD$, $P$ invertible, hence $A = PDP^{-1}$ — diagonalisable. For $A$ of Problem 3 the eigenvalues $5$ and $2$ are distinct, so it is diagonalisable; Problem 9 exhibits the $P$ and $D$ explicitly.</p>
+<p><strong>(c)</strong> No — distinct eigenvalues are sufficient but not necessary. Take $2I$: its only eigenvalue is $2$ (algebraic multiplicity $2$), yet it is <em>already diagonal</em>, so it is trivially diagonalisable, and moreover <strong>every</strong> non-zero vector is an eigenvector. So the genuine obstruction is not a repeated root: it is geometric multiplicity falling short of algebraic multiplicity, which is exactly Problem 7.</p>
+<p><strong>(d)</strong> Nothing in the proof uses reality — it only uses subtraction and division in the underlying field. So it is equally valid over $\mathbb{C}$: a real matrix with complex eigenvalues has linearly independent <em>complex</em> eigenvectors (Problem 8 is such a case, with eigenvectors involving $i$).</p>
+</div>
+</div>
+
+<!-- ===================== 7 ===================== -->
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">The shear $S = \begin{bmatrix}2&1\\0&2\end{bmatrix}$: repeated eigenvalue, missing eigenvector.</p>
+<div class="sol">
+<p><strong>(a)</strong> $S - \lambda I = \begin{bmatrix}2-\lambda & 1\\ 0 & 2-\lambda\end{bmatrix}$ is triangular, so its determinant is the product of the diagonal:</p>
+<p>$$\det(S - \lambda I) = (2-\lambda)^2.$$</p>
+<p class="ans">Single eigenvalue $\lambda = 2$, <strong>algebraic multiplicity 2</strong> (the root appears twice).</p>
+<p><strong>(b)</strong> $S - 2I = \begin{bmatrix}0 & 1\\ 0 & 0\end{bmatrix}$, and $(S-2I)\mathbf{v} = \mathbf{0}$ says $y = 0$ with $x$ free:</p>
+<p>$$\mathbf{v} = t\begin{bmatrix}1\\0\end{bmatrix}, \qquad E_2 = \operatorname{Span}\{(1,0)\}.$$</p>
+<p class="ans">Only $1$ linearly independent eigenvector: the <strong>geometric multiplicity is 1</strong>. Check: $S(1,0) = (2,0) = 2(1,0)$ ✓, while $S(0,1) = (1,2)$ is not a multiple of $(0,1)$.</p>
+<p><strong>(c)</strong> Two independent arguments.</p>
+<p><em>Counting.</em> To write $S = PDP^{-1}$ the columns of $P$ must be $n = 2$ linearly independent eigenvectors (Problem 6(b) reversed). There is only one eigendirection, so no basis of eigenvectors exists.</p>
+<p><em>Contradiction.</em> Suppose $S = PDP^{-1}$. Diagonal entries of $D$ are the eigenvalues of $S$ (they are visibly the eigenvalues of the diagonal matrix $D$, and similar matrices share eigenvalues — Problem 10(a)), so every diagonal entry would be $2$, giving $D = 2I$ and hence $S = P(2I)P^{-1} = 2I$. But $S \ne 2I$. Contradiction.</p>
+<p><strong>(d)</strong> For $2I$ we get $2I - 2I = \mathbf{0}$, whose null space is all of $\mathbb{R}^2$: geometric multiplicity $2$, equal to the algebraic multiplicity, so there is a basis of eigenvectors (any basis) and $2I$ is diagonalisable already. What separates them is therefore not the repetition of the root but the <strong>geometric multiplicity</strong> $\dim\operatorname{Nul}(A-\lambda I)$ reaching the algebraic multiplicity; when it falls short — the shear's $1 < 2$ — eigenvalues and eigenvectors alone cannot build a basis.</p>
+<p><strong>(e)</strong> In coordinates, $S(x,y) = (2x + y,\, 2y)$. Every point doubles in height and doubles horizontally, then <em>slides sideways by an amount equal to its new height</em> — hence "shear": vertical layers slide over each other like a deck of cards. The horizontal axis is the exception, points on it have $y = 0$ and stay horizontal, merely stretched by $2$; the line is preserved as a line, so it is the unique eigendirection.</p>
+</div>
+</div>
+
+<!-- ===================== 8 ===================== -->
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">Rotation $R$, reflection $H$, rotate-and-scale $K$.</p>
+<div class="sol">
+<p><strong>(a)</strong> $\det(R-\lambda I) = \begin{vmatrix}-\lambda & -1\\ 1 & -\lambda\end{vmatrix} = \lambda^2 + 1$, so $\lambda^2 = -1$ and $\lambda = \pm i$. No real eigenvector exists for a purely geometric reason: an eigenvector would have to satisfy $R\mathbf{v} = \lambda\mathbf{v}$, meaning $\mathbf{v}$ stays on its own line through the origin. But $R$ rotates every non-zero vector by exactly $90^\circ$, which moves every line onto a different line. Confirm: $R(x,y) = (-y, x)$ is parallel to $(x,y)$ only if $(-y,x) = c(x,y)$, giving $-y = cx$ and $x = cy$, hence $x = c(-cx) = -c^2 x$ and $x(1+c^2) = 0$, so $x = 0$ and then $y = 0$.</p>
+<p class="ans">Eigenvalues $\pm i$; no real eigendirection — the rotation has no invariant line.</p>
+<p><strong>(b)</strong> $\det(H - \lambda I) = \begin{vmatrix}-\lambda & 1\\ 1 & -\lambda\end{vmatrix} = \lambda^2 - 1 = (\lambda-1)(\lambda+1)$, so $\lambda = \pm 1$ (real!). Then $H(1,1) = (1,1)$ → $\lambda = 1$, and $H(1,-1) = (-1,1) = -(1,-1)$ → $\lambda = -1$. Both matrices have trace $0$ — the difference is the determinant: $\det R = 0\cdot 0 - (-1)(1) = 1$ while $\det H = 0\cdot 0 - 1\cdot 1 = -1$. For a $2\times 2$ matrix the discriminant of the characteristic polynomial is $(\operatorname{tr}A)^2 - 4\det A$: here $0 - 4(1) = -4 < 0$ for $R$ (complex pair) versus $0 - 4(-1) = 4 > 0$ for $H$ (two real roots). Geometrically, a reflection <em>does</em> leave two lines in place (the mirror line fixed, the perpendicular line reversed), and those lines are precisely its eigenvectors.</p>
+<p><strong>(c)</strong> $\det(K-\lambda I) = (1-\lambda)^2 + 1 = \lambda^2 - 2\lambda + 2$, whose roots are $\lambda = 1 \pm i$. In polar form $1 \pm i = \sqrt2\,e^{\pm i\pi/4}$, so $r = \sqrt2$ and $\theta = \pi/4$: predict that $K$ <em>scales every length by $\sqrt2$ and rotates by $45^\circ$</em> counter-clockwise. Test on $(1,0)$:</p>
+<p>$$K\begin{bmatrix}1\\0\end{bmatrix} = \begin{bmatrix}1\\1\end{bmatrix}, \qquad \bigl|(1,1)\bigr| = \sqrt2 \ \checkmark, \qquad \text{angle from }(1,0) = 45^\circ \ \checkmark .$$</p>
+<p>The prediction holds.</p>
+<p><strong>(d)</strong> Dictionary: writing the pair as $a \pm bi = re^{\pm i\theta}$ with $r = \sqrt{a^2+b^2}$ and $\theta = \arctan(b/a)$, the matrix acts as <strong>scale by $r$, rotate by $\theta$</strong> — the single sentence behind "complex eigenvalues mean rotation is involved". A large and important class never produces this: <strong>real symmetric matrices</strong> ($A^{T} = A$) always have real eigenvalues (the spectral theorem), which is why $B$ in Problem 2, $H$ above, and any covariance matrix you meet later have only real spectra.</p>
+</div>
+</div>
+
+<!-- ===================== 9 ===================== -->
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">Diagonalising $A = \begin{bmatrix}4&1\\2&3\end{bmatrix}$ and computing $A^k$ by hand.</p>
+<div class="sol">
+<p><strong>(a)</strong> Work column by column. Column $j$ of $AP$ is $A$ applied to column $j$ of $P$, i.e. $A(1,1)$ and $A(1,-2)$:</p>
+<p>$$AP = \begin{bmatrix}5 & 2\\ 5 & -4\end{bmatrix}; \qquad PD = \begin{bmatrix}1 & 1\\ 1 & -2\end{bmatrix}\begin{bmatrix}5 & 0\\ 0 & 2\end{bmatrix} = \begin{bmatrix}5\cdot 1 & 2\cdot 1\\ 5\cdot 1 & 2(-2)\end{bmatrix} = \begin{bmatrix}5 & 2\\ 5 & -4\end{bmatrix}.$$</p>
+<p>They agree. And this is no coincidence: column $j$ of $PD$ is $d_j$ times column $j$ of $P$, so the $j$-th column of $AP = PD$ reads exactly "$A\mathbf{p}_j = d_j\mathbf{p}_j$" — the statement that each column of $P$ is an eigenvector with eigenvalue $d_j$. Recognising a diagonalisation therefore costs only $n$ eigenvector checks; you never have to invert anything.</p>
+<p><strong>(b)</strong> $\det P = 1(-2) - 1\cdot 1 = -3$, so $P^{-1} = \frac{1}{-3}\begin{bmatrix}-2 & -1\\ -1 & 1\end{bmatrix} = \begin{bmatrix}2/3 & 1/3\\ 1/3 & -1/3\end{bmatrix}$. Then, reusing $PD$ from (a),</p>
+<p>$$PDP^{-1} = \begin{bmatrix}5 & 2\\ 5 & -4\end{bmatrix}\begin{bmatrix}2/3 & 1/3\\ 1/3 & -1/3\end{bmatrix} = \begin{bmatrix}\tfrac{10}{3}+\tfrac{2}{3} & \tfrac{5}{3}-\tfrac{2}{3}\\[2pt] \tfrac{10}{3}-\tfrac{4}{3} & \tfrac{5}{3}+\tfrac{4}{3}\end{bmatrix} = \begin{bmatrix}4 & 1\\ 2 & 3\end{bmatrix} = A \ \checkmark .$$</p>
+<p><strong>(c)</strong> Decompose the vector in the eigenbasis: $(2,-1) = (1,1) + (1,-2)$ (check: $1+1 = 2$, $1-2 = -1$). Since $A$ multiplies the first piece by $5$ and the second by $2$ at every application,</p>
+<p class="ans">$$A^k\begin{bmatrix}2\\-1\end{bmatrix} = 5^k\begin{bmatrix}1\\1\end{bmatrix} + 2^k\begin{bmatrix}1\\-2\end{bmatrix} = \begin{bmatrix}5^k + 2^k\\ 5^k - 2^{k+1}\end{bmatrix}.$$</p>
+<p>Check $k = 1$: $(5+2,\ 5-4) = (7,1)$, and indeed $A(2,-1) = (8-1,\,4-3) = (7,1)$ ✓. Check $k = 2$: $(25+4,\ 25-8) = (29, 17)$, while $A^2 = \begin{bmatrix}18 & 7\\ 14 & 11\end{bmatrix}$ and $A^2(2,-1) = (36-7,\,28-11) = (29,17)$ ✓.</p>
+<p><strong>(d)</strong> Divide by $5^k$: $\dfrac{A^k(2,-1)}{5^k} = (1,1) + \left(\dfrac{2}{5}\right)^{k}(1,-2) \longrightarrow (1,1)$ as $k \to \infty$, since $(2/5)^k \to 0$. In general, if $\mathbf{x} = \sum c_i\mathbf{v}_i$ with $A\mathbf{v}_i = \lambda_i \mathbf{v}_i$ and $|\lambda_1|$ the largest modulus, then $A^k\mathbf{x} = \lambda_1^k\bigl(c_1\mathbf{v}_1 + \sum_{i>1} c_i(\lambda_i/\lambda_1)^k \mathbf{v}_i\bigr)$, and every ratio $(\lambda_i/\lambda_1)^k$ decays. So the iterated process is dominated by the largest eigenvalue, and the surviving direction is $(1,1)$ — the $\lambda = 5$ eigendirection. This single observation is the engine behind Markov chains and steady states: repeated application washes out everything except the dominant eigenmode.</p>
+</div>
+</div>
+
+<!-- ===================== 10 ===================== -->
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">Similarity: what survives $B = P^{-1}AP$.</p>
+<div class="sol">
+<p><strong>(a)</strong> Insert $I = PP^{-1}$ inside the $\lambda$ term:</p>
+<p>$$\det(B - \lambda I) = \det(P^{-1}AP - \lambda P^{-1}P) = \det\!\bigl(P^{-1}(A - \lambda I)P\bigr) = \det(P^{-1})\det(A-\lambda I)\det(P) = \det(A - \lambda I),$$</p>
+<p>since $\det(P^{-1})\det(P) = \det(I) = 1$. Identical characteristic polynomials mean identical eigenvalues with identical algebraic multiplicities.</p>
+<p><strong>(b)</strong> If $A\mathbf{v} = \lambda\mathbf{v}$ then</p>
+<p>$$B(P^{-1}\mathbf{v}) = P^{-1}AP\,P^{-1}\mathbf{v} = P^{-1}A\mathbf{v} = P^{-1}(\lambda\mathbf{v}) = \lambda (P^{-1}\mathbf{v}),$$</p>
+<p>so the eigenvector of the similar matrix $B$ is $P^{-1}\mathbf{v}$ — the same vector expressed in $P$'s coordinates, not the same list of numbers. Concretely, with $A$ and $P$ from Problem 9 the similar matrix is $B = P^{-1}AP = \begin{bmatrix}5&0\\0&2\end{bmatrix}$ and $P^{-1} = \begin{bmatrix}2/3 & 1/3\\ 1/3 & -1/3\end{bmatrix}$:</p>
+<p>$$P^{-1}\begin{bmatrix}1\\1\end{bmatrix} = \begin{bmatrix}1\\0\end{bmatrix} \ \checkmark \ (\text{eigenvector of } B \text{ for } \lambda=5), \qquad P^{-1}\begin{bmatrix}1\\-2\end{bmatrix} = \begin{bmatrix}0\\1\end{bmatrix} \ \checkmark \ (\text{for } \lambda=2).$$</p>
+<p>The eigenvectors became the coordinate axes — the cleanest possible illustration that eigenvectors are basis-dependent while eigenvalues are not.</p>
+<p><strong>(c)</strong> Take $S = \begin{bmatrix}2&1\\0&2\end{bmatrix}$ (Problem 7) and $2I$. Both have characteristic polynomial $(\lambda-2)^2$: identical spectrum, same multiplicities. Yet they are not similar. For if $S = P(2I)P^{-1}$ then $S = 2I$, false. Equivalently, geometric multiplicity is invariant under similarity (multiplication by $P^{-1}$ is an isomorphism, so it preserves null-space dimensions), and it is $1$ for $S$ versus $2$ for $2I$.</p>
+<p class="ans">Same eigenvalues $\not\Rightarrow$ similar. The defect (algebraic minus geometric multiplicity) is itself a similarity invariant.</p>
+<p><strong>(d)</strong> Invariant under similarity: characteristic polynomial, eigenvalues with algebraic multiplicities, trace, determinant, rank, nullity, invertibility, and geometric multiplicities. Not invariant: the eigenvectors themselves, the entries, symmetry, orthogonality. Conceptually: a matrix is a <em>description</em> of one linear map in some coordinate system, and change of basis replaces $A$ by $P^{-1}AP$. Anything that belongs to the map itself — the numbers $\lambda$ for which $(T - \lambda I)$ fails to be invertible — cannot depend on coordinates. Anything expressed in coordinates, above all the vectors themselves, must change: they are translated into the new basis, exactly as $P^{-1}\mathbf{v}$ in part (b).</p>
+</div>
+</div>
+
+<!-- ===================== 11 ===================== -->
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">True or false, each with a reason.</p>
+<div class="sol">
+<p><strong>(i) False.</strong> $R = \begin{bmatrix}0&-1\\1&0\end{bmatrix}$ has $\lambda^2 + 1 = 0$, so its eigenvalues are $\pm i$ and it has no real eigenvalue at all. What <em>is</em> true: over $\mathbb{C}$ every square matrix has at least one eigenvalue, because $\det(A-\lambda I)$ is a degree-$n$ polynomial and the fundamental theorem of algebra gives it a root.</p>
+<p><strong>(ii) True.</strong> Exactly Problem 5(a): $A\mathbf{v} = 0\mathbf{v} = \mathbf{0}$ with $\mathbf{v}\ne\mathbf{0}$ means a non-trivial null space, i.e. $A$ singular, and conversely a singular $A$ has some non-zero $\mathbf{v}$ with $A\mathbf{v} = \mathbf{0}$.</p>
+<p><strong>(iii) True.</strong> $(A+3I)\mathbf{v} = A\mathbf{v} + 3\mathbf{v} = \lambda\mathbf{v} + 3\mathbf{v} = (\lambda+3)\mathbf{v}$, and $\mathbf{v}\ne\mathbf{0}$. Shifting by a multiple of the identity shifts the spectrum without touching the eigenvectors.</p>
+<p><strong>(iv) False.</strong> With $A = \begin{bmatrix}4&1\\2&3\end{bmatrix}$ and $\mathbf{v} = (1,1)$: $A^{T}(1,1) = (4\cdot1 + 2\cdot1,\ 1\cdot1 + 3\cdot 1) = (6,4)$, which is not a multiple of $(1,1)$. What $A$ and $A^{T}$ <em>do</em> share is the eigenvalues: $\det A^{T} = \det A$ and $\operatorname{tr}A^{T} = \operatorname{tr}A$, and indeed $A^{T}$ has the same characteristic polynomial, with $\lambda = 5$ belonging to $(2,1)$ — check $A^{T}(2,1) = (10,5) = 5(2,1)$ — and $\lambda = 2$ belonging to $(-1,1)$ — check $A^{T}(-1,1) = (-2,2) = 2(-1,1)$.</p>
+<p><strong>(v) False.</strong> Same counterexample as Problem 4(c): $(1,1) + (1,-2) = (2,-1)$ but $A(2,-1) = (7,1)$, which is not parallel to $(2,-1)$. The corrected rule: sums are safe only <em>within one eigenspace</em>.</p>
+<p><strong>(vi) True.</strong> Problem 6(a) — provided the eigenvalues are distinct, which is the whole content of that proof.</p>
+<p><strong>(vii) False.</strong> Problem 10(c): the shear $\begin{bmatrix}2&1\\0&2\end{bmatrix}$ and $2I$ share $(\lambda-2)^2$ but are not similar, because no invertible $P$ can repair a missing eigenvector.</p>
+</div>
+</div>
+
+<p class="note">Spotted an error, or a solution that assumes something it should not? Open an <a href="https://github.com/Franky100-pig/LA-hw/issues/new" style="color:var(--accent)">issue on LA-hw</a> and quote the problem and part — corrections are welcome.</p>
+
+</div>
+</body>
+</html>
