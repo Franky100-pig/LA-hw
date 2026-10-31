@@ -16,7 +16,7 @@ $$A = \begin{bmatrix} 3 & 0 \\ 0 & -1 \end{bmatrix}$$
 
 $$B = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$$
 (a) Compute $B(1,1)$ and $B(1,-1)$. Read off two eigenvalues.
-(b) Use $\operatorname{tr}B$ and $\det B$ to explain why there are no others.
+(b) Expand $\det(B - \lambda I)$ and check that it factors as $(\lambda - 3)(\lambda - 1)$. Why does that settle the list?
 
 
 ## Problem 3
@@ -30,7 +30,7 @@ $$A = \begin{bmatrix} 4 & 1 \\ 2 & 3 \end{bmatrix}$$
 ## Problem 4
 
 $$M = \begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}$$
-(a) Without computing a characteristic polynomial, explain why $0$ is an eigenvalue, and use the trace to find the other one.
+(a) Explain why $0$ is an eigenvalue. Then find the other one — try multiplying $M$ by $(1,2)$ and see what happens.
 (b) Find an eigenvector for each eigenvalue.
 
 
