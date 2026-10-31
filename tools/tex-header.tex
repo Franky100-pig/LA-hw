@@ -1,0 +1,7 @@
+% 供 pandoc 的 -H 使用：让 LaTeX 能吃讲义里用到的少量 Unicode 符号。
+% 默认正文字体（Latin Modern）没有 U+2713，缺字形会被吞成空白，
+% 所以显式映射到 amssymb 的 \checkmark。
+\usepackage{amssymb}
+\usepackage{newunicodechar}
+\newunicodechar{✓}{\ensuremath{\checkmark}}
+\newunicodechar{✔}{\ensuremath{\checkmark}}
