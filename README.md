@@ -16,6 +16,9 @@ Set 5 turns that vocabulary into computation. Every matrix carries three subspac
 
 Set 6 is six short problems on eigenvalues and eigenvectors — deliberately brief, one idea per problem, every matrix $2\times2$. The single sentence behind it: **on an eigenvector, multiplication by $A$ is multiplication by a number**, which is what turns $A^k\mathbf{v}$ into $\lambda^k\mathbf{v}$. The set moves in order: test a definition (Problem 1), recognise eigenvectors by symmetry instead of grinding (2), do the full computation once (3), spot a zero eigenvalue from a dependent row (4), meet the one matrix that cannot be diagonalised — the shear $\begin{bmatrix}2&1\\0&2\end{bmatrix}$ (5) — and finish by computing $A^k$ from the eigenbasis (6). Each answer is checkable with a single multiplication.
 
+All problem sets and solutions are also readable online (MathJax-rendered HTML):
+**https://franky100-pig.github.io/LA-hw/** — e.g. [`set6/problems.html`](https://franky100-pig.github.io/LA-hw/set6/problems.html).
+
 ## Contents
 
 | Set | Topics | Problems | Solutions |

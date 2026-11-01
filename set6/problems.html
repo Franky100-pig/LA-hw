@@ -23,6 +23,9 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
   .ans { color: var(--accent); font-weight: 600; }
   .muted { color: var(--muted); font-size: 13px; }
   .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+  .verify { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+  .verify a { color: var(--accent); text-decoration: none; }
+  .verify a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -39,6 +42,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p class="prob">$$A = \begin{bmatrix} 3 & 0 \\ 0 & -1 \end{bmatrix}$$</p>
 <p class="prob">(a) Compute $A(1,0)$, $A(0,1)$ and $A(1,1)$. Which of the three are eigenvectors, and with what eigenvalue?</p>
 <p class="prob">(b) Why does the definition require $\mathbf{v} \ne \mathbf{0}$?</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%223%22%2C%220%22%5D%2C%5B%220%22%2C%22-1%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix →</a> (eigenvalues &amp; eigenvectors, one click)</p>
 </div>
 
 <!-- ===================== 2 ===================== -->
@@ -47,6 +51,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p class="prob">$$B = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$$</p>
 <p class="prob">(a) Compute $B(1,1)$ and $B(1,-1)$. Read off two eigenvalues.</p>
 <p class="prob">(b) Expand $\det(B - \lambda I)$ and check that it factors as $(\lambda - 3)(\lambda - 1)$. Why does that settle the list?</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%222%22%2C%221%22%5D%2C%5B%221%22%2C%222%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix →</a> (eigenvalues &amp; eigenvectors, one click)</p>
 </div>
 
 <!-- ===================== 3 ===================== -->
@@ -56,6 +61,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p class="prob">(a) Compute $\det(A - \lambda I)$ and solve for the eigenvalues.</p>
 <p class="prob">(b) For each eigenvalue solve $(A - \lambda I)\mathbf{v} = \mathbf{0}$ and give the eigenvectors.</p>
 <p class="prob">(c) Check both answers with a single multiplication each.</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%224%22%2C%221%22%5D%2C%5B%222%22%2C%223%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix →</a> (eigenvalues &amp; eigenvectors, one click)</p>
 </div>
 
 <!-- ===================== 4 ===================== -->
@@ -64,6 +70,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p class="prob">$$M = \begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}$$</p>
 <p class="prob">(a) Explain why $0$ is an eigenvalue. Then find the other one — try multiplying $M$ by $(1,2)$ and see what happens.</p>
 <p class="prob">(b) Find an eigenvector for each eigenvalue.</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%221%22%2C%222%22%5D%2C%5B%222%22%2C%224%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix →</a> (eigenvalues &amp; eigenvectors, one click)</p>
 </div>
 
 <!-- ===================== 5 ===================== -->
@@ -72,6 +79,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p class="prob">$$S = \begin{bmatrix} 2 & 1 \\ 0 & 2 \end{bmatrix}$$</p>
 <p class="prob">(a) Find the eigenvalue and its algebraic multiplicity. Then solve $(S - 2I)\mathbf{v} = \mathbf{0}$: what is the geometric multiplicity?</p>
 <p class="prob">(b) Can $S$ be diagonalised? One sentence of justification.</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%222%22%2C%221%22%5D%2C%5B%220%22%2C%222%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix →</a> (eigenvalues &amp; eigenvectors, one click)</p>
 </div>
 
 <!-- ===================== 6 ===================== -->
@@ -80,6 +88,7 @@ window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [[
 <p class="prob">Use $A = \begin{bmatrix}4&1\\2&3\end{bmatrix}$ from Problem 3, with $$P = \begin{bmatrix} 1 & 1 \\ 1 & -2 \end{bmatrix}, \qquad D = \begin{bmatrix} 5 & 0 \\ 0 & 2 \end{bmatrix}.$$</p>
 <p class="prob">(a) Verify $AP = PD$. (Hint: compute column by column — no inverse needed.)</p>
 <p class="prob">(b) Write $(2,-1)$ as a sum of the two eigenvectors, then give $A^k(2,-1)$. Check it at $k = 1$.</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%224%22%2C%221%22%5D%2C%5B%222%22%2C%223%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix →</a> (eigenvalues &amp; eigenvectors, one click)</p>
 </div>
 
 <p class="note">Stuck, or found an error? Please open an <a href="https://github.com/Franky100-pig/LA-hw/issues/new" style="color:var(--accent)">issue on LA-hw</a> and quote the problem number.</p>
