@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 7</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+  .verify { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+  .verify a { color: var(--accent); text-decoration: none; }
+  .verify a:hover { text-decoration: underline; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 7</h1>
+<div class="meta">Similar Matrices &amp; Diagonalization · 6 problems · Original problems in the spirit of MIT 18.06 (Strang)</div>
+
+<p class="muted">One sentence organizes the whole set: <strong>similar matrices are the same linear map written in different bases</strong>, so they differ in coordinates but not in their invariants. The set moves from verifying $AP = PD$ (1), through the invariants and their proofs (2), to the counterexample that defeats the converse — same eigenvalues do <em>not</em> imply similar (3) — then diagonalizes a matrix and uses it for $A^3$ (4), sorts diagonalizable from not (5), and finishes with the change-of-basis argument for why eigenvalues survive (6).</p>
+
+<!-- ===================== 1 ===================== -->
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">Let $$A = \begin{bmatrix}4&1\\2&3\end{bmatrix}, \qquad P = \begin{bmatrix}1&1\\1&-2\end{bmatrix}, \qquad D = \begin{bmatrix}5&0\\0&2\end{bmatrix}.$$</p>
+<p class="prob">(a) Compute $AP$ and $PD$ column by column, and verify $AP = PD$.</p>
+<p class="prob">(b) Conclude $P^{-1}AP = D$, i.e. $A \sim D$. (You do not need to invert $P$.)</p>
+<p class="prob">(c) What are the diagonal entries of $D$, and where did they come from?</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%224%22%2C%221%22%5D%2C%5B%222%22%2C%223%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix &rarr;</a> (eigenvalues &amp; eigenvectors, one click)</p>
+</div>
+
+<!-- ===================== 2 ===================== -->
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">Suppose $B = P^{-1}AP$ with $P$ invertible.</p>
+<p class="prob">(a) Prove $\det B = \det A$ using the multiplicativity of the determinant.</p>
+<p class="prob">(b) Prove $\operatorname{tr} B = \operatorname{tr} A$. (Hint: the trace is cyclic, $\operatorname{tr}(XY) = \operatorname{tr}(YX)$.)</p>
+<p class="prob">(c) A $3\times3$ matrix $A$ has $\det A = 4$ and $\operatorname{tr} A = 6$. If $B \sim A$, what are $\det B$ and $\operatorname{tr} B$? Can $B$ have a different set of eigenvalues?</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=det&A=%5B%5B%224%22%2C%221%22%5D%2C%5B%222%22%2C%223%22%5D%5D" target="_blank" rel="noopener noreferrer">load a matrix &rarr;</a> (determinant, one click)</p>
+</div>
+
+<!-- ===================== 3 ===================== -->
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">Let $$I = \begin{bmatrix}1&0\\0&1\end{bmatrix}, \qquad J = \begin{bmatrix}1&1\\0&1\end{bmatrix}.$$</p>
+<p class="prob">(a) Show that both have characteristic polynomial $(\lambda-1)^2$.</p>
+<p class="prob">(b) Find the geometric multiplicity of $\lambda = 1$ for each matrix.</p>
+<p class="prob">(c) Conclude that $I$ and $J$ are <strong>not</strong> similar. Which invariant did you use?</p>
+<p class="note">This is the set's warning: an identical characteristic polynomial (hence identical eigenvalues) is necessary but <em>not</em> sufficient for similarity.</p>
+</div>
+
+<!-- ===================== 4 ===================== -->
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Let $A = \begin{bmatrix}2&1\\1&2\end{bmatrix}$.</p>
+<p class="prob">(a) Find the eigenvalues and a basis of eigenvectors.</p>
+<p class="prob">(b) Build $P$ from the eigenvectors and write down $D$ with $A = PDP^{-1}$.</p>
+<p class="prob">(c) Verify $AP = PD$ (column by column) rather than computing a full inverse.</p>
+<p class="prob">(d) Use $A = PDP^{-1}$ to compute $A^3$. Check the answer against $A^2 \cdot A$ directly.</p>
+<p class="verify">Check it in the calculator: <a href="https://la-helper.app.workbuddy.host/#op=eigen&A=%5B%5B%222%22%2C%221%22%5D%2C%5B%221%22%2C%222%22%5D%5D" target="_blank" rel="noopener noreferrer">load this matrix &rarr;</a> (eigenvalues &amp; eigenvectors, one click)</p>
+</div>
+
+<!-- ===================== 5 ===================== -->
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">For each matrix, say whether it is diagonalizable over $\mathbb{R}$ and give a one-line reason.</p>
+<p class="prob">(a) $\begin{bmatrix}3&1\\0&3\end{bmatrix}$ &nbsp;&nbsp; (b) $\begin{bmatrix}2&0\\0&2\end{bmatrix}$ &nbsp;&nbsp; (c) $\begin{bmatrix}0&-1\\1&0\end{bmatrix}$ &nbsp;&nbsp; (d) $\begin{bmatrix}1&2\\2&1\end{bmatrix}$</p>
+<p class="note">The test: the geometric multiplicity of every eigenvalue must equal its algebraic multiplicity; a matrix with distinct real eigenvalues always passes.</p>
+</div>
+
+<!-- ===================== 6 ===================== -->
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">(a) In $B = P^{-1}AP$, what does $P$ do geometrically?</p>
+<p class="prob">(b) Prove: if $A\mathbf{v} = \lambda\mathbf{v}$ and $B = P^{-1}AP$, then $B(P^{-1}\mathbf{v}) = \lambda(P^{-1}\mathbf{v})$. What does this say about the eigenvectors of similar matrices?</p>
+<p class="prob">(c) True or false: similar matrices have the <em>same</em> eigenvectors. Explain.</p>
+</div>
+
+<p class="muted" style="margin-top:32px">Stuck, or found an error? Please open an <a href="https://github.com/Franky100-pig/LA-hw/issues/new" style="color:var(--accent)">issue on LA-hw</a> and quote the problem number.</p>
+</div>
+</body>
+</html>

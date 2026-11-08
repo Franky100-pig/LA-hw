@@ -16,6 +16,8 @@ Set 5 turns that vocabulary into computation. Every matrix carries three subspac
 
 Set 6 is six short problems on eigenvalues and eigenvectors — deliberately brief, one idea per problem, every matrix $2\times2$. The single sentence behind it: **on an eigenvector, multiplication by $A$ is multiplication by a number**, which is what turns $A^k\mathbf{v}$ into $\lambda^k\mathbf{v}$. The set moves in order: test a definition (Problem 1), recognise eigenvectors by symmetry instead of grinding (2), do the full computation once (3), spot a zero eigenvalue from a dependent row (4), meet the one matrix that cannot be diagonalised — the shear $\begin{bmatrix}2&1\\0&2\end{bmatrix}$ (5) — and finish by computing $A^k$ from the eigenbasis (6). Each answer is checkable with a single multiplication.
 
+Set 7 moves from eigenvalues to **similarity**. The organising sentence: **$B = P^{-1}AP$ means the same linear map written in a different basis** — so the coordinates change, but the invariants do not. Six problems: verify $AP = PD$ column by column instead of inverting $P$ (1); prove and use the invariants $\det$ and $\operatorname{tr}$ (2); meet the counterexample that kills the converse — $I$ and the shear have the same characteristic polynomial, yet different geometric multiplicities, so they are *not* similar (3); diagonalise a symmetric matrix and reuse it to compute $A^3$ (4); sort diagonalisable from not (5); and finish with the change-of-basis proof that similar matrices share eigenvalues while their eigenvectors move with the basis (6).
+
 All problem sets and solutions are also readable online (MathJax-rendered HTML):
 **https://franky100-pig.github.io/LA-hw/** — e.g. [`set6/problems.html`](https://franky100-pig.github.io/LA-hw/set6/problems.html).
 
@@ -29,6 +31,7 @@ All problem sets and solutions are also readable online (MathJax-rendered HTML):
 | Set 4 | Vector Spaces & Bases | [`.pdf`](set4/problems.pdf) · [`.html`](set4/problems.html) | [`.pdf`](set4/solutions.pdf) · [`.docx`](set4/solutions.docx) · [`.html`](set4/solutions.html) |
 | Set 5 | Column, Row & Null Spaces; Rank & Nullity | [`.pdf`](set5/problems.pdf) · [`.html`](set5/problems.html) | [`.pdf`](set5/solutions.pdf) · [`.docx`](set5/solutions.docx) · [`.html`](set5/solutions.html) |
 | Set 6 | Eigenvalues & Eigenvectors | [`.pdf`](set6/problems.pdf) · [`.html`](set6/problems.html) | [`.pdf`](set6/solutions.pdf) · [`.docx`](set6/solutions.docx) · [`.html`](set6/solutions.html) |
+| Set 7 | Similar Matrices & Diagonalization | [`.pdf`](set7/problems.pdf) · [`.html`](set7/problems.html) | [`.pdf`](set7/solutions.pdf) · [`.docx`](set7/solutions.docx) · [`.html`](set7/solutions.html) |
 
 Solution formats:
 
