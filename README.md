@@ -2,7 +2,7 @@
 
 Original Linear Algebra practice sets with full worked solutions. It can be used with the LA Helper to strengthen your Linear Algebra knowledge.
 
-All problems are self-written mimicking the form of MIT 18.06 (Gilbert Strang) — no school or course materials are included. If there are similar questions, those are just coincidences. 
+Sets 1–7 are self-written, mimicking the form of MIT 18.06 (Gilbert Strang). Set 8 is a course review set (Summative Exam 3 Review) included for study; if problems in the self-written sets look similar, that is a coincidence. 
 
 Set 1 covers determinant properties, row operations, cofactor structure and Cramer's rule, with proof-style reasoning questions. 
 
@@ -18,6 +18,8 @@ Set 6 is six short problems on eigenvalues and eigenvectors — deliberately bri
 
 Set 7 moves from eigenvalues to **similarity**. The organising sentence: **$B = P^{-1}AP$ means the same linear map written in a different basis** — so the coordinates change, but the invariants do not. Six problems: verify $AP = PD$ column by column instead of inverting $P$ (1); prove and use the invariants $\det$ and $\operatorname{tr}$ (2); meet the counterexample that kills the converse — $I$ and the shear have the same characteristic polynomial, yet different geometric multiplicities, so they are *not* similar (3); diagonalise a symmetric matrix and reuse it to compute $A^3$ (4); sort diagonalisable from not (5); and finish with the change-of-basis proof that similar matrices share eigenvalues while their eigenvectors move with the basis (6).
 
+Set 8 is a **15-problem review** for the end-of-course summative exam. It runs the full second half of the course in order: change of basis and coordinates (1), linear transformations — standard matrix, kernel, rank–nullity (2–4), eigenvectors and eigenvalues (5–7), the AM-vs-GM test for diagonalization with the classic shear/identity counterexample (8–10), computing $A^k$ by diagonalizing (11), and complex eigenvalues with rotation-scaling — including when a matrix is diagonalizable over $\mathbb{C}$ but not $\mathbb{R}$ (12–15).
+
 All problem sets and solutions are also readable online (MathJax-rendered HTML):
 **https://franky100-pig.github.io/LA-hw/** — e.g. [`set6/problems.html`](https://franky100-pig.github.io/LA-hw/set6/problems.html).
 
@@ -32,6 +34,7 @@ All problem sets and solutions are also readable online (MathJax-rendered HTML):
 | Set 5 | Column, Row & Null Spaces; Rank & Nullity | [`.pdf`](set5/problems.pdf) · [`.html`](set5/problems.html) | [`.pdf`](set5/solutions.pdf) · [`.docx`](set5/solutions.docx) · [`.html`](set5/solutions.html) |
 | Set 6 | Eigenvalues & Eigenvectors | [`.pdf`](set6/problems.pdf) · [`.html`](set6/problems.html) | [`.pdf`](set6/solutions.pdf) · [`.docx`](set6/solutions.docx) · [`.html`](set6/solutions.html) |
 | Set 7 | Similar Matrices & Diagonalization | [`.pdf`](set7/problems.pdf) · [`.html`](set7/problems.html) | [`.pdf`](set7/solutions.pdf) · [`.docx`](set7/solutions.docx) · [`.html`](set7/solutions.html) |
+| Set 8 | Summative Exam 3 Review — Bases, Eigenvalues, Diagonalization & Complex Eigenvalues | [`.pdf`](set8/problems.pdf) · [`.html`](set8/problems.html) | [`.pdf`](set8/solutions.pdf) · [`.docx`](set8/solutions.docx) · [`.html`](set8/solutions.html) |
 
 Solution formats:
 
