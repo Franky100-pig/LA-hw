@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 8</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+  .verify { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+  .verify a { color: var(--accent); text-decoration: none; }
+  .verify a:hover { text-decoration: underline; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 8</h1>
+<p class="muted">Summative Exam 3 Review · 15 problems · Eigenvalues, diagonalization, complex eigenvalues &amp; rotation-scaling This set is a review covering the second half of the course: change of basis, linear transformations, eigenvalues and eigenvectors, algebraic vs geometric multiplicity, diagonalization, and complex eigenvalues with rotation-scaling. Work through it in order — the later problems build on the earlier ones.</p>
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">Let \(B=\{\mathbf b_1,\mathbf b_2\}\) and \(C=\{\mathbf c_1,\mathbf c_2\}\) be ordered bases for \(\mathbb{R}^2\), where</p>
+<p class="prob">\[B=\left\{\begin{bmatrix}1\\1\end{bmatrix},\begin{bmatrix}1\\-1\end{bmatrix}\right\},\qquad C=\left\{\begin{bmatrix}2\\1\end{bmatrix},\begin{bmatrix}1\\1\end{bmatrix}\right\}.\]</p>
+<p class="prob">(a) Find the change-of-coordinates matrix \(P_{C\leftarrow B}\).</p>
+<p class="prob">(b) Given \([\mathbf x]_B=\begin{bmatrix}3\\-2\end{bmatrix}\), find \([\mathbf x]_C\).</p>
+<p class="prob">(c) Find the standard coordinates of \(\mathbf x\).</p>
+</div>
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob">Let \(T:\mathbb{R}^3\to\mathbb{R}^2\) be a linear transformation defined by \(T(x,y,z)=(x+2y-z,\;2x+4y-2z)\).</p>
+<p class="prob">(a) Find the standard matrix \(A\) of \(T\).</p>
+<p class="prob">(b) Find a basis for \(\ker(T)\).</p>
+<p class="prob">(c) Determine the rank and nullity of \(A\).</p>
+<p class="prob">(d) Determine whether \(T\) is one-to-one and whether it is onto. Briefly explain.</p>
+</div>
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob">Let \(T:\mathbb{R}^2\to\mathbb{R}^2\) be a linear transformation such that</p>
+<p class="prob">\[T\left(\begin{bmatrix}1\\1\end{bmatrix}\right)=\begin{bmatrix}4\\1\end{bmatrix},\qquad T\left(\begin{bmatrix}1\\-1\end{bmatrix}\right)=\begin{bmatrix}2\\3\end{bmatrix}.\]</p>
+<p class="prob">(a) Find the standard matrix \(A\) of \(T\).</p>
+<p class="prob">(b) Find \(T\left(\begin{bmatrix}3\\1\end{bmatrix}\right)\).</p>
+<p class="prob">(c) Determine whether \(T\) is invertible.</p>
+</div>
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob">Let \(T:\mathbb{R}^2\to\mathbb{R}^2\) be defined by \(T(x,y)=(3x+y,\;x+3y)\). Consider the ordered basis</p>
+<p class="prob">\[B=\left\{\begin{bmatrix}1\\1\end{bmatrix},\begin{bmatrix}1\\-1\end{bmatrix}\right\}.\]</p>
+<p class="prob">(a) Find the standard matrix \(A\) of \(T\).</p>
+<p class="prob">(b) Find the matrix \([T]_B\) representing \(T\) relative to \(B\).</p>
+<p class="prob">(c) Verify that \([T]_B=P_B^{-1}AP_B\), where \(P_B\) is the matrix whose columns are the basis vectors of \(B\).</p>
+</div>
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">Let \(A=\begin{bmatrix}3&2\\1&4\end{bmatrix}\), \(\mathbf v_1=\begin{bmatrix}1\\1\end{bmatrix}\), \(\mathbf v_2=\begin{bmatrix}2\\-1\end{bmatrix}\).</p>
+<p class="prob">Determine whether each vector is an eigenvector of \(A\). For each eigenvector, find its corresponding eigenvalue. Show your calculations.</p>
+</div>
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob">Let</p>
+<p class="prob">\[A=\begin{bmatrix}3&1&0\\0&3&0\\0&0&-2\end{bmatrix}.\]</p>
+<p class="prob">(a) Find all eigenvalues of \(A\) and their algebraic multiplicities.</p>
+<p class="prob">(b) Find a basis for each eigenspace.</p>
+<p class="prob">(c) Find the geometric multiplicity of each eigenvalue.</p>
+<p class="prob">(d) Determine whether \(A\) is diagonalizable. Briefly explain.</p>
+</div>
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob">Let</p>
+<p class="prob">\[A=\begin{bmatrix}2&1&0\\1&2&0\\0&0&5\end{bmatrix}.\]</p>
+<p class="prob">(a) Find the characteristic polynomial of \(A\).</p>
+<p class="prob">(b) Find all eigenvalues of \(A\).</p>
+<p class="prob">(c) Find a basis for each eigenspace.</p>
+</div>
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob">Consider the matrices \(A=\begin{bmatrix}4&1\\0&4\end{bmatrix}\), \(B=\begin{bmatrix}4&0\\0&4\end{bmatrix}\).</p>
+<p class="prob">(a) Find the characteristic polynomial of each matrix.</p>
+<p class="prob">(b) Find the algebraic and geometric multiplicities of each eigenvalue.</p>
+<p class="prob">(c) Are \(A\) and \(B\) similar? Explain your answer using their eigenspaces.</p>
+</div>
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob">Let \(A=\begin{bmatrix}4&2\\1&3\end{bmatrix}\).</p>
+<p class="prob">(a) Find all eigenvalues and a basis for each eigenspace.</p>
+<p class="prob">(b) Find an invertible matrix \(P\) and a diagonal matrix \(D\) such that \(A=PDP^{-1}\).</p>
+<p class="prob">(c) Use diagonalization to find \(A^4\).</p>
+</div>
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob">Let</p>
+<p class="prob">\[A=\begin{bmatrix}1&1&0\\0&2&0\\0&0&2\end{bmatrix}.\]</p>
+<p class="prob">(a) Find all eigenvalues of \(A\) and their algebraic multiplicities.</p>
+<p class="prob">(b) Find a basis for each eigenspace.</p>
+<p class="prob">(c) Determine whether \(A\) is diagonalizable.</p>
+<p class="prob">(d) If \(A\) is diagonalizable, construct matrices \(P\) and \(D\) such that \(A=PDP^{-1}\).</p>
+</div>
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob">Suppose \(P=\begin{bmatrix}1&1\\1&-1\end{bmatrix}\), \(D=\begin{bmatrix}4&0\\0&-2\end{bmatrix}\), and \(A=PDP^{-1}\).</p>
+<p class="prob">(a) Find \(A\).</p>
+<p class="prob">(b) Find \(A^5\).</p>
+<p class="prob">(c) State the eigenvalues of \(A\) and give a corresponding eigenvector for each eigenvalue.</p>
+</div>
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob">Let \(A=\begin{bmatrix}2&-3\\3&2\end{bmatrix}\).</p>
+<p class="prob">(a) Find all complex eigenvalues of \(A\).</p>
+<p class="prob">(b) Find a basis for the eigenspace corresponding to the eigenvalue with positive imaginary part.</p>
+<p class="prob">(c) Find a basis for the eigenspace corresponding to the other eigenvalue.</p>
+</div>
+<h2>Problem 13</h2>
+<div class="q">
+<p class="prob">Consider \(A=\begin{bmatrix}-1&-\sqrt{3}\\\sqrt{3}&-1\end{bmatrix}\).</p>
+<p class="prob">(a) Find the complex eigenvalues of \(A\).</p>
+<p class="prob">(b) Express \(A\) in the form</p>
+<p class="prob">\[A=r\begin{bmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{bmatrix},\]</p>
+<p class="prob">where \(r>0\) and \(0\le\theta<2\pi\).</p>
+<p class="prob">(c) Describe the geometric effect of the transformation \(\mathbf x\mapsto A\mathbf x\).</p>
+</div>
+<h2>Problem 14</h2>
+<div class="q">
+<p class="prob">Let \(A=\begin{bmatrix}0&-2\\2&0\end{bmatrix}\).</p>
+<p class="prob">(a) Find all complex eigenvalues of \(A\).</p>
+<p class="prob">(b) Find a basis for each eigenspace over \(\mathbb{C}\).</p>
+<p class="prob">(c) Determine whether \(A\) is diagonalizable over \(\mathbb{R}\) and over \(\mathbb{C}\). Briefly explain.</p>
+<p class="prob">(d) Find \(A^6\).</p>
+</div>
+<h2>Problem 15</h2>
+<div class="q">
+<p class="prob">Let</p>
+<p class="prob">\[A=\begin{bmatrix}2&-1&0\\1&2&0\\0&0&4\end{bmatrix}.\]</p>
+<p class="prob">(a) Find the characteristic polynomial of \(A\).</p>
+<p class="prob">(b) Find all eigenvalues of \(A\) over \(\mathbb{C}\).</p>
+<p class="prob">(c) Find a basis for each eigenspace over \(\mathbb{C}\).</p>
+<p class="prob">(d) Determine whether \(A\) is diagonalizable over \(\mathbb{R}\) and over \(\mathbb{C}\). Explain your answers.</p>
+</div>
+<p class="muted" style="margin-top:32px">Stuck, or found an error? Please open an <a href="https://github.com/Franky100-pig/LA-hw/issues/new" style="color:var(--accent)">issue on LA-hw</a> and quote the problem number.</p>
+</div>
+</body>
+</html>

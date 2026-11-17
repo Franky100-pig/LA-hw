@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra – Problem Set 8 — Solutions</title>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root { --bg:#0f1117; --card:#171a23; --ink:#e6e8ee; --muted:#9aa3b2; --accent:#7dd3fc; --good:#86efac; --line:#2a2f3a; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 32px 20px 80px; }
+  h1 { font-size: 26px; margin-bottom: 4px; }
+  h2 { font-size: 20px; color: var(--accent); border-bottom: 1px solid var(--line); padding-bottom: 6px; margin-top: 40px; }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .q { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+  .q h3 { margin: 0 0 8px; font-size: 16px; color: var(--good); }
+  .prob { color: var(--ink); margin: 0 0 10px; }
+  .sol { color: var(--ink); }
+  .ans { color: var(--accent); font-weight: 600; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .note { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; margin-top:8px; }
+  .verify { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+  .verify a { color: var(--accent); text-decoration: none; }
+  .verify a:hover { text-decoration: underline; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<h1>Linear Algebra – Problem Set 8 — Solutions</h1>
+<p class="muted">Summative Exam 3 Review · Full solutions · 15 problems · Eigenvalues, diagonalization, complex eigenvalues Two ideas carry the whole set: <strong>the change-of-basis matrix translates coordinates between bases</strong>, and <strong>a matrix is diagonalizable exactly when every algebraic multiplicity equals its geometric multiplicity</strong> (\(\sum \mathrm{GM}=n\)). For rotation-scaling matrices \(\begin{bmatrix}a&-b\\b&a\end{bmatrix}\), the eigenvalues are \(a\pm bi\) and the geometry is &quot;rotate by \(\theta=\operatorname{atan2}(b,a)\), scale by \(r=\sqrt{a^2+b^2}\)&quot;. Every answer below was verified with SymPy.</p>
+<h2>Problem 1</h2>
+<div class="q">
+<p class="prob">\(P_B=\begin{bmatrix}1&1\\1&-1\end{bmatrix}\), \(P_C=\begin{bmatrix}2&1\\1&1\end{bmatrix}\), \(P_C^{-1}=\begin{bmatrix}1&-1\\-1&2\end{bmatrix}\).</p>
+<p class="prob"><strong>(a)</strong> The change-of-basis matrix is \(P_{C\leftarrow B}=P_C^{-1}P_B\):</p>
+<p class="prob">\[P_{C\leftarrow B}=\begin{bmatrix}1&-1\\-1&2\end{bmatrix}\begin{bmatrix}1&1\\1&-1\end{bmatrix}=\begin{bmatrix}0&2\\1&-3\end{bmatrix}.\]</p>
+<p class="prob">Column check: \(\mathbf b_1=(1,1)=0\mathbf c_1+1\mathbf c_2\); \(\mathbf b_2=(1,-1)=2\mathbf c_1-3\mathbf c_2\).</p>
+<p class="prob"><strong>(b)</strong> \([\mathbf x]_C=P_{C\leftarrow B}[\mathbf x]_B=\begin{bmatrix}0&2\\1&-3\end{bmatrix}\begin{bmatrix}3\\-2\end{bmatrix}=\begin{bmatrix}-4\\9\end{bmatrix}\).</p>
+<p class="prob"><strong>(c)</strong> \(\mathbf x=P_B[\mathbf x]_B=\begin{bmatrix}1&1\\1&-1\end{bmatrix}\begin{bmatrix}3\\-2\end{bmatrix}=\begin{bmatrix}1\\5\end{bmatrix}\). Check via \(C\): \(P_C[\mathbf x]_C=(1,5)\) ✓</p>
+</div>
+<h2>Problem 2</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> \(A=\begin{bmatrix}T(e_1)&T(e_2)&T(e_3)\end{bmatrix}=\begin{bmatrix}1&2&-1\\2&4&-2\end{bmatrix}\).</p>
+<p class="prob"><strong>(b)</strong> Row 2 is twice row 1; \(\operatorname{rref}(A)=\begin{bmatrix}1&2&-1\\0&0&0\end{bmatrix}\), so \(x=-2y+z\) with \(y,z\) free:</p>
+<p class="prob">\[\ker T=\operatorname{span}\left\{\begin{bmatrix}-2\\1\\0\end{bmatrix},\begin{bmatrix}1\\0\\1\end{bmatrix}\right\}.\]</p>
+<p class="prob"><strong>(c)</strong> \(\operatorname{rank}A=1\), \(\operatorname{nullity}A=2\) (rank–nullity: \(1+2=3\)).</p>
+<p class="prob"><strong>(d)</strong> Not one-to-one (kernel is nonzero). Not onto: \(\operatorname{rank}A=1<2=\dim\mathbb{R}^2\), so the image is only a line in \(\mathbb{R}^2\) (spanned by \((1,2)\)).</p>
+</div>
+<h2>Problem 3</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Write the two input/output pairs as \(AS=Y\) with \(S=\begin{bmatrix}1&1\\1&-1\end{bmatrix}\), \(Y=\begin{bmatrix}4&2\\1&3\end{bmatrix}\). Then \(A=YS^{-1}=\begin{bmatrix}4&2\\1&3\end{bmatrix}\begin{bmatrix}\tfrac12&\tfrac12\\\tfrac12&-\tfrac12\end{bmatrix}=\begin{bmatrix}3&1\\2&-1\end{bmatrix}\).</p>
+<p class="prob"><strong>(b)</strong> \(T(3,1)=A\begin{bmatrix}3\\1\end{bmatrix}=\begin{bmatrix}10\\5\end{bmatrix}\). (Equivalently \((3,1)=2(1,1)+(1,-1)\), so \(T(3,1)=2(4,1)+(2,3)=(10,5)\).)</p>
+<p class="prob"><strong>(c)</strong> \(\det A=3(-1)-1(2)=-5\neq0\), so \(A\) is invertible.</p>
+</div>
+<h2>Problem 4</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> \(A=\begin{bmatrix}3&1\\1&3\end{bmatrix}\).</p>
+<p class="prob"><strong>(b)</strong> The basis vectors are eigenvectors: \(A(1,1)=(4,4)=4(1,1)\) and \(A(1,-1)=(2,-2)=2(1,-1)\). Hence \([T]_B=\begin{bmatrix}4&0\\0&2\end{bmatrix}\).</p>
+<p class="prob"><strong>(c)</strong> \(P_B=\begin{bmatrix}1&1\\1&-1\end{bmatrix}\), \(P_B^{-1}=\begin{bmatrix}\tfrac12&\tfrac12\\\tfrac12&-\tfrac12\end{bmatrix}\), and</p>
+<p class="prob">\[P_B^{-1}AP_B=\begin{bmatrix}\tfrac12&\tfrac12\\\tfrac12&-\tfrac12\end{bmatrix}\begin{bmatrix}4&2\\4&-2\end{bmatrix}=\begin{bmatrix}4&0\\0&2\end{bmatrix}=[T]_B\;\checkmark\]</p>
+<p class="prob">Because \(B\) consists of eigenvectors, \([T]_B\) is diagonal with the eigenvalues on the diagonal.</p>
+</div>
+<h2>Problem 5</h2>
+<div class="q">
+<p class="prob">\(A(1,1)^T=\begin{bmatrix}5\\5\end{bmatrix}=5(1,1)^T\) → \(\mathbf v_1\) is an eigenvector with \(\lambda=5\).</p>
+<p class="prob">\(A(2,-1)^T=\begin{bmatrix}4\\-2\end{bmatrix}=2(2,-1)^T\) → \(\mathbf v_2\) is an eigenvector with \(\lambda=2\).</p>
+<p class="prob">Check: \(\det A=10=5\cdot2\) (product of eigenvalues) ✓ Two distinct eigenvalues ⇒ two independent eigenvectors ⇒ \(A\) is diagonalizable.</p>
+</div>
+<h2>Problem 6</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Upper triangular: eigenvalues are the diagonal entries. \(\lambda=3\) (AM \(=2\)), \(\lambda=-2\) (AM \(=1\)). \(p(\lambda)=(\lambda-3)^2(\lambda+2)\).</p>
+<p class="prob"><strong>(b)</strong> \(\lambda=3\): \(A-3I=\begin{bmatrix}0&1&0\\0&0&0\\0&0&-5\end{bmatrix}\) gives \(x_2=x_3=0\), basis \(\{(1,0,0)\}\).</p>
+<p class="prob">\(\lambda=-2\): \(A+2I=\begin{bmatrix}5&1&0\\0&5&0\\0&0&0\end{bmatrix}\) gives \(x_1=x_2=0\), basis \(\{(0,0,1)\}\).</p>
+<p class="prob"><strong>(c)</strong> \(\mathrm{GM}(3)=1\), \(\mathrm{GM}(-2)=1\).</p>
+<p class="prob"><strong>(d)</strong> Not diagonalizable: for \(\lambda=3\), GM \(=1<\) AM \(=2\); only \(1+1=2<3\) independent eigenvectors.</p>
+</div>
+<h2>Problem 7</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Block diagonal: \(\det(A-\lambda I)=\big[(2-\lambda)^2-1\big](5-\lambda)=(1-\lambda)(3-\lambda)(5-\lambda)\), i.e. \(p(\lambda)=(\lambda-1)(\lambda-3)(\lambda-5)\).</p>
+<p class="prob"><strong>(b)</strong> Eigenvalues \(\lambda=1,3,5\) (each AM \(=1\)).</p>
+<p class="prob"><strong>(c)</strong> \(\lambda=3\): basis \((1,1,0)\). \(\lambda=1\): basis \((-1,1,0)\). \(\lambda=5\): basis \((0,0,1)\).</p>
+</div>
+<h2>Problem 8</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Both have \(p(\lambda)=(\lambda-4)^2\).</p>
+<p class="prob"><strong>(b)</strong> Eigenvalue \(\lambda=4\), AM \(=2\) for both. For \(A\): \(A-4I=\begin{bmatrix}0&1\\0&0\end{bmatrix}\) → \(E_4=\operatorname{span}\{(1,0)\}\), GM \(=1\). For \(B=4I\): \(E_4=\mathbb{R}^2\), GM \(=2\).</p>
+<p class="prob"><strong>(c)</strong> Not similar. Similar matrices have equal geometric multiplicities (if \(B=P^{-1}AP\) then \(E_\lambda(B)=P^{-1}E_\lambda(A)\), same dimension). Here GM\(_A=1\neq2=\) GM\(_B\). Also \(A\) is not diagonalizable while \(B\) already is. This is the classic counterexample: same characteristic polynomial does not imply similar.</p>
+</div>
+<h2>Problem 9</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> \(p(\lambda)=\lambda^2-7\lambda+10=(\lambda-5)(\lambda-2)\), so \(\lambda=5,2\). \(\lambda=5\): basis \((2,1)\). \(\lambda=2\): basis \((-1,1)\).</p>
+<p class="prob"><strong>(b)</strong> \(P=\begin{bmatrix}2&-1\\1&1\end{bmatrix}\) (columns are eigenvectors), \(D=\begin{bmatrix}5&0\\0&2\end{bmatrix}\), \(A=PDP^{-1}\). Verified: \(PDP^{-1}=\begin{bmatrix}4&2\\1&3\end{bmatrix}=A\).</p>
+<p class="prob"><strong>(c)</strong> \(A^4=PD^4P^{-1}\) with \(D^4=\operatorname{diag}(625,16)\):</p>
+<p class="prob">\[A^4=\begin{bmatrix}422&406\\203&219\end{bmatrix}.\]</p>
+<p class="prob">(Direct multiplication of \(A^4\) gives the same.)</p>
+</div>
+<h2>Problem 10</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Upper triangular: \(\lambda=1\) (AM \(=1\)), \(\lambda=2\) (AM \(=2\)); \(p(\lambda)=(1-\lambda)(2-\lambda)^2\).</p>
+<p class="prob"><strong>(b)</strong> \(\lambda=1\): basis \((1,0,0)\). \(\lambda=2\): \(A-2I=\begin{bmatrix}-1&1&0\\0&0&0\\0&0&0\end{bmatrix}\) → \(x_1=x_2\), \(x_2,x_3\) free; basis \(\{(1,1,0),(0,0,1)\}\), GM \(=2\).</p>
+<p class="prob"><strong>(c)</strong> Diagonalizable: GM \(=\) AM for both eigenvalues, and \(\sum\mathrm{GM}=1+2=3=n\).</p>
+<p class="prob"><strong>(d)</strong> \(P=\begin{bmatrix}1&1&0\\0&1&0\\0&0&1\end{bmatrix}\) (columns: eigenvectors for \(1,2,2\)), \(D=\operatorname{diag}(1,2,2)\), with \(A=PDP^{-1}\).</p>
+</div>
+<h2>Problem 11</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> \(A=PDP^{-1}=\begin{bmatrix}4&-2\\4&2\end{bmatrix}\begin{bmatrix}\tfrac12&\tfrac12\\\tfrac12&-\tfrac12\end{bmatrix}=\begin{bmatrix}1&3\\3&1\end{bmatrix}\).</p>
+<p class="prob"><strong>(b)</strong> \(A^5=PD^5P^{-1}\) with \(D^5=\operatorname{diag}(4^5,(-2)^5)=\operatorname{diag}(1024,-32)\):</p>
+<p class="prob">\[A^5=\begin{bmatrix}496&528\\528&496\end{bmatrix}.\]</p>
+<p class="prob"><strong>(c)</strong> Eigenvalues are the diagonal entries of \(D\): \(\lambda=4\) with eigenvector (column 1 of \(P\)) \((1,1)\); \(\lambda=-2\) with eigenvector \((1,-1)\). Check: \(A(1,1)^T=4(1,1)^T\), \(A(1,-1)^T=-2(1,-1)^T\).</p>
+</div>
+<h2>Problem 12</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> \(p(\lambda)=(2-\lambda)^2+9=\lambda^2-4\lambda+13\), so \(\lambda=2\pm3i\). (Rotation-scaling form \(a=2,b=3\).)</p>
+<p class="prob"><strong>(b)</strong> For \(\lambda=2+3i\): \((A-(2+3i)I)\mathbf v=0\) gives \(v_2=-iv_1\); take \(v_1=i\) → basis \(\left\{\begin{bmatrix}i\\1\end{bmatrix}\right\}\). Check: \(A(i,1)^T=(2+3i)(i,1)^T\).</p>
+<p class="prob"><strong>(c)</strong> Conjugate eigenvalue \(\lambda=2-3i\) has basis \(\left\{\begin{bmatrix}-i\\1\end{bmatrix}\right\}\).</p>
+<p class="prob">Geometrically \(A=\sqrt{13}\,R(\theta)\) with \(\theta=\operatorname{atan2}(3,2)\approx56.3^\circ\): rotate then scale by \(\sqrt{13}\).</p>
+</div>
+<h2>Problem 13</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Rotation-scaling form with \(a=-1,b=\sqrt3\): eigenvalues \(\lambda=-1\pm\sqrt3\,i\). (\(p(\lambda)=\lambda^2+2\lambda+4\).)</p>
+<p class="prob"><strong>(b)</strong> \(r=\sqrt{(-1)^2+(\sqrt3)^2}=2\); \(\cos\theta=-1/2\), \(\sin\theta=\sqrt3/2\) → \(\theta=2\pi/3\). Thus</p>
+<p class="prob">\[A=2\begin{bmatrix}\cos(2\pi/3)&-\sin(2\pi/3)\\\sin(2\pi/3)&\cos(2\pi/3)\end{bmatrix}=2\begin{bmatrix}-1/2&-\sqrt3/2\\\sqrt3/2&-1/2\end{bmatrix}\;\checkmark\]</p>
+<p class="prob"><strong>(c)</strong> \(\mathbf x\mapsto A\mathbf x\) rotates counterclockwise by \(120^\circ\) and scales by \(2\) (a similarity: angles preserved, no real invariant direction since \(2\pi/3\neq0,\pi\)).</p>
+</div>
+<h2>Problem 14</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Rotation-scaling with \(a=0,b=2\): eigenvalues \(\lambda=\pm2i\) (\(p(\lambda)=\lambda^2+4\)).</p>
+<p class="prob"><strong>(b)</strong> \(\lambda=2i\): basis \(\{(i,1)\}\). \(\lambda=-2i\): basis \(\{(-i,1)\}\) (over \(\mathbb{C}\)).</p>
+<p class="prob"><strong>(c)</strong> Not diagonalizable over \(\mathbb{R}\) (eigenvalues are not real, no real eigenvectors; geometrically a \(90^\circ\) rotation with no invariant real direction). Diagonalizable over \(\mathbb{C}\): two distinct complex eigenvalues with independent eigenvectors, \(P=\begin{bmatrix}i&-i\\1&1\end{bmatrix}\), \(D=\operatorname{diag}(2i,-2i)\).</p>
+<p class="prob"><strong>(d)</strong> \(A^6=PD^6P^{-1}\); \((2i)^6=(-2i)^6=-64\), so \(A^6=-64I=\begin{bmatrix}-64&0\\0&-64\end{bmatrix}\). Geometrically: scale by \(2^6=64\) and rotate \(6\times90^\circ=180^\circ\) → \(-64I\).</p>
+</div>
+<h2>Problem 15</h2>
+<div class="q">
+<p class="prob"><strong>(a)</strong> Block diagonal: \(\det(A-\lambda I)=\big[(2-\lambda)^2+1\big](4-\lambda)\), i.e. \(p(\lambda)=(4-\lambda)(\lambda^2-4\lambda+5)\).</p>
+<p class="prob"><strong>(b)</strong> Over \(\mathbb{C}\): \(\lambda=4\) and \(\lambda=2\pm i\) (roots of \(\lambda^2-4\lambda+5\)).</p>
+<p class="prob"><strong>(c)</strong> \(\lambda=4\): basis \((0,0,1)\). \(\lambda=2+i\): basis \((i,1,0)\) — check \(A(i,1,0)^T=(2+i)(i,1,0)^T\). \(\lambda=2-i\): basis \((-i,1,0)\).</p>
+<p class="prob"><strong>(d)</strong> Not diagonalizable over \(\mathbb{R}\) (\(2\pm i\) are not real). Diagonalizable over \(\mathbb{C}\): three distinct eigenvalues with three independent eigenvectors, \(P_{\mathbb{C}}=\begin{bmatrix}0&i&-i\\0&1&1\\1&0&0\end{bmatrix}\), \(D=\operatorname{diag}(4,2+i,2-i)\), \(A=P_{\mathbb{C}}DP_{\mathbb{C}}^{-1}\).</p>
+</div>
+<p class="muted" style="margin-top:32px">Stuck, or found an error? Please open an <a href="https://github.com/Franky100-pig/LA-hw/issues/new" style="color:var(--accent)">issue on LA-hw</a> and quote the problem number.</p>
+</div>
+</body>
+</html>
