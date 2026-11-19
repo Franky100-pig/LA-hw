@@ -2,7 +2,7 @@
 
 Original Linear Algebra practice sets with full worked solutions. It can be used with the LA Helper to strengthen your Linear Algebra knowledge.
 
-Sets 1–7 are self-written, mimicking the form of MIT 18.06 (Gilbert Strang). Set 8 is a course review set (Summative Exam 3 Review) included for study; if problems in the self-written sets look similar, that is a coincidence. 
+Sets 1–7 and Set 9 are self-written, mimicking the form of MIT 18.06 (Gilbert Strang). Set 8 is a course review set (Summative Exam 3 Review) included for study; if problems in the self-written sets look similar, that is a coincidence. 
 
 Set 1 covers determinant properties, row operations, cofactor structure and Cramer's rule, with proof-style reasoning questions. 
 
@@ -20,6 +20,8 @@ Set 7 moves from eigenvalues to **similarity**. The organising sentence: **$B = 
 
 Set 8 is a **15-problem review** for the end-of-course summative exam. It runs the full second half of the course in order: change of basis and coordinates (1), linear transformations — standard matrix, kernel, rank–nullity (2–4), eigenvectors and eigenvalues (5–7), the AM-vs-GM test for diagonalization with the classic shear/identity counterexample (8–10), computing $A^k$ by diagonalizing (11), and complex eigenvalues with rotation-scaling — including when a matrix is diagonalizable over $\mathbb{C}$ but not $\mathbb{R}$ (12–15).
 
+Set 9 is a short, beginner-friendly bridge from the study notes to practice: determinant geometry (area and orientation), Cramer's rule in 2×2 and 3×3, Gram-Schmidt, QR decomposition, dependent columns, least squares, and the AM/GM test on the classic shear matrix. Each problem is designed to be checkable in one or two lines.
+
 All problem sets and solutions are also readable online (MathJax-rendered HTML):
 **https://franky100-pig.github.io/LA-hw/** — e.g. [`set6/problems.html`](https://franky100-pig.github.io/LA-hw/set6/problems.html).
 
@@ -35,6 +37,7 @@ All problem sets and solutions are also readable online (MathJax-rendered HTML):
 | Set 6 | Eigenvalues & Eigenvectors | [`.pdf`](set6/problems.pdf) · [`.html`](set6/problems.html) | [`.pdf`](set6/solutions.pdf) · [`.docx`](set6/solutions.docx) · [`.html`](set6/solutions.html) |
 | Set 7 | Similar Matrices & Diagonalization | [`.pdf`](set7/problems.pdf) · [`.html`](set7/problems.html) | [`.pdf`](set7/solutions.pdf) · [`.docx`](set7/solutions.docx) · [`.html`](set7/solutions.html) |
 | Set 8 | Summative Exam 3 Review — Bases, Eigenvalues, Diagonalization & Complex Eigenvalues | [`.pdf`](set8/problems.pdf) · [`.html`](set8/problems.html) | [`.pdf`](set8/solutions.pdf) · [`.docx`](set8/solutions.docx) · [`.html`](set8/solutions.html) |
+| Set 9 | Determinant Geometry, Cramer's Rule, Gram-Schmidt, QR & Least Squares | [`.pdf`](set9/problems.pdf) · [`.html`](set9/problems.html) | [`.pdf`](set9/solutions.pdf) · [`.docx`](set9/solutions.docx) · [`.html`](set9/solutions.html) |
 
 Solution formats:
 
